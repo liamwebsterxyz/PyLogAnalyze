@@ -8,7 +8,6 @@ class App:
     """
 
     def __init__(self, title: str) -> None:
-
         self.title = title
         self.fullName_FirstParty = set()
         self.fullName_ThirdParty = set()
@@ -29,6 +28,12 @@ class App:
         self.location_FirstParty = set()
         self.location_ThirdParty = set()
 
+    def GetAppData(self) -> list:
+        # TODO: not the best way to do this ie hardcode the order possible?
+        ret = []
+        for _, identifiers in self.__dict__.items():
+            ret.append(identifiers)
+        return ret
 
     def AddFullName(self, domain: str, firstParty: bool) -> None:
         """
@@ -111,6 +116,100 @@ class App:
         else:
             self.location_ThirdParty.add(domain)
 
+    def AddDomain(self, identifierKey: str, domain: str, firstParty: bool,) -> None:
+        """
+        Add the domain to either the App's FirstParty or ThirdParty set corresponding to the given identifier key.
+        """
+        if identifierKey == "FullName":
+            self.AddFullName(domain, firstParty)
+        elif identifierKey == "Email":
+            self.AddEmail(domain, firstParty)
+        elif identifierKey == "DOB":
+            self.AddDOB(domain, firstParty)
+        elif identifierKey == "DeviceID":
+            self.AddDeviceID(domain, firstParty)
+        elif identifierKey == "Gender":
+            self.AddGender(domain, firstParty)
+        elif identifierKey == "Phone":
+            self.AddPhone(domain, firstParty)
+        elif identifierKey == "IPAddress":
+            self.AddIPAddress(domain, firstParty)
+        elif identifierKey == "Fingerprint":
+            self.AddFingerprint(domain, firstParty)
+        elif identifierKey == "Location":
+            self.AddLocation(domain, firstParty)
+   
+    def IdentifierSearch(self, identifierKey: str, identifier: str, line: str) -> bool:
+        # TODO improve search process to not be so naive REGEX? 
+        # TODO add search until next domain... e.g. to search for first and last name then combine to determine full name 
+        success = False
+        if identifierKey == "FullName":
+            for identity in identifier:
+                full_name = identity.split(' ')
+                for namepart in full_name:
+                    if namepart in line:
+                        success = True
+                    else:
+                        success = False
+                        break
+        elif identifierKey == "Email":
+            for identity in identifier:
+                if identity in line:
+                    success = True
+                else:
+                    success = False
+                    break
+        elif identifierKey == "DOB":
+            for identity in identifier:
+                if identity in line:
+                    success = True
+                else:
+                    success = False
+                    break
+        elif identifierKey == "DeviceID":
+            for identity in identifier:
+                if identity in line:
+                    success = True
+                else:
+                    success = False
+                    break
+        elif identifierKey == 'Gender':
+            for identity in identifier:
+                if identity in line and ('gender' in line or 'sex' in line):
+                    success = True
+                else:
+                    success = False
+                    break
+        elif identifierKey == "Phone":
+            for identity in identifier:
+                if identity in line:
+                    success = True
+                else:
+                    success = False
+                    break
+        elif identifierKey == "IPAddress":
+            for identity in identifier:
+                if identity in line:
+                    success = True
+                else:
+                    success = False
+                    break
+        elif identifierKey == "Fingerprint":
+            for identity in identifier:
+                if identity in line:
+                    success = True
+                else:
+                    success = False
+                    break
+        elif identifierKey == "Location":
+            for identity in identifier:
+                if identity in line:
+                    success = True
+                else:
+                    success = False
+                    break
+        return success
+   
     def Analyze_PlainLog(self, appPath: Path, identifiers: dict) -> None:
         """
         Analyze the plain log file for identifiers.
@@ -128,30 +227,10 @@ class App:
                             currentParty = False
                     else:
                         for identifierKey in identifiers.keys():
-                            # TODO improve search process to not be so naive REGEX?
-                            if identifiers[identifierKey] in line:
-                                if identifierKey == "FullName":
-                                    self.AddFullName(currentDomain, currentParty)
-                                elif identifierKey == "Email":
-                                    self.AddEmail(currentDomain, currentParty)
-                                elif identifierKey == "DOB":
-                                    self.AddDeviceID(currentDomain, currentParty)
-                                elif identifierKey == "DeviceID":
-                                    self.AddDeviceID(currentDomain, currentParty)
-                                elif identifierKey == "Gender":
-                                    self.AddGender(currentDomain, currentParty)
-                                elif identifierKey == "Phone":
-                                    self.AddPhone(currentDomain, currentParty)
-                                elif identifierKey == "IPAddress":
-                                    self.AddIPAddress(currentDomain, currentParty)
-                                elif identifierKey == "Fingerprint":
-                                    self.AddFingerprint(currentDomain, currentParty)
-                                elif identifierKey == "Location":
-                                    self.AddLocation(currentDomain, currentParty)
+                            if self.IdentifierSearch(identifierKey, identifiers[identifierKey], line):
+                                self.AddDomain(identifierKey, str(currentDomain).split(':')[0], currentParty)
         except Exception as e:
             print(f"Error Opening App File: {e}")
-
-        
 
     def Analyze_NetLog(self, appPath: Path, identifiers: dict) -> None:
         """
@@ -174,29 +253,7 @@ class App:
                         domainNext = True
                     else:
                         for identifierKey in identifiers.keys():
-                            # TODO improve search process to not be so naive REGEX? 
-                            # TODO add search until next domain... e.g. to search for first and last name then combine to determine full name 
-                            if identifiers[identifierKey] in line:
-                                if identifierKey == "FullName":
-                                    self.AddFullName(currentDomain, currentParty)
-                                elif identifierKey == "Email":
-                                    self.AddEmail(currentDomain, currentParty)
-                                elif identifierKey == "DOB":
-                                    self.AddDeviceID(currentDomain, currentParty)
-                                elif identifierKey == "DeviceID":
-                                    self.AddDeviceID(currentDomain, currentParty)
-                                elif identifierKey == "Gender":
-                                    self.AddGender(currentDomain, currentParty)
-                                elif identifierKey == "Phone":
-                                    self.AddPhone(currentDomain, currentParty)
-                                elif identifierKey == "IPAddress":
-                                    self.AddIPAddress(currentDomain, currentParty)
-                                elif identifierKey == "Fingerprint":
-                                    self.AddFingerprint(currentDomain, currentParty)
-                                elif identifierKey == "Location":
-                                    self.AddLocation(currentDomain, currentParty)
+                            if self.IdentifierSearch(identifierKey, identifiers[identifierKey], line):
+                                self.AddDomain(identifierKey, currentDomain, currentParty)
         except Exception as e:
             print(f"Error Opening App File: {e}")
-
-
-

@@ -42,6 +42,7 @@
 from pathlib import Path
 from typing import List, Optional
 from pyloganalyze import app
+import pandas as pd
 
 
 class PyLogAnalyze:
@@ -74,8 +75,12 @@ class PyLogAnalyze:
             self.appList.append(currentApp)
 
     def Save(self) -> None:
+        df = pd.DataFrame(columns=['AppID', 'FullName_FirstPart', 'FullName_ThirdParty', 'Email_FirstParty', 'Email_ThirdParty', 'DOB_FirstParty', 'DOB_ThirdParty', 'DeviceID_FirstParty', 'DeviceID_ThirdParty', 'Gender_FirstParty', 'Gender_ThirdParty', 'Phone_FirstParty', 'Phone_ThirdParty', 'IPAddress_FirstParty', 'IPAddress_ThirdParty', 'Fingerprint_FirstParty', 'Fingerprint_ThirdParty', 'Location_FirstParty', 'Location_ThirdParty'])
+        for app in self.appList:
+            df.loc[len(df)] = app.GetAppData()
         if self.outputDir is not None:
             # TODO write app to output file
-            pass
+            print("Writing results to file...")
+            df.to_csv(self.outputDir)
         else:
-            print(self.appList[0].fullName_FirstParty)
+            print(df)

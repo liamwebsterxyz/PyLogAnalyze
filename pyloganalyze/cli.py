@@ -2,12 +2,11 @@
 
 from pathlib import Path
 from typing import Optional
+from pyloganalyze import __app_name__, __version__, pyloganalyze
 
 import typer
-
 import json
 
-from pyloganalyze import __app_name__, __version__, pyloganalyze
 
 app = typer.Typer()
 
@@ -68,9 +67,6 @@ def analyze(
     except FileNotFoundError as e:
         typer.echo(f"Error: {e}")
         raise typer.Exit(1)
-    
-    # TODO create output file??
-
 
     # Init the controller
     controller = pyloganalyze.PyLogAnalyze(primaryfiles_paths, identifier_dict, output_file)
