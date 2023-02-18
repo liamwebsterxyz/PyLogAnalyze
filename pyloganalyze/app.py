@@ -7,144 +7,46 @@ class App:
     Initialize the app object.
     """
 
-    def __init__(self, title: str) -> None:
-        self.title = title
-        self.fullName_FirstParty = set()
-        self.fullName_ThirdParty = set()
-        self.email_FirstParty = set()
-        self.email_ThirdParty = set()
-        self.dob_FirstParty = set()
-        self.dob_ThirdParty = set()
-        self.deviceID_FirstParty = set()
-        self.deviceID_ThirdParty = set()
-        self.gender_FirstParty = set()
-        self.gender_ThirdParty = set()
-        self.phone_FirstParty = set()
-        self.phone_ThirdParty = set()
-        self.ipAddress_FirstParty = set()
-        self.ipAddress_ThirdParty = set()
-        self.fingerprint_FirstParty = set()
-        self.fingerprint_ThirdParty = set()
-        self.location_FirstParty = set()
-        self.location_ThirdParty = set()
+    def __init__(self, appId: str, identifiers: list[str]) -> None:
+        self.AppID = appId
+        for identifier in identifiers:
+            setattr(self, identifier + "_FirstParty", set())
+            setattr(self, identifier + "_ThirdParty", set())
+
+
+    def PercentThirdParty(self, identifierKey: str) -> float:
+        """
+        Calculate the percentage of third party domains that the app has identified.
+        """
+        total = len(getattr(self, identifierKey + "_FirstParty")) + len(getattr(self, identifierKey + "_ThirdParty"))
+        if total == 0:
+            return 0
+        return len(getattr(self, identifierKey + "_ThirdParty")) // total
 
     def GetAppData(self) -> list:
         # TODO: not the best way to do this ie hardcode the order possible?
         ret = []
-        for _, identifiers in self.__dict__.items():
+        for identifiers in self.__dict__.values():
             ret.append(identifiers)
         return ret
-
-    def AddFullName(self, domain: str, firstParty: bool) -> None:
-        """
-        Add the domain to either the App's FirstParty or ThirdParty FullName set.
-        """
-        if firstParty:
-            self.fullName_FirstParty.add(domain)
-        else:
-            self.fullName_ThirdParty.add(domain)
-
-    def AddEmail(self, domain: str, firstParty: bool) -> None:
-        """
-        Add the domain to either the App's FirstParty or ThirdParty Email set.
-        """
-        if firstParty:
-            self.email_FirstParty.add(domain)
-        else:
-            self.email_ThirdParty.add(domain)
-    
-    def AddDOB(self, domain: str, firstParty: bool) -> None:
-        """
-        Add the domain to either the App's FirstParty or ThirdParty DOB set.
-        """
-        if firstParty:
-            self.dob_FirstParty.add(domain)
-        else:
-            self.dob_ThirdParty.add(domain)
-    
-    def AddDeviceID(self, domain: str, firstParty: bool) -> None:
-        """
-        Add the domain to either the App's FirstParty or ThirdParty DeviceID set.
-        """
-        if firstParty:
-            self.deviceID_FirstParty.add(domain)
-        else:
-            self.deviceID_ThirdParty.add(domain)
-    
-    def AddGender(self, domain: str, firstParty: bool) -> None:
-        """
-        Add the domain to either the App's FirstParty of ThirdParty Gender set.
-        """
-        if firstParty:
-            self.gender_FirstParty.add(domain)
-        else:
-            self.gender_ThirdParty.add(domain)
-
-    def AddPhone(self, domain: str, firstParty: bool) -> None:
-        """
-        Add the domain to either the App's FirstParty or ThirdParty Phone set.
-        """
-        if firstParty:
-            self.phone_FirstParty.add(domain)
-        else:
-            self.phone_ThirdParty.add(domain)
-
-    def AddIPAddress(self, domain: str, firstParty: bool) -> None:
-        """
-        Add the domain to either the App's FirstParty or ThirdParty IPAddress set.
-        """
-        if firstParty:
-            self.ipAddress_FirstParty.add(domain)
-        else:
-            self.ipAddress_ThirdParty.add(domain)
-
-    def AddFingerprint(self, domain: str, firstParty: bool) -> None:
-        """
-        Add the domain to either the App's FirstParty or ThirdParty Fingerprint set.
-        """
-        if firstParty:
-            self.fingerprint_FirstParty.add(domain)
-        else:
-            self.fingerprint_ThirdParty.add(domain)
-
-    def AddLocation(self, domain: str, firstParty: bool) -> None:
-        """
-        Add the domain to either the App's FirstParty or ThirdParty Location set.
-        """
-        if firstParty:
-            self.location_FirstParty.add(domain)
-        else:
-            self.location_ThirdParty.add(domain)
 
     def AddDomain(self, identifierKey: str, domain: str, firstParty: bool,) -> None:
         """
         Add the domain to either the App's FirstParty or ThirdParty set corresponding to the given identifier key.
         """
-        if identifierKey == "FullName":
-            self.AddFullName(domain, firstParty)
-        elif identifierKey == "Email":
-            self.AddEmail(domain, firstParty)
-        elif identifierKey == "DOB":
-            self.AddDOB(domain, firstParty)
-        elif identifierKey == "DeviceID":
-            self.AddDeviceID(domain, firstParty)
-        elif identifierKey == "Gender":
-            self.AddGender(domain, firstParty)
-        elif identifierKey == "Phone":
-            self.AddPhone(domain, firstParty)
-        elif identifierKey == "IPAddress":
-            self.AddIPAddress(domain, firstParty)
-        elif identifierKey == "Fingerprint":
-            self.AddFingerprint(domain, firstParty)
-        elif identifierKey == "Location":
-            self.AddLocation(domain, firstParty)
-   
-    def IdentifierSearch(self, identifierKey: str, identifier: str, line: str) -> bool:
+        if firstParty:
+            getattr(self, identifierKey + "_FirstParty").add(domain)
+        else:
+            getattr(self, identifierKey + "_ThirdParty").add(domain)
+
+
+    def IdentifierSearch(self, identifierKey: str, identifiers: list[str], line: str) -> bool:
         # TODO improve search process to not be so naive REGEX? 
         # TODO add search until next domain... e.g. to search for first and last name then combine to determine full name 
+        line = line.lower()
         success = False
         if identifierKey == "FullName":
-            for identity in identifier:
+            for identity in identifiers:
                 full_name = identity.split(' ')
                 for namepart in full_name:
                     if namepart in line:
@@ -153,61 +55,37 @@ class App:
                         success = False
                         break
         elif identifierKey == "Email":
-            for identity in identifier:
+            for identity in identifiers:
                 if identity in line:
                     success = True
-                else:
-                    success = False
-                    break
         elif identifierKey == "DOB":
-            for identity in identifier:
+            for identity in identifiers:
                 if identity in line:
                     success = True
-                else:
-                    success = False
-                    break
         elif identifierKey == "DeviceID":
-            for identity in identifier:
+            for identity in identifiers:
                 if identity in line:
                     success = True
-                else:
-                    success = False
-                    break
         elif identifierKey == 'Gender':
-            for identity in identifier:
+            for identity in identifiers:
                 if identity in line and ('gender' in line or 'sex' in line):
                     success = True
-                else:
-                    success = False
-                    break
         elif identifierKey == "Phone":
-            for identity in identifier:
+            for identity in identifiers:
                 if identity in line:
                     success = True
-                else:
-                    success = False
-                    break
         elif identifierKey == "IPAddress":
-            for identity in identifier:
+            for identity in identifiers:
                 if identity in line:
                     success = True
-                else:
-                    success = False
-                    break
         elif identifierKey == "Fingerprint":
-            for identity in identifier:
+            for identity in identifiers:
                 if identity in line:
                     success = True
-                else:
-                    success = False
-                    break
         elif identifierKey == "Location":
-            for identity in identifier:
+            for identity in identifiers:
                 if identity in line:
                     success = True
-                else:
-                    success = False
-                    break
         return success
    
     def Analyze_PlainLog(self, appPath: Path, identifiers: dict) -> None:
@@ -221,14 +99,17 @@ class App:
                 for line in file:
                     if ('(packet)' in line):
                         currentDomain = line
-                        if self.title in currentDomain:
+                        if self.AppID in currentDomain:
                             currentParty = True
                         else:
                             currentParty = False
                     else:
                         for identifierKey in identifiers.keys():
                             if self.IdentifierSearch(identifierKey, identifiers[identifierKey], line):
-                                self.AddDomain(identifierKey, str(currentDomain).split(':')[0], currentParty)
+                                try:
+                                    self.AddDomain(identifierKey, str(currentDomain).split(':')[0], currentParty)
+                                except Exception as e:
+                                    print(f"Error Adding Domain: {e}")
         except Exception as e:
             print(f"Error Opening App File: {e}")
 
@@ -244,7 +125,7 @@ class App:
                 for line in file:
                     if domainNext == True:
                         currentDomain = line
-                        if self.title in currentDomain:
+                        if self.AppID in currentDomain:
                             currentParty = True
                         else:
                             currentParty = False
@@ -254,6 +135,9 @@ class App:
                     else:
                         for identifierKey in identifiers.keys():
                             if self.IdentifierSearch(identifierKey, identifiers[identifierKey], line):
-                                self.AddDomain(identifierKey, currentDomain, currentParty)
+                                try:
+                                    self.AddDomain(identifierKey, currentDomain, currentParty)
+                                except Exception as e:
+                                    print(f"Error Adding Domain: {e}")
         except Exception as e:
             print(f"Error Opening App File: {e}")

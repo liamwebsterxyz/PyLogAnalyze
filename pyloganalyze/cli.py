@@ -37,6 +37,11 @@ def analyze(
     identifier_file: Path = typer.Argument(
         ..., 
         help="File containing identifiers to analyze(JSON format).",),
+    input_file: Path = typer.Option(
+        None,
+      "--inputdir", "-i",
+        help="The input file to add results to.",
+        ),
     output_file: Path = typer.Option(
         None,
         "--outputdir", "-d",
@@ -44,6 +49,7 @@ def analyze(
     ),
 ) -> None:
     """Analyze log files."""
+
     typer.echo(f"Analyzing app logs from {app_file} and writing results to {output_file}.")
 
     primaryfiles_paths = []
@@ -52,7 +58,7 @@ def analyze(
         with open(app_file, 'r') as file:
             primaryfiles_paths = [Path(x.strip()) for x in file.readlines()]  
     except FileNotFoundError as e:
-        typer.echo(f"Error: {e}")
+        typer.echo(f"Error Opening File Paths: {e}")
         raise typer.Exit(1)
 
     identifier_dict = {}
@@ -62,21 +68,21 @@ def analyze(
             try:
                 identifier_dict = json.load(file)
             except json.JSONDecodeError as e:
-                typer.echo(f"Error: {e}")
+                typer.echo(f"Error Loading Identifier Dictionary: {e}")
                 raise typer.Exit(1)
     except FileNotFoundError as e:
-        typer.echo(f"Error: {e}")
+        typer.echo(f"Error Opening Identifier Dictionary: {e}")
         raise typer.Exit(1)
 
     # Init the controller
-    controller = pyloganalyze.PyLogAnalyze(primaryfiles_paths, identifier_dict, output_file)
+    controller = pyloganalyze.PyLogAnalyze(primaryfiles_paths, identifier_dict, input_file, output_file)
 
     # Analyze the log files
     controller.Analyze()
 
     # TODO call other functions ie add analysis options
-
+    controller.GetStats()
     # Save the results
     # TODO finish this
-    controller.Save()
+    #controller.Save()
 
