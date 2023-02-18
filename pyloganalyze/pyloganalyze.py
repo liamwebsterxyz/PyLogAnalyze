@@ -80,11 +80,16 @@ class PyLogAnalyze:
     def GetStats(self) -> None:
         dictStats = {}
         for identifierKey in self.identifiers.keys():
-            dictStats[identifierKey] = 0
-        for app in self.appList:
-            #print(f"App: {app.AppID}")
-            for identifierKey in self.identifiers.keys():
-                dictStats[identifierKey] = (dictStats[identifierKey] + app.PercentThirdParty(identifierKey)) / 2
+            FirstPartyCount = 0
+            ThirdPartyCount = 0
+            for app in self.appList:
+                FirstPartyCount += app.FirstPartyCount(identifierKey)
+                ThirdPartyCount += app.ThirdPartyCount(identifierKey)
+            total = FirstPartyCount + ThirdPartyCount
+            if total == 0:
+                dictStats[identifierKey] = 0
+            else:
+                dictStats[identifierKey] = ThirdPartyCount / total
         print(dictStats)
 
 

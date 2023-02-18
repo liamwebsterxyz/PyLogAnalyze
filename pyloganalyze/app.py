@@ -1,5 +1,9 @@
 
 from pathlib import Path
+from difflib import SequenceMatcher
+from urllib.parse import urlparse
+
+
 
 
 class App:
@@ -14,14 +18,17 @@ class App:
             setattr(self, identifier + "_ThirdParty", set())
 
 
-    def PercentThirdParty(self, identifierKey: str) -> float:
+    def ThirdPartyCount(self, identifierKey: str) -> int:
         """
         Calculate the percentage of third party domains that the app has identified.
         """
-        total = len(getattr(self, identifierKey + "_FirstParty")) + len(getattr(self, identifierKey + "_ThirdParty"))
-        if total == 0:
-            return 0
-        return len(getattr(self, identifierKey + "_ThirdParty")) // total
+        return len(getattr(self, identifierKey + "_ThirdParty"))
+    
+    def FirstPartyCount(self, identifierKey: str) -> int:
+        """
+        Calculate the percentage of third party domains that the app has identified.
+        """
+        return len(getattr(self, identifierKey + "_FirstParty"))
 
     def GetAppData(self) -> list:
         # TODO: not the best way to do this ie hardcode the order possible?
@@ -99,10 +106,14 @@ class App:
                 for line in file:
                     if ('(packet)' in line):
                         currentDomain = line
-                        if self.AppID in currentDomain:
-                            currentParty = True
-                        else:
+                        if "inbound" in currentDomain:
+                            currentDomain = currentDomain.split('inbound to ')[1]
+                        elif "outbound" in currentDomain:
+                            currentDomain = currentDomain.split('outbound to ')[1]
+                        if SequenceMatcher(None, self.AppID.rsplit('.', 1)[1], currentDomain).ratio() < 0.35 and self.AppID.rsplit('.',1)[1] not in currentDomain:
                             currentParty = False
+                        else:
+                            currentParty = True
                     else:
                         for identifierKey in identifiers.keys():
                             if self.IdentifierSearch(identifierKey, identifiers[identifierKey], line):
@@ -124,11 +135,13 @@ class App:
                 currentParty = None
                 for line in file:
                     if domainNext == True:
-                        currentDomain = line
-                        if self.AppID in currentDomain:
-                            currentParty = True
-                        else:
+                        currentDomain = line.split(':')[1]
+                        #currentDomain = urlparse(currentDomain).netloc
+                        #currentDomain = '.'.join(currentDomain.split('.')[-2:])
+                        if SequenceMatcher(None, self.AppID.rsplit('.',1)[1], currentDomain).ratio() < 0.35 and self.AppID.rsplit('.',1)[1] not in currentDomain:
                             currentParty = False
+                        else:
+                            currentParty = True
                         domainNext = False
                     elif "---------------- new packet ----------------" in line:
                         domainNext = True

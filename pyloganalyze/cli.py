@@ -84,5 +84,5 @@ def analyze(
     controller.GetStats()
     # Save the results
     # TODO finish this
-    #controller.Save()
+    controller.Save()
 
