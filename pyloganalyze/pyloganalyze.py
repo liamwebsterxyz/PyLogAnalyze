@@ -43,6 +43,7 @@ from pathlib import Path
 from typing import List, Optional
 from pyloganalyze import app
 import pandas as pd
+import logging
 
 
 class PyLogAnalyze:
@@ -54,16 +55,15 @@ class PyLogAnalyze:
         self, 
         appfile: List[Path], 
         identifierdict: dict,
-        inputfile: Optional[Path],
-        outputdir: Optional[Path],
     ) -> None:
         self.appPaths = [x.absolute() for x in appfile]
         self.identifiers = identifierdict
-        self.inputFile = inputfile
-        self.outputDir = outputdir
         self.appList = []
     
     def Analyze(self) -> None:
+        """
+        Analyze the chrome_packet and net_log files for each specified app. Producing a PyLogAnalyze object containing the results.
+        """
         for appPath in self.appPaths:
 
             # create an app object
@@ -76,8 +76,14 @@ class PyLogAnalyze:
             # add app to appList
             self.appList.append(currentApp)
 
+            print(f"App {currentApp.AppID} analyzed.")
+            logging.debug(f"App {currentApp.AppID} analyzed.")
+
 
     def GetStats(self) -> None:
+        """
+        For each identifier key calculate the percentage of third party domains which received the identifier.
+        """
         dictStats = {}
         for identifierKey in self.identifiers.keys():
             FirstPartyCount = 0
@@ -93,20 +99,25 @@ class PyLogAnalyze:
         print(dictStats)
 
 
-    def Save(self) -> None:
-        if self.inputFile is not None:
-            # read app from input file
-            print("Reading results from file...")
-            try:
-                with open(self.inputFile, 'r') as f:
-                    df = pd.read_csv(f, index_col=0)
-            except:
-                print("Error reading input file to save df")
-                return
-        else:
-            #TODO change this? shouldn't be hardcoded
-            df = pd.DataFrame(columns=['AppID', 'FullName_FirstPart', 'FullName_ThirdParty', 'Email_FirstParty', 'Email_ThirdParty', 'DOB_FirstParty', 'DOB_ThirdParty', 'DeviceID_FirstParty', 'DeviceID_ThirdParty', 'Gender_FirstParty', 'Gender_ThirdParty', 'Phone_FirstParty', 'Phone_ThirdParty', 'IPAddress_FirstParty', 'IPAddress_ThirdParty', 'Fingerprint_FirstParty', 'Fingerprint_ThirdParty', 'Location_FirstParty', 'Location_ThirdParty'])
+    def ToDataFrame(self) -> pd.DataFrame:
+        """
+        Convert the PyLogAnalyze object to a pandas DataFrame.
+        """
+        # if self.inputFile is not None:
+        #     # read app from input file
+        #     print("Reading results from file...")
+        #     try:
+        #         with open(self.inputFile, 'r') as f:
+        #             df = pd.read_csv(f, index_col=0)
+        #     except:
+        #         print("Error reading input file to save df")
+        #         return
+        # else:
+        #     #TODO change this? shouldn't be hardcoded
+        #     df = pd.DataFrame(columns=['AppID', 'FullName_FirstPart', 'FullName_ThirdParty', 'Email_FirstParty', 'Email_ThirdParty', 'DOB_FirstParty', 'DOB_ThirdParty', 'DeviceID_FirstParty', 'DeviceID_ThirdParty', 'Gender_FirstParty', 'Gender_ThirdParty', 'Phone_FirstParty', 'Phone_ThirdParty', 'IPAddress_FirstParty', 'IPAddress_ThirdParty', 'Fingerprint_FirstParty', 'Fingerprint_ThirdParty', 'Location_FirstParty', 'Location_ThirdParty'])
 
+        df = pd.DataFrame(columns=self.appList[0].__dict__.keys())
+        print(df.columns)
         for app in self.appList:
             appData = app.GetAppData()
             # TODO decide if i want to update or add duplicates?
@@ -115,12 +126,5 @@ class PyLogAnalyze:
                 df.loc[df['AppID'] == app.AppID] = appData
             else:
                 df.loc[len(df)] = appData
-        if self.outputDir is not None:
-            #  write app analysis to output file
-            print("Writing results to file...")
-            try:
-                df.to_csv(self.outputDir, index=0)
-            except:
-                print("Error writing output file")
-        else:
-            print(df)
+        
+        return df

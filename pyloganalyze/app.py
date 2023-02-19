@@ -2,7 +2,7 @@
 from pathlib import Path
 from difflib import SequenceMatcher
 from urllib.parse import urlparse
-
+import logging
 
 
 
@@ -20,17 +20,20 @@ class App:
 
     def ThirdPartyCount(self, identifierKey: str) -> int:
         """
-        Calculate the percentage of third party domains that the app has identified.
+        Return the number of third party domains that received the given identifier.
         """
         return len(getattr(self, identifierKey + "_ThirdParty"))
     
     def FirstPartyCount(self, identifierKey: str) -> int:
         """
-        Calculate the percentage of third party domains that the app has identified.
+        Return the number of first party domains that received the given identifier.
         """
         return len(getattr(self, identifierKey + "_FirstParty"))
 
     def GetAppData(self) -> list:
+        """
+        Return the app data in a list.
+        """
         # TODO: not the best way to do this ie hardcode the order possible?
         ret = []
         for identifiers in self.__dict__.values():
@@ -39,7 +42,7 @@ class App:
 
     def AddDomain(self, identifierKey: str, domain: str, firstParty: bool,) -> None:
         """
-        Add the domain to either the App's FirstParty or ThirdParty set corresponding to the given identifier key.
+        Add the domain to either the App's first party or third party set corresponding to the given identifier key.
         """
         if firstParty:
             getattr(self, identifierKey + "_FirstParty").add(domain)
@@ -48,6 +51,9 @@ class App:
 
 
     def IdentifierSearch(self, identifierKey: str, identifiers: list[str], line: str) -> bool:
+        """
+        Returns true if the line contains the identifier.
+        """
         # TODO improve search process to not be so naive REGEX? 
         # TODO add search until next domain... e.g. to search for first and last name then combine to determine full name 
         line = line.lower()
@@ -110,7 +116,9 @@ class App:
                             currentDomain = currentDomain.split('inbound to ')[1]
                         elif "outbound" in currentDomain:
                             currentDomain = currentDomain.split('outbound to ')[1]
-                        if SequenceMatcher(None, self.AppID.rsplit('.', 1)[1], currentDomain).ratio() < 0.35 and self.AppID.rsplit('.',1)[1] not in currentDomain:
+                        # AppID = urlparse(self.AppID).netloc
+                        # print(App)
+                        if SequenceMatcher(None, self.AppID, currentDomain).ratio() < 0.35 and self.AppID.split('.')[1] not in currentDomain:
                             currentParty = False
                         else:
                             currentParty = True
@@ -120,9 +128,9 @@ class App:
                                 try:
                                     self.AddDomain(identifierKey, str(currentDomain).split(':')[0], currentParty)
                                 except Exception as e:
-                                    print(f"Error Adding Domain: {e}")
+                                    logging.error(f"Error Adding Domain: {e}")
         except Exception as e:
-            print(f"Error Opening App File: {e}")
+            logging.error(f"Error Opening {self.AppID} Plain Log File: {e}")
 
     def Analyze_NetLog(self, appPath: Path, identifiers: dict) -> None:
         """
@@ -136,9 +144,9 @@ class App:
                 for line in file:
                     if domainNext == True:
                         currentDomain = line.split(':')[1]
-                        #currentDomain = urlparse(currentDomain).netloc
-                        #currentDomain = '.'.join(currentDomain.split('.')[-2:])
-                        if SequenceMatcher(None, self.AppID.rsplit('.',1)[1], currentDomain).ratio() < 0.35 and self.AppID.rsplit('.',1)[1] not in currentDomain:
+                        currentDomain = urlparse(currentDomain).netloc
+                        currentDomain = '.'.join(currentDomain.split('.')[-2:])
+                        if SequenceMatcher(None, self.AppID, currentDomain).ratio() < 0.35 and self.AppID.split('.')[1] not in currentDomain:
                             currentParty = False
                         else:
                             currentParty = True
@@ -151,6 +159,6 @@ class App:
                                 try:
                                     self.AddDomain(identifierKey, currentDomain, currentParty)
                                 except Exception as e:
-                                    print(f"Error Adding Domain: {e}")
+                                    logging.error(f"Error Adding Domain: {e}")
         except Exception as e:
-            print(f"Error Opening App File: {e}")
+            logging.error(f"Error Opening {self.AppID} NetLog File: {e}")

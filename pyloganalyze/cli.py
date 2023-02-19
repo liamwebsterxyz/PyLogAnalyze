@@ -6,7 +6,11 @@ from pyloganalyze import __app_name__, __version__, pyloganalyze
 
 import typer
 import json
+import pandas as pd
+import pickle
+import logging
 
+#TODO add logging instead of print statements
 
 app = typer.Typer()
 
@@ -37,18 +41,19 @@ def analyze(
     identifier_file: Path = typer.Argument(
         ..., 
         help="File containing identifiers to analyze(JSON format).",),
-    input_file: Path = typer.Option(
-        None,
-      "--inputdir", "-i",
-        help="The input file to add results to.",
-        ),
-    output_file: Path = typer.Option(
-        None,
-        "--outputdir", "-d",
-        help="The output file to write the results to.",
+    output_folder: Path = typer.Argument(
+        ...,
+        help="Folder to write the results to.",
     ),
+    # input_file: Path = typer.Option(
+    #     None,
+    #   "--inputdir", "-i",
+    #     help="The input file to add results to.",
+    #     ),
 ) -> None:
-    """Analyze log files."""
+    """Analyze log files of the specified apps."""
+    
+    logging.basicConfig(filename= output_folder + 'debug.log', encoding='utf-8', level=logging.DEBUG)
 
     typer.echo(f"Analyzing app logs from {app_file} and writing results to {output_file}.")
 
@@ -58,7 +63,7 @@ def analyze(
         with open(app_file, 'r') as file:
             primaryfiles_paths = [Path(x.strip()) for x in file.readlines()]  
     except FileNotFoundError as e:
-        typer.echo(f"Error Opening File Paths: {e}")
+        logging.error(f"Error Opening App Paths File: {e}")
         raise typer.Exit(1)
 
     identifier_dict = {}
@@ -68,21 +73,90 @@ def analyze(
             try:
                 identifier_dict = json.load(file)
             except json.JSONDecodeError as e:
-                typer.echo(f"Error Loading Identifier Dictionary: {e}")
+                logging.error(f"Error Loading Identifier Dictionary: {e}")
                 raise typer.Exit(1)
     except FileNotFoundError as e:
-        typer.echo(f"Error Opening Identifier Dictionary: {e}")
+        logging.error(f"Error Opening Identifier Dictionary: {e}")
         raise typer.Exit(1)
 
     # Init the controller
-    controller = pyloganalyze.PyLogAnalyze(primaryfiles_paths, identifier_dict, input_file, output_file)
+    # TODO decide if we should check for an  existing analysis file
+    controller = pyloganalyze.PyLogAnalyze(primaryfiles_paths, identifier_dict)
 
     # Analyze the log files
     controller.Analyze()
 
-    # TODO call other functions ie add analysis options
-    controller.GetStats()
     # Save the results
+    try:
+        with open(str(output_folder)+"out.pkl", 'wb') as outp:  # Overwrites any existing file.
+            try:
+                pickle.dump(controller, outp, pickle.HIGHEST_PROTOCOL)
+            except pickle.PickleError as e:
+                logging.error(f"Error Writing Results Object to Pickle File: {e}")
+                raise typer.Exit(1)
+    except FileNotFoundError as e:
+        logging.error(f"Error Opening Results File: {e}")
+        raise typer.Exit(1)
+
+
+@app.command()
+def csv(
+    input_file: Path = typer.Argument(
+        ...,
+        help="File containing the results to analyze.",
+    ),
+    output_file: Path = typer.Argument(
+        ...,
+        help="The output file to write the results to.",
+    ),
+) -> None:
+    """Produce a CSV file from the results"""
+
+    print(f"Writing results to file {input_file} to {output_file}")
+    logging.basicConfig(filename='debug.log', encoding='utf-8', level=logging.DEBUG)
+
+    # Init the controller
+    try:
+        with open(str(input_file)+".pkl", 'rb') as inp:
+            try:
+                controller =  pickle.load(inp)
+            except pickle.PickleError as e:
+                logging.error(f"Error Loading Results Object: {e}")
+                raise typer.Exit(1)
+    except FileNotFoundError as e:
+        logging.error(f"Error Opening Results Object: {e}")
+        raise typer.Exit(1)
+    
+    # Save the results
+
+    df = controller.ToDataFrame()
+    df.to_csv(output_file, index=0)
+
+@app.command()
+def stats(
+    input_file: Path = typer.Argument(
+        ...,
+        help="File containing the results to analyze.",
+    ),
+) -> None:
+    """Analyze results."""
+
+    typer.echo(f"Analyzing results from {input_file}.")
+    logging.basicConfig(filename='debug.log', encoding='utf-8', level=logging.DEBUG)
+
     # TODO finish this
-    controller.Save()
+    # Init the controller
+    try:
+        with open(str(input_file)+".pkl", 'rb') as inp:
+            try:
+                controller = pickle.load(inp)
+            except pickle.PickleError as e:
+                logging.error(f"Error Loading Results Object: {e}")
+                raise typer.Exit(1)
+    except FileNotFoundError as e:
+        logging.error(f"Error Opening Results Object: {e}")
+        raise typer.Exit(1)
+    
+    controller.GetStats()
+
 
