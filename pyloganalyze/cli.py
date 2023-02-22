@@ -6,11 +6,8 @@ from pyloganalyze import __app_name__, __version__, pyloganalyze
 
 import typer
 import json
-import pandas as pd
 import pickle
 import logging
-
-#TODO add logging instead of print statements
 
 app = typer.Typer()
 
@@ -53,9 +50,16 @@ def analyze(
 ) -> None:
     """Analyze log files of the specified apps."""
     
-    logging.basicConfig(filename= output_folder + 'debug.log', encoding='utf-8', level=logging.DEBUG)
+    typer.echo(f"Analyzing the app logs of the apps listed in {app_file} and writing results to {output_folder}/out.pckl")
 
-    typer.echo(f"Analyzing app logs from {app_file} and writing results to {output_file}.")
+    # Create output folder if it doesn't exist
+    if not output_folder.exists():
+        output_folder.mkdir(parents=True)
+    #os.chdir(output_folder)
+
+    # Create logging
+    logging.basicConfig(filename=(str(output_folder)+"/debug.log"), level=logging.DEBUG)
+
 
     primaryfiles_paths = []
 
@@ -88,7 +92,7 @@ def analyze(
 
     # Save the results
     try:
-        with open(str(output_folder)+"out.pkl", 'wb') as outp:  # Overwrites any existing file.
+        with open(str(output_folder)+"/out.pkl", 'wb') as outp:  # Overwrites any existing file.
             try:
                 pickle.dump(controller, outp, pickle.HIGHEST_PROTOCOL)
             except pickle.PickleError as e:
@@ -103,21 +107,27 @@ def analyze(
 def csv(
     input_file: Path = typer.Argument(
         ...,
-        help="File containing the results to analyze.",
+        help="File path containing the results to analyze.",
     ),
-    output_file: Path = typer.Argument(
+    output_folder: Path = typer.Argument(
         ...,
-        help="The output file to write the results to.",
+        help="The output folder to put the results into.",
     ),
 ) -> None:
     """Produce a CSV file from the results"""
 
-    print(f"Writing results to file {input_file} to {output_file}")
-    logging.basicConfig(filename='debug.log', encoding='utf-8', level=logging.DEBUG)
+    # Check if output folder exists
+    if not output_folder.exists():
+        logging.error(f"Output Folder doesn't Exist")
+        raise typer.Exit(1)
+
+    print(f"Writing results from {input_file} into {output_folder} as out.csv")
+    logging.basicConfig(filename=(str(output_folder)+'/debug.log'), level=logging.DEBUG)
+
 
     # Init the controller
     try:
-        with open(str(input_file)+".pkl", 'rb') as inp:
+        with open(str(input_file), 'rb') as inp:
             try:
                 controller =  pickle.load(inp)
             except pickle.PickleError as e:
@@ -130,24 +140,32 @@ def csv(
     # Save the results
 
     df = controller.ToDataFrame()
-    df.to_csv(output_file, index=0)
+    df.to_csv(str(output_folder)+"/out.csv", index=0)
 
 @app.command()
 def stats(
     input_file: Path = typer.Argument(
         ...,
-        help="File containing the results to analyze.",
+        help="File path containing the results to analyze.",
+    ),
+    output_folder: Path = typer.Argument(
+        ...,
+        help="The output folder to put the results into.",
     ),
 ) -> None:
     """Analyze results."""
+    
+    # Check if output folder exists
+    if not output_folder.exists():
+        logging.error(f"Output Folder doesn't Exist")
+        raise typer.Exit(1)
 
-    typer.echo(f"Analyzing results from {input_file}.")
-    logging.basicConfig(filename='debug.log', encoding='utf-8', level=logging.DEBUG)
+    typer.echo(f"Analyzing results from {input_file} and writing to {output_folder}/out.json")
+    logging.basicConfig(filename=str(output_folder)+'/debug.log', level=logging.DEBUG)
 
-    # TODO finish this
     # Init the controller
     try:
-        with open(str(input_file)+".pkl", 'rb') as inp:
+        with open(str(input_file), 'rb') as inp:
             try:
                 controller = pickle.load(inp)
             except pickle.PickleError as e:
@@ -157,6 +175,15 @@ def stats(
         logging.error(f"Error Opening Results Object: {e}")
         raise typer.Exit(1)
     
-    controller.GetStats()
+    statsDict = controller.GetStats()
+    # create json object from dictionary
+    statsJson = json.dumps(statsDict, indent=2)
 
+    # open file for writing, "w" 
+    f = open(str(output_folder)+"/out.json","w")
 
+    # write json object to file
+    f.write(statsJson)
+
+    # close file
+    f.close()

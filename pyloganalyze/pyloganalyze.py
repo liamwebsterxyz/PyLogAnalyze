@@ -80,7 +80,7 @@ class PyLogAnalyze:
             logging.debug(f"App {currentApp.AppID} analyzed.")
 
 
-    def GetStats(self) -> None:
+    def GetStats(self) -> dict:
         """
         For each identifier key calculate the percentage of third party domains which received the identifier.
         """
@@ -96,7 +96,7 @@ class PyLogAnalyze:
                 dictStats[identifierKey] = 0
             else:
                 dictStats[identifierKey] = ThirdPartyCount / total
-        print(dictStats)
+        return dictStats
 
 
     def ToDataFrame(self) -> pd.DataFrame:
@@ -117,7 +117,6 @@ class PyLogAnalyze:
         #     df = pd.DataFrame(columns=['AppID', 'FullName_FirstPart', 'FullName_ThirdParty', 'Email_FirstParty', 'Email_ThirdParty', 'DOB_FirstParty', 'DOB_ThirdParty', 'DeviceID_FirstParty', 'DeviceID_ThirdParty', 'Gender_FirstParty', 'Gender_ThirdParty', 'Phone_FirstParty', 'Phone_ThirdParty', 'IPAddress_FirstParty', 'IPAddress_ThirdParty', 'Fingerprint_FirstParty', 'Fingerprint_ThirdParty', 'Location_FirstParty', 'Location_ThirdParty'])
 
         df = pd.DataFrame(columns=self.appList[0].__dict__.keys())
-        print(df.columns)
         for app in self.appList:
             appData = app.GetAppData()
             # TODO decide if i want to update or add duplicates?

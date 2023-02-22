@@ -2,7 +2,9 @@
 from pathlib import Path
 from difflib import SequenceMatcher
 from urllib.parse import urlparse
+from typing import List
 import logging
+import tldextract
 
 
 
@@ -11,7 +13,7 @@ class App:
     Initialize the app object.
     """
 
-    def __init__(self, appId: str, identifiers: list[str]) -> None:
+    def __init__(self, appId: str, identifiers: List[str]) -> None:
         self.AppID = appId
         for identifier in identifiers:
             setattr(self, identifier + "_FirstParty", set())
@@ -50,7 +52,7 @@ class App:
             getattr(self, identifierKey + "_ThirdParty").add(domain)
 
 
-    def IdentifierSearch(self, identifierKey: str, identifiers: list[str], line: str) -> bool:
+    def IdentifierSearch(self, identifierKey: str, identifiers: List[str], line: str) -> bool:
         """
         Returns true if the line contains the identifier.
         """
@@ -116,9 +118,14 @@ class App:
                             currentDomain = currentDomain.split('inbound to ')[1]
                         elif "outbound" in currentDomain:
                             currentDomain = currentDomain.split('outbound to ')[1]
-                        # AppID = urlparse(self.AppID).netloc
-                        # print(App)
-                        if SequenceMatcher(None, self.AppID, currentDomain).ratio() < 0.35 and self.AppID.split('.')[1] not in currentDomain:
+                        
+                        # split app ID
+                        appID_tld = tldextract.extract(self.AppID)
+
+                        # split domain
+                        domain_tld = tldextract.extract(currentDomain)
+                        currentDomain = domain_tld.subdomain + '.' + domain_tld.domain
+                        if appID_tld.domain not in currentDomain and domain_tld.domain not in self.AppID and SequenceMatcher(None, appID_tld.domain, domain_tld.domain).ratio() < 0.5:
                             currentParty = False
                         else:
                             currentParty = True
@@ -143,10 +150,16 @@ class App:
                 currentParty = None
                 for line in file:
                     if domainNext == True:
+                        
+                        # split app ID
+                        appID_tld = tldextract.extract(self.AppID)
+
+                        # split domain
                         currentDomain = line.split(':')[1]
-                        currentDomain = urlparse(currentDomain).netloc
-                        currentDomain = '.'.join(currentDomain.split('.')[-2:])
-                        if SequenceMatcher(None, self.AppID, currentDomain).ratio() < 0.35 and self.AppID.split('.')[1] not in currentDomain:
+                        domain_tld = tldextract.extract(currentDomain)
+                        currentDomain = domain_tld.subdomain + '.' + domain_tld.domain
+
+                        if appID_tld.domain not in currentDomain and domain_tld.domain not in self.AppID and SequenceMatcher(None, appID_tld.domain, domain_tld.domain).ratio() < 0.5:
                             currentParty = False
                         else:
                             currentParty = True
