@@ -7,5 +7,6 @@
     "Phone": ["4157376490", "2018577757", "1117000917", "2819555831", "8332648106", "2086213307", "8332672839", "1121450979", "7520635797", "2086465729", "8332403627", "9838071998", "1485828833", "9060479293", "7379932768", "8153353131", "5102569730", "5418084636"],
     "IPAddress": ["192.168.1.32"],
     "Fingerprint": [],
-    "Location": ["berkeley", "94704", "2520 college", "country\":\"us"]
+    "Location": ["berkeley", "94704", "2520 college", "country\":\"us"],
+    "MedicalInfo": ["beta blocker", "penicillin", "saya punya sakit tenggorokan", "i have had a pressure in my ears for a week", "i have had a sore throat for", "breast cancer", "had to deal with high blood pressure for the rest of his life", "i have been getting skin rashes. i want to get allergy tested", "abdominal cramps", "i was looking into getting laser surgery for my face", "laser surgery to clear up face", "have had weakness in my back and", "i  want to be happier and more productive. i need help executingz."]
 }

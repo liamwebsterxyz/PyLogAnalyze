@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 from typing import List
 import logging
 import tldextract
-
+import pandas as pd
 
 
 class App:
@@ -13,12 +13,32 @@ class App:
     Initialize the app object.
     """
 
-    def __init__(self, appId: str, identifiers: List[str]) -> None:
+    def __init__(self, appId: str, test_stage: int, hipaa_compliant: int, us_based: int, identifiers: List[str]) -> None:
         self.AppID = appId
+        self.testStage = 1 if test_stage == 3 else 0
+        self.hipaaCompliant = hipaa_compliant
+        self.usBased = us_based
         for identifier in identifiers:
             setattr(self, identifier + "_FirstParty", set())
             setattr(self, identifier + "_ThirdParty", set())
 
+    def SharedID(self, identifiers) -> bool:
+        """
+        Return true if the app shares identifiers with other apps.
+        """
+        for identifier in identifiers:
+            if self.ThirdPartyCount(identifier) > 0:
+                return True
+        return False
+
+    def SharedMedical(self, identifiers) -> bool:
+        """
+        Return true if the app shares medical identifiers with other apps.
+        """
+        for identifier in identifiers:
+            if self.ThirdPartyCount(identifier) > 0:
+                return True
+        return False
 
     def ThirdPartyCount(self, identifierKey: str) -> int:
         """
@@ -42,68 +62,16 @@ class App:
             ret.append(identifiers)
         return ret
 
-    def AddDomain(self, identifierKey: str, domain: str, firstParty: bool,) -> None:
+    def AddDomain(self, identifierKey: str, domain: str, thirdParty: bool,) -> None:
         """
         Add the domain to either the App's first party or third party set corresponding to the given identifier key.
         """
-        if firstParty:
+        if not thirdParty:
             getattr(self, identifierKey + "_FirstParty").add(domain)
         else:
             getattr(self, identifierKey + "_ThirdParty").add(domain)
-
-
-    def IdentifierSearch(self, identifierKey: str, identifiers: List[str], line: str) -> bool:
-        """
-        Returns true if the line contains the identifier.
-        """
-        # TODO improve search process to not be so naive REGEX? 
-        # TODO add search until next domain... e.g. to search for first and last name then combine to determine full name 
-        line = line.lower()
-        success = False
-        if identifierKey == "FullName":
-            for identity in identifiers:
-                full_name = identity.split(' ')
-                for namepart in full_name:
-                    if namepart in line:
-                        success = True
-                    else:
-                        success = False
-                        break
-        elif identifierKey == "Email":
-            for identity in identifiers:
-                if identity in line:
-                    success = True
-        elif identifierKey == "DOB":
-            for identity in identifiers:
-                if identity in line:
-                    success = True
-        elif identifierKey == "DeviceID":
-            for identity in identifiers:
-                if identity in line:
-                    success = True
-        elif identifierKey == 'Gender':
-            for identity in identifiers:
-                if identity in line and ('gender' in line or 'sex' in line):
-                    success = True
-        elif identifierKey == "Phone":
-            for identity in identifiers:
-                if identity in line:
-                    success = True
-        elif identifierKey == "IPAddress":
-            for identity in identifiers:
-                if identity in line:
-                    success = True
-        elif identifierKey == "Fingerprint":
-            for identity in identifiers:
-                if identity in line:
-                    success = True
-        elif identifierKey == "Location":
-            for identity in identifiers:
-                if identity in line:
-                    success = True
-        return success
    
-    def Analyze_PlainLog(self, appPath: Path, identifiers: dict) -> None:
+    def Analyze_PlainLog(self, domainInfo: pd.DataFrame, appPath: Path, identifiers: dict) -> None:
         """
         Analyze the plain log file for identifiers.
         """
@@ -123,12 +91,16 @@ class App:
                         appID_tld = tldextract.extract(self.AppID)
 
                         # split domain
-                        domain_tld = tldextract.extract(currentDomain)
-                        currentDomain = domain_tld.subdomain + '.' + domain_tld.domain
-                        if appID_tld.domain not in currentDomain and domain_tld.domain not in self.AppID and SequenceMatcher(None, appID_tld.domain, domain_tld.domain).ratio() < 0.5:
+                        currentDomain = tldextract.extract(currentDomain).domain
+                        
+                        # get domain info
+                        currentDomainInfo = domainInfo.loc[domainInfo['domain'] == currentDomain.strip()]
+                        if currentDomainInfo.empty:
+                            # TODO add logggging
+                            print(f"Domain {currentDomain} not found in domain info")
                             currentParty = False
-                        else:
-                            currentParty = True
+
+
                     else:
                         for identifierKey in identifiers.keys():
                             if self.IdentifierSearch(identifierKey, identifiers[identifierKey], line):

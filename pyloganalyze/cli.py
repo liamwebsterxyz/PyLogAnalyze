@@ -8,6 +8,7 @@ import typer
 import json
 import pickle
 import logging
+import pandas as pd
 
 app = typer.Typer()
 
@@ -37,7 +38,16 @@ def analyze(
     ),
     identifier_file: Path = typer.Argument(
         ..., 
-        help="File containing identifiers to analyze(JSON format).",),
+        help="File containing identifiers to analyze(JSON format).",
+    ),
+    app_info_file: Path = typer.Argument(
+        ...,
+        help="csv file containing app info"
+    ),
+    domain_info_file = typer.Argument(
+        ...,
+        help="csv file containing domain info"
+    ),
     output_folder: Path = typer.Argument(
         ...,
         help="Folder to write the results to.",
@@ -47,7 +57,7 @@ def analyze(
     #   "--inputdir", "-i",
     #     help="The input file to add results to.",
     #     ),
-) -> None:
+    ) -> None:
     """Analyze log files of the specified apps."""
     
     typer.echo(f"Analyzing the app logs of the apps listed in {app_file} and writing results to {output_folder}/out.pckl")
@@ -83,9 +93,12 @@ def analyze(
         logging.error(f"Error Opening Identifier Dictionary: {e}")
         raise typer.Exit(1)
 
+    appInfo = pd.read_csv(app_info_file)
+    domainInfo = pd.read_csv(domain_info_file)
+
     # Init the controller
     # TODO decide if we should check for an  existing analysis file
-    controller = pyloganalyze.PyLogAnalyze(primaryfiles_paths, identifier_dict)
+    controller = pyloganalyze.PyLogAnalyze(appfile=primaryfiles_paths, identifierdict=identifier_dict, appinfo=appInfo, domaininfo=domainInfo)
 
     # Analyze the log files
     controller.Analyze()
@@ -139,11 +152,13 @@ def csv(
     
     # Save the results
 
-    df = controller.ToDataFrame()
-    df.to_csv(str(output_folder)+"/out.csv", index=0)
+    dfapp, dfdomain = controller.ToDataFrame()
+    dfapp.to_csv(str(output_folder)+"/outApp.csv", index=0)
+    dfdomain.to_csv(str(output_folder)+"/outDomain.csv", index=0)
+
 
 @app.command()
-def stats(
+def thirdparty(
     input_file: Path = typer.Argument(
         ...,
         help="File path containing the results to analyze.",
@@ -175,15 +190,40 @@ def stats(
         logging.error(f"Error Opening Results Object: {e}")
         raise typer.Exit(1)
     
-    statsDict = controller.GetStats()
+    us_full, us_nonfull, nonus_full, nonus_nonfull = controller.ThirdParty()
+
     # create json object from dictionary
-    statsJson = json.dumps(statsDict, indent=2)
-
+    statsJson = json.dumps(us_full, indent=2)
     # open file for writing, "w" 
-    f = open(str(output_folder)+"/out.json","w")
-
+    f = open(str(output_folder)+"/us_full.json","w")
     # write json object to file
     f.write(statsJson)
+    # close file
+    f.close()
 
+    # create json object from dictionary
+    statsJson = json.dumps(us_nonfull, indent=2)
+    # open file for writing, "w" 
+    f = open(str(output_folder)+"/us_nonfull.json","w")
+    # write json object to file
+    f.write(statsJson)
+    # close file
+    f.close()
+
+    # create json object from dictionary
+    statsJson = json.dumps(nonus_full, indent=2)
+    # open file for writing, "w" 
+    f = open(str(output_folder)+"/nonus_full.json","w")
+    # write json object to file
+    f.write(statsJson)
+    # close file
+    f.close()
+    
+    # create json object from dictionary
+    statsJson = json.dumps(nonus_nonfull, indent=2)
+    # open file for writing, "w" 
+    f = open(str(output_folder)+"/nonus_nonfull.json","w")
+    # write json object to file
+    f.write(statsJson)
     # close file
     f.close()

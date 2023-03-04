@@ -40,64 +40,197 @@
 
 
 from pathlib import Path
-from typing import List, Optional
-from pyloganalyze import app
+from typing import List, Optional, Tuple
+from pyloganalyze import app, domain
 import pandas as pd
-import logging
+import logging, tldextract
+
+
+
+def _IdentifierSearch(identifierKey: str, identifiers: List[str], line: str) -> bool:
+    """
+    Returns true if the line contains the identifier.
+    """
+    # TODO improve search process to not be so naive REGEX? 
+    # TODO add search until next domain... e.g. to search for first and last name then combine to determine full name 
+    line = line.lower()
+    success = False
+    if identifierKey == "FullName":
+        for identity in identifiers:
+            full_name = identity.split(' ')
+            for namepart in full_name:
+                if namepart in line:
+                    success = True
+                else:
+                    success = False
+                    break
+    elif identifierKey == "Email":
+        for identity in identifiers:
+            if identity in line:
+                success = True
+    elif identifierKey == "DOB":
+        for identity in identifiers:
+            if identity in line:
+                success = True
+    elif identifierKey == "DeviceID":
+        for identity in identifiers:
+            if identity in line:
+                success = True
+    elif identifierKey == 'Gender':
+        for identity in identifiers:
+            if identity in line and ('gender' in line or 'sex' in line):
+                success = True
+    elif identifierKey == "Phone":
+        for identity in identifiers:
+            if identity in line:
+                success = True
+    elif identifierKey == "IPAddress":
+        for identity in identifiers:
+            if identity in line:
+                success = True
+    elif identifierKey == "Fingerprint":
+        for identity in identifiers:
+            if identity in line:
+                success = True
+    elif identifierKey == "Location":
+        for identity in identifiers:
+            if identity in line:
+                success = True
+    return success
 
 
 class PyLogAnalyze:
     """
     Main class for PyLogAnalyze.
     """
-    
-    def __init__(
-        self, 
-        appfile: List[Path], 
-        identifierdict: dict,
-    ) -> None:
+
+    def __init__(self, appfile: List[Path], identifierdict: dict, appinfo: pd.DataFrame, domaininfo: pd.DataFrame) -> None:
         self.appPaths = [x.absolute() for x in appfile]
         self.identifiers = identifierdict
-        self.appList = []
+        self.appList = {}
+        self.domainList = {}
+        self.appInfo = appinfo
+        self.domainInfo = domaininfo
     
     def Analyze(self) -> None:
         """
         Analyze the chrome_packet and net_log files for each specified app. Producing a PyLogAnalyze object containing the results.
         """
         for appPath in self.appPaths:
+            
+            appID = str(appPath).split('/')[-1]
+            appInfo = self.appInfo.loc[self.appInfo['app_id'] == appID.strip()]
 
             # create an app object
-            currentApp = app.App(str(appPath).split('/')[-1], self.identifiers.keys())
-
-            # Analyze the app's chrome_packet and net_log files
-            currentApp.Analyze_PlainLog(str(appPath), self.identifiers)
-            currentApp.Analyze_NetLog(str(appPath), self.identifiers)
-
-            # add app to appList
-            self.appList.append(currentApp)
-
-            print(f"App {currentApp.AppID} analyzed.")
-            logging.debug(f"App {currentApp.AppID} analyzed.")
-
-
-    def GetStats(self) -> dict:
-        """
-        For each identifier key calculate the percentage of third party domains which received the identifier.
-        """
-        dictStats = {}
-        for identifierKey in self.identifiers.keys():
-            FirstPartyCount = 0
-            ThirdPartyCount = 0
-            for app in self.appList:
-                FirstPartyCount += app.FirstPartyCount(identifierKey)
-                ThirdPartyCount += app.ThirdPartyCount(identifierKey)
-            total = FirstPartyCount + ThirdPartyCount
-            if total == 0:
-                dictStats[identifierKey] = 0
+            if appID in self.appList:
+                currentApp_obj = self.appList[appID]
             else:
-                dictStats[identifierKey] = ThirdPartyCount / total
-        return dictStats
+                currentApp_obj = app.App(appID, appInfo['testing_stage'].values[0], appInfo['hipaa'].values[0], appInfo['US'].values[0], self.identifiers.keys())
+                # add app to appList
+                self.appList[appID] = currentApp_obj
 
+            # # Analyze the app's chrome_packet and net_log files
+            self._Analyze_PlainLog(appPath, self.identifiers, currentApp_obj)
+            self._Analyze_NetLog(appPath, self.identifiers, currentApp_obj)
+
+            print(f"App {currentApp_obj.AppID} analyzed.")
+            logging.debug(f"App {currentApp_obj.AppID} analyzed.")
+
+    def _Analyze_PlainLog(self, appPath: Path, identifiers: dict, app_obj: app) -> None:
+        """
+        Analyze the plain log file for identifiers.
+        """
+        try:
+            with open(appPath / "plain_log", "r") as file:
+                for line in file:
+                    if ('(packet)' in line):
+                        currentDomain_full = line
+                        if "inbound" in currentDomain_full:
+                            currentDomain_full = currentDomain_full.split('inbound to ')[1]
+                        elif "outbound" in currentDomain_full:
+                            currentDomain_full = currentDomain_full.split('outbound to ')[1]
+                        
+                        # # split app ID
+                        # appID_tld = tldextract.extract(self.AppID)
+
+                        # split domain
+                        currentDomain_tld = tldextract.extract(currentDomain_full.strip())
+                        currentDomain_full = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain
+                        currentDomain = currentDomain_tld.domain
+
+
+                        # get domain info
+                        currentDomainInfo = self.domainInfo.loc[self.domainInfo['domain'] == currentDomain]
+                        
+                        if currentDomainInfo.empty:
+                            # TODO add loging
+                            print(f"Curr {currentDomain} not found in domain info")
+                            print(f"Domain {currentDomain_full} not found in domain info")
+                            exit(1)
+                        else:
+                            # create domain object and add it to self.domains
+                            if currentDomain in self.domainList:
+                                currentDomain_obj = self.domainList[currentDomain]
+                            else:
+                                # create domain object
+                                currentDomain_obj = domain.Domain(currentDomain, currentDomainInfo['third_party'].values[0], currentDomainInfo['hipaa_compliant'].values[0], currentDomainInfo['us_based'].values[0], self.identifiers.keys())
+                                self.domainList[currentDomain] = currentDomain_obj
+                    else:
+                        for identifierKey in identifiers.keys():
+                            if _IdentifierSearch(identifierKey, identifiers[identifierKey], line):
+                                try:
+                                    app_obj.AddDomain(identifierKey, currentDomain_full, currentDomain_obj.thirdParty)
+                                    currentDomain_obj.AddApp(app_obj.AppID, identifierKey)
+                                except Exception as e:
+                                    logging.error(f"Error Adding Domain: {e}")
+        except Exception as e:
+            logging.error(f"Error Analyzing {app_obj.AppID} Plain Log File: {e}")
+
+    def _Analyze_NetLog(self, appPath: Path, identifiers: dict, app_obj: app) -> None:
+        """
+        Analyze the NetLog file for identifiers.
+        """
+        try:
+            with open(appPath / "chrome_packet", "r") as file:
+                for line in file:
+                    if domainNext == True:
+                        
+                        # split domain
+                        currentDomain_full = line.split(':')[1]
+                        currentDomain_tld = tldextract.extract(currentDomain_full.strip())
+                        currentDomain_full = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain
+                        currentDomain = currentDomain_tld.domain
+                                             
+                        # get domain info
+                        currentDomainInfo = self.domainInfo.loc[self.domainInfo['domain'] == currentDomain]
+                        
+                        if currentDomainInfo.empty:
+                            # TODO add loging
+                            print(f"Domain {currentDomain} not found in domain info")
+                            print(f"Domain {currentDomain_full} not found in domain info")
+                            exit(1)
+                        else:
+                            # create domain object and add it to self.domains
+                            if currentDomain in self.domainList:
+                                currentDomain_obj = self.domainList[currentDomain]
+                            else:
+                                # create domain object
+                                currentDomain_obj = domain.Domain(currentDomain, currentDomainInfo['third_party'].values[0], currentDomainInfo['hipaa_compliant'].values[0], currentDomainInfo['us_based'].values[0], self.identifiers.keys())
+                                self.domainList[currentDomain] = currentDomain_obj
+                            
+                        domainNext = False
+                    elif "---------------- new packet ----------------" in line:
+                        domainNext = True
+                    else:
+                        for identifierKey in identifiers.keys():
+                            if _IdentifierSearch(identifierKey, identifiers[identifierKey], line):
+                                try:
+                                    currentDomain_obj.AddDomain(identifierKey, currentDomain_full, currentDomain_obj.thirdParty)
+                                    currentDomain_obj.AddApp(app_obj.AppID, identifierKey)
+                                except Exception as e:
+                                    logging.error(f"Error Adding Domain: {e}")
+        except Exception as e:
+            logging.error(f"Error Analyzing {app_obj.AppID} NetLog File: {e}")
 
     def ToDataFrame(self) -> pd.DataFrame:
         """
@@ -115,15 +248,123 @@ class PyLogAnalyze:
         # else:
         #     #TODO change this? shouldn't be hardcoded
         #     df = pd.DataFrame(columns=['AppID', 'FullName_FirstPart', 'FullName_ThirdParty', 'Email_FirstParty', 'Email_ThirdParty', 'DOB_FirstParty', 'DOB_ThirdParty', 'DeviceID_FirstParty', 'DeviceID_ThirdParty', 'Gender_FirstParty', 'Gender_ThirdParty', 'Phone_FirstParty', 'Phone_ThirdParty', 'IPAddress_FirstParty', 'IPAddress_ThirdParty', 'Fingerprint_FirstParty', 'Fingerprint_ThirdParty', 'Location_FirstParty', 'Location_ThirdParty'])
+        appIDs = list(self.appList.keys())
 
-        df = pd.DataFrame(columns=self.appList[0].__dict__.keys())
-        for app in self.appList:
-            appData = app.GetAppData()
-            # TODO decide if i want to update or add duplicates?
-            if app.AppID in df.AppID.values:
-                # update app in output file
-                df.loc[df['AppID'] == app.AppID] = appData
-            else:
-                df.loc[len(df)] = appData
+        appDF = pd.DataFrame(columns=self.appList[appIDs[0]].__dict__.keys())
+
+        for appID in appIDs:
+            appData = self.appList[appID].GetAppData()
+            appDF.loc[len(appDF)] = appData
         
-        return df
+        domainIDs = list(self.domainList.keys())
+
+        domainDF = pd.DataFrame(columns=self.domainList[domainIDs[0]].__dict__.keys())
+
+        for domainID in domainIDs:
+            domainData = self.domainList[domainID].GetDomainData()
+            domainDF.loc[len(domainDF)] = domainData
+    
+        return appDF, domainDF
+
+    def ThirdParty(self) -> Tuple[dict, dict, dict, dict]:
+        """
+        For each identifier key calculate the percentage of third party domains which received the identifier.
+        """
+        us_full = {}
+        us_nonfull = {}
+        nonus_full = {}
+        nonus_nonfull = {}
+
+        for identifierKey in self.identifiers.keys():
+            FirstPartyCount = [0]*4
+            ThirdPartyCount = [0]*4
+
+            for app in self.appList:
+                if app.usBased == 1 and app.testStage == 1:
+                    FirstPartyCount[0] += app.FirstPartyCount(identifierKey)
+                    ThirdPartyCount[0] += app.ThirdPartyCount(identifierKey)
+                elif app.usBased == 1 and app.testStage != 1:
+                    FirstPartyCount[1] += app.FirstPartyCount(identifierKey)
+                    ThirdPartyCount[1] += app.ThirdPartyCount(identifierKey)
+                elif app.usBased != 1 and app.testStage == 1:
+                    FirstPartyCount[2] += app.FirstPartyCount(identifierKey)
+                    ThirdPartyCount[2] += app.ThirdPartyCount(identifierKey)
+                else:
+                    FirstPartyCount[3] += app.FirstPartyCount(identifierKey)
+                    ThirdPartyCount[3] += app.ThirdPartyCount(identifierKey)
+            
+            us_full[identifierKey] = (ThirdPartyCount[0] / (FirstPartyCount[0] + ThirdPartyCount[0])) if FirstPartyCount[0] + ThirdPartyCount[0] > 0 else 0
+            us_nonfull[identifierKey] = (ThirdPartyCount[1] / (FirstPartyCount[1] + ThirdPartyCount[1])) if FirstPartyCount[1] + ThirdPartyCount[1] > 0 else 0
+            nonus_full[identifierKey] = (ThirdPartyCount[2] / (FirstPartyCount[2] + ThirdPartyCount[2])) if FirstPartyCount[2] + ThirdPartyCount[2] > 0 else 0
+            nonus_nonfull[identifierKey] = (ThirdPartyCount[3] / (FirstPartyCount[3] + ThirdPartyCount[3])) if FirstPartyCount[3] + ThirdPartyCount[3] > 0 else 0
+
+        return us_full, us_nonfull, nonus_full, nonus_nonfull
+
+    def HIPAA(self) -> Tuple[dict, dict, dict, dict]:
+
+        # US subset
+        us_hipaa_sharedID = 0
+        us_nonhipaa_sharedID = 0
+
+        # Totol subset
+        hipaa_sharedID = 0
+        nonhipaa_sharedID = 0
+
+        for app in self.appList:
+            if app.SharedID(['FullName', 'Email', 'DOB', 'DeviceID', 'Gender', 'Phone', 'IPAddress', 'Fingerprint', 'Location']):
+                # check if US subset
+                if app.usBased == 1:
+                    if app.hipaaCompliant == 1:
+                        us_hipaa_sharedID += 1
+                    else:
+                        us_nonhipaa_sharedID += 1
+                # total subset
+                if app.hipaaCompliant == 1:
+                    hipaa_sharedID += 1
+                else:
+                    nonhipaa_sharedID += 1
+
+        dict = {}
+        dict['percent of US apps that are HIPAA compliant that shared ID'] = us_hipaa_sharedID / (us_hipaa_sharedID + us_nonhipaa_sharedID) if us_hipaa_sharedID + us_nonhipaa_sharedID > 0 else 0
+        dict['percent of apps that are HIPAA compliant that shared ID'] = hipaa_sharedID / (hipaa_sharedID + nonhipaa_sharedID) if hipaa_sharedID + nonhipaa_sharedID > 0 else 0
+        print(dict)
+
+        # # US subset
+        # us_hipaa_sharedMedical = 0
+        # us_nonhipaa_sharedMedical = 0
+
+        # # Totol subset
+        # hipaa_sharedMedical = 0
+        # nonhipaa_sharedMedical = 0
+
+        # for app in self.appList:
+        #     if app.SharedMedical(['MedicalInfo']):
+        #         # check if US subset
+        #         if app.usBased == 1:
+        #             if app.hipaaCompliant == 1:
+        #                 us_hipaa_sharedMedical += 1
+        #             else:
+        #                 us_nonhipaa_sharedMedical += 1
+        #         # total subset
+        #         if app.hipaaCompliant == 1:
+        #             hipaa_sharedMedical += 1
+        #         else:
+        #             nonhipaa_sharedMedical += 1
+
+        # dict2 = {}
+        # dict2['percent of US apps that are HIPAA compliant that shared Medical Info'] = us_hipaa_sharedMedical / (us_hipaa_sharedMedical + us_nonhipaa_sharedMedical) if us_hipaa_sharedMedical + us_nonhipaa_sharedMedical > 0 else 0
+        # dict2['percent of apps that are HIPAA compliant that shared Medical Info'] = hipaa_sharedMedical / (hipaa_sharedMedical + nonhipaa_sharedMedical) if hipaa_sharedMedical + nonhipaa_sharedMedical > 0 else 0
+        # print(dict2)
+
+
+# US APPs:
+# percent of hipaa compliant apps that shared ID vs percent of non hipaa compliant apps that shared ID
+
+# percent of hipaa compliant apps that shared medical info vs percent of non hipaa compliant apps that shared medical info
+
+# All APPs:
+# percent of hipaa compliant apps that shared ID vs percent of non hipaa compliant apps that shared ID
+
+# percent of hipaa compliant apps that shared medical info vs percent of non hipaa compliant apps that shared medical info
+
+
