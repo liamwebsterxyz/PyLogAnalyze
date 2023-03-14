@@ -125,7 +125,7 @@ class PyLogAnalyze:
             if appID in self.appList:
                 currentApp_obj = self.appList[appID]
             else:
-                currentApp_obj = app.App(appID, appInfo['testing_stage'].values[0], appInfo['hipaa'].values[0], appInfo['US'].values[0], self.identifiers.keys())
+                currentApp_obj = app.App(appID, appInfo['testing_stage'].values[0], appInfo['hipaa_compliant'].values[0], appInfo['us_audience'].values[0], self.identifiers.keys())
                 # add app to appList
                 self.appList[appID] = currentApp_obj
 
@@ -173,7 +173,7 @@ class PyLogAnalyze:
                                 currentDomain_obj = self.domainList[currentDomain]
                             else:
                                 # create domain object
-                                currentDomain_obj = domain.Domain(currentDomain, currentDomainInfo['third_party'].values[0], currentDomainInfo['hipaa_compliant'].values[0], currentDomainInfo['us_based'].values[0], self.identifiers.keys())
+                                currentDomain_obj = domain.Domain(currentDomain, currentDomainInfo['third_party'].values[0], currentDomainInfo['hipaa_compliant'].values[0], currentDomainInfo['us_ip'].values[0], self.identifiers.keys())
                                 self.domainList[currentDomain] = currentDomain_obj
                     else:
                         for identifierKey in identifiers.keys():
@@ -196,8 +196,8 @@ class PyLogAnalyze:
                     if domainNext == True:
                         
                         # split domain
-                        currentDomain_full = line.split(':')[1]
-                        currentDomain_tld = tldextract.extract(currentDomain_full.strip())
+                        currentDomain_full = ''.join(line.split(':')[:2])
+                        currentDomain_tld = tldextract.extract(line.strip())
                         currentDomain_full = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain
                         currentDomain = currentDomain_tld.domain
                                              
@@ -215,7 +215,7 @@ class PyLogAnalyze:
                                 currentDomain_obj = self.domainList[currentDomain]
                             else:
                                 # create domain object
-                                currentDomain_obj = domain.Domain(currentDomain, currentDomainInfo['third_party'].values[0], currentDomainInfo['hipaa_compliant'].values[0], currentDomainInfo['us_based'].values[0], self.identifiers.keys())
+                                currentDomain_obj = domain.Domain(currentDomain, currentDomainInfo['third_party'].values[0], currentDomainInfo['hipaa_compliant'].values[0], currentDomainInfo['us_ip'].values[0], self.identifiers.keys())
                                 self.domainList[currentDomain] = currentDomain_obj
                             
                         domainNext = False
@@ -269,6 +269,7 @@ class PyLogAnalyze:
     def ThirdParty(self) -> Tuple[dict, dict, dict, dict]:
         """
         For each identifier key calculate the percentage of third party domains which received the identifier.
+        That is, of the domains which received X identifier, what percentage were third party domains?
         """
         us_full = {}
         us_nonfull = {}
@@ -301,6 +302,11 @@ class PyLogAnalyze:
         return us_full, us_nonfull, nonus_full, nonus_nonfull
 
     def HIPAA(self) -> Tuple[dict, dict, dict, dict]:
+        """
+        Calculate the percentage of apps that claim HIPAA compliance that share identifiers.
+        That is, of the apps that shared ID, what percentage claim HIPAA compliance?
+        That is, of the apps that shared medical info, what percentage claim HIPAA compliance?
+        """
 
         # US subset
         us_hipaa_sharedID = 0
@@ -325,8 +331,8 @@ class PyLogAnalyze:
                     nonhipaa_sharedID += 1
 
         dict = {}
-        dict['percent of US apps that are HIPAA compliant that shared ID'] = us_hipaa_sharedID / (us_hipaa_sharedID + us_nonhipaa_sharedID) if us_hipaa_sharedID + us_nonhipaa_sharedID > 0 else 0
-        dict['percent of apps that are HIPAA compliant that shared ID'] = hipaa_sharedID / (hipaa_sharedID + nonhipaa_sharedID) if hipaa_sharedID + nonhipaa_sharedID > 0 else 0
+        dict['of the US apps that shared ID this percent claim hipaa compliance'] = us_hipaa_sharedID / (us_hipaa_sharedID + us_nonhipaa_sharedID) if us_hipaa_sharedID + us_nonhipaa_sharedID > 0 else 0
+        dict['of the apps that shared ID this percent claim hipaa compliance'] = hipaa_sharedID / (hipaa_sharedID + nonhipaa_sharedID) if hipaa_sharedID + nonhipaa_sharedID > 0 else 0
         print(dict)
 
         # # US subset
@@ -356,6 +362,10 @@ class PyLogAnalyze:
         # dict2['percent of apps that are HIPAA compliant that shared Medical Info'] = hipaa_sharedMedical / (hipaa_sharedMedical + nonhipaa_sharedMedical) if hipaa_sharedMedical + nonhipaa_sharedMedical > 0 else 0
         # print(dict2)
 
+    def Domain(self) -> None:
+        """
+        What percentage of third party domains received 
+        """
 
 # US APPs:
 # percent of hipaa compliant apps that shared ID vs percent of non hipaa compliant apps that shared ID
