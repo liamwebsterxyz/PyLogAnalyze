@@ -58,12 +58,8 @@ def _IdentifierSearch(identifierKey: str, identifiers: List[str], line: str) -> 
     if identifierKey == "FullName":
         for identity in identifiers:
             full_name = identity.split(' ')
-            for namepart in full_name:
-                if namepart in line:
-                    success = True
-                else:
-                    success = False
-                    break
+            if full_name[0] in line and full_name[1] in line:
+                success = True
     elif identifierKey == "Email":
         for identity in identifiers:
             if identity in line:
@@ -122,7 +118,7 @@ class PyLogAnalyze:
             appInfo = self.appInfo.loc[self.appInfo['app_id'] == appID.strip()]
 
             # create an app object
-            if appID in self.appList:
+            if appID in self.appList.keys():
                 currentApp_obj = self.appList[appID]
             else:
                 currentApp_obj = app.App(appID, appInfo['testing_stage'].values[0], appInfo['hipaa_compliant'].values[0], appInfo['us_audience'].values[0], self.identifiers.keys())
@@ -155,8 +151,8 @@ class PyLogAnalyze:
 
                         # split domain
                         currentDomain_tld = tldextract.extract(currentDomain_full.strip())
-                        currentDomain_full = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain
-                        currentDomain = currentDomain_tld.domain
+                        currentDomain_full = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain + '.' + currentDomain_tld.suffix
+                        currentDomain = currentDomain_tld.domain + '.' + currentDomain_tld.suffix
 
 
                         # get domain info
@@ -166,7 +162,7 @@ class PyLogAnalyze:
                             # TODO add loging
                             print(f"Curr {currentDomain} not found in domain info")
                             print(f"Domain {currentDomain_full} not found in domain info")
-                            exit(1)
+                            
                         else:
                             # create domain object and add it to self.domains
                             if currentDomain in self.domainList:
@@ -196,10 +192,10 @@ class PyLogAnalyze:
                     if domainNext == True:
                         
                         # split domain
-                        currentDomain_full = ''.join(line.split(':')[:2])
-                        currentDomain_tld = tldextract.extract(line.strip())
-                        currentDomain_full = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain
-                        currentDomain = currentDomain_tld.domain
+                        currentDomain_full = line.split(':')[1]
+                        currentDomain_tld = tldextract.extract(currentDomain_full.strip())
+                        currentDomain_full = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain + '.' + currentDomain_tld.suffix
+                        currentDomain = currentDomain_tld.domain + '.' + currentDomain_tld.suffix
                                              
                         # get domain info
                         currentDomainInfo = self.domainInfo.loc[self.domainInfo['domain'] == currentDomain]
@@ -208,7 +204,6 @@ class PyLogAnalyze:
                             # TODO add loging
                             print(f"Domain {currentDomain} not found in domain info")
                             print(f"Domain {currentDomain_full} not found in domain info")
-                            exit(1)
                         else:
                             # create domain object and add it to self.domains
                             if currentDomain in self.domainList:
@@ -280,7 +275,7 @@ class PyLogAnalyze:
             FirstPartyCount = [0]*4
             ThirdPartyCount = [0]*4
 
-            for app in self.appList:
+            for appID, app in self.appList.items():
                 if app.usBased == 1 and app.testStage == 1:
                     FirstPartyCount[0] += app.FirstPartyCount(identifierKey)
                     ThirdPartyCount[0] += app.ThirdPartyCount(identifierKey)

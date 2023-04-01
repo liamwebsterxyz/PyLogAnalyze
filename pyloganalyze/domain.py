@@ -31,5 +31,5 @@ class Domain:
         # TODO: not the best way to do this ie hardcode the order possible?
         ret = []
         for identifiers in self.__dict__.values():
-            ret.append(identifiers)
+            ret.append(identifiers.values())
         return ret
