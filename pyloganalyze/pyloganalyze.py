@@ -125,12 +125,30 @@ class PyLogAnalyze:
                 # add app to appList
                 self.appList[appID] = currentApp_obj
 
-            # # Analyze the app's chrome_packet and net_log files
+            # # Analyze the app's log, plain_log and chrome_packet files
+            self._Analyze_Log(appPath, currentApp_obj)
             self._Analyze_PlainLog(appPath, self.identifiers, currentApp_obj)
-            self._Analyze_NetLog(appPath, self.identifiers, currentApp_obj)
+            self._Analyze_ChromePacket(appPath, self.identifiers, currentApp_obj)
 
             print(f"App {currentApp_obj.AppID} analyzed.")
             logging.debug(f"App {currentApp_obj.AppID} analyzed.")
+
+    def _Analyze_Log(self, appPath: Path, app_obj: app) -> None:
+        """
+        Analyze the log file for identifiers.
+        """
+        try:
+            with open(appPath / "log", "r") as file:
+                for line in file:
+                    if "DNS:" in line:
+                        currentDomain = line.split("DNS:")[1]
+                        if currentDomain != "":
+                            currentDomain_tld = tldextract.extract(currentDomain.strip())
+                            currentDomain = currentDomain_tld.domain + '.' + currentDomain_tld.suffix
+                            app_obj.DNSList.add(currentDomain)
+                    
+        except FileNotFoundError:
+            logging.warning(f"File {appPath / 'log'} not found.")
 
     def _Analyze_PlainLog(self, appPath: Path, identifiers: dict, app_obj: app) -> None:
         """
@@ -153,7 +171,8 @@ class PyLogAnalyze:
                         currentDomain_tld = tldextract.extract(currentDomain_full.strip())
                         currentDomain_full = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain + '.' + currentDomain_tld.suffix
                         currentDomain = currentDomain_tld.domain + '.' + currentDomain_tld.suffix
-
+                        if currentDomain not in app_obj.DNSList:
+                            print(currentDomain)
 
                         # get domain info
                         currentDomainInfo = self.domainInfo.loc[self.domainInfo['domain'] == currentDomain]
@@ -182,7 +201,7 @@ class PyLogAnalyze:
         except Exception as e:
             logging.error(f"Error Analyzing {app_obj.AppID} Plain Log File: {e}")
 
-    def _Analyze_NetLog(self, appPath: Path, identifiers: dict, app_obj: app) -> None:
+    def _Analyze_ChromePacket(self, appPath: Path, identifiers: dict, app_obj: app) -> None:
         """
         Analyze the NetLog file for identifiers.
         """
@@ -220,7 +239,7 @@ class PyLogAnalyze:
                         for identifierKey in identifiers.keys():
                             if _IdentifierSearch(identifierKey, identifiers[identifierKey], line):
                                 try:
-                                    currentDomain_obj.AddDomain(identifierKey, currentDomain_full, currentDomain_obj.thirdParty)
+                                    app_obj.AddDomain(identifierKey, currentDomain_full, currentDomain_obj.thirdParty)
                                     currentDomain_obj.AddApp(app_obj.AppID, identifierKey)
                                 except Exception as e:
                                     logging.error(f"Error Adding Domain: {e}")
