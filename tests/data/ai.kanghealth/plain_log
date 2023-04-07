@@ -1,0 +1,1355 @@
+run: split=0 device= 2
+[1;36m    0 INFO: [0m Creating Report Processor
+[1;36m    0 INFO: [0m Running net saw
+(packet) 10105 outbound to graph.facebook.com:0 () encrypted at time Mon Aug 15 16:54:2.2907 2022 (1660582467290)
+--------------------------------
+GET /v8.0/176063449849557?fields=supports_implicit_sdk_logging,gdpv4_nux_content,gdpv4_nux_enabled,android_dialog_configs,android_sdk_error_categories,app_events_session_timeout,app_events_feature_bitmask,auto_event_mapping_android,seamless_login,smart_login_bookmark_icon_url,smart_login_menu_icon_url,restrictive_data_filter_params,aam_rules,suggested_events_setting&format=json&sdk=android HTTP/1.1
+User-Agent: FBAndroidSDK.8.2.0
+Accept-Language: en_US
+Content-Type: application/x-www-form-urlencoded
+Content-Encoding: gzip
+Host: graph.facebook.com
+Connection: Keep-Alive
+Accept-Encoding: gzip
+
+
+
+
+--------------------------------
+(packet) 10105 inbound to graph.facebook.com:0 () encrypted at time Mon Aug 15 16:54:2.3147 2022 (1660582467314)
+--------------------------------
+HTTP/1.1 200 OK
+Content-Encoding: gzip
+ETag: "74747d2be55e2a69a26ff8897e137fdd74a057b2"
+Content-Type: text/javascript; charset=UTF-8
+Vary: Origin
+Vary: Accept-Encoding
+x-fb-rlafr: 0
+Access-Control-Allow-Origin: *
+facebook-api-version: v8.0
+Strict-Transport-Security: max-age=15552000; preload
+Pragma: no-cache
+Cache-Control: private, no-cache, no-store, must-revalidate
+Expires: Sat, 01 Jan 2000 00:00:00 GMT
+x-fb-request-id: As3UCTT48_YOWIRs8d9ibwx
+x-fb-trace-id: FzMpnrZfeBE
+x-fb-rev: 1006024898
+X-FB-Debug: IkyAHpxVOUpdsUArjXv/cpqIhjsv7Z1qp0N8nlwaYj+TV8gq/P1wM/tOnyZdKIbLrAMIldHTZAxtkmiK7DIKVg==
+Date: Mon, 15 Aug 2022 16:54:27 GMT
+Alt-Svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+Connection: keep-alive
+Content-Length: 522
+
+{"data":[{"gatekeepers":[{"key":"FBSDKFeatureInstrument","value":true},{"key":"FBSDKFeatureCrashReport","value":true},{"key":"FBSDKFeatureAnrReport","value":true},{"key":"FBSDKFeatureRestrictiveDataFiltering","value":true},{"key":"FBSDKFeatureCodelessEvents","value":true},{"key":"FBSDKFeatureErrorReport","value":false},{"key":"FBSDKFeatureAAMR1","value":true},{"key":"FBSDKFeatureAAMR2","value":true},{"key":"FBSDKFeatureAAM","value":true},{"key":"FBSDKFeatureSuggestedEvents","value":false},{"key":"FBSDKFeatureCrashShield","value":true},{"key":"FBSDKFeatureThreadCheck","value":false},{"key":"FBSDKFeaturePrivacyProtection","value":true},{"key":"FBSDKFeaturePIIFiltering","value":true},{"key":"FBSDKFeatureAddressDetectionSample","value":false},{"key":"FBSDKFeatureMTML","value":true},{"key":"FBSDKFeatureModelRequest","value":true},{"key":"FBSDKFeatureEventDeactivation","value":true},{"key":"FBSDKFeatureChromeCustomTabsUpdate","value":true},{"key":"FBSDKFeatureChromeCustomTabsPrefetching","value":false},{"key":"FBSDKFeatureIntelligentIntegrity","value":false},{"key":"FBSDKFeatureIntegritySample","value":true},{"key":"FBSDKFeatureMonitoring","value":false},{"key":"FBSDKFeatureATELogging","value":true},{"key":"FBSDKFeatureOnDeviceEventProcessing","value":false},{"key":"FBSDKFeatureOnDevicePostInstallEventProcessing","value":false},{"key":"FBSDKFeatureSKAdNetwork","value":true},{"key":"FBSDKFeatureSKAdNetworkConversionValue","value":true},{"key":"FBSDKFeatureIAPLogging","value":true},{"key":"FBSDKFeatureIAPLoggingLib2","value":true},{"key":"FBSDKFeatureUshbaLogin","value":true},{"key":"FBSDKFeatureBypassAppSwitch","value":false},{"key":"FBSDKFeatureWebViewSchemeFiltering","value":true},{"key":"FBSDKFeatureAEM","value":false},{"key":"FBSDKFeatureAppEventsCloudbridge","value":false},{"key":"FBSDKFeatureServiceUpdateCompliance","value":false},{"key":"FBSDKFeatureAEMConversionFiltering","value":true},{"key":"FBSDKFeatureAEMCatalogMatching","value":false},{"key":"FBSDKFeatureAEMAdvertiserRuleMatchInServer","value":false},{"key":"app_events_if_auto_log_subs","value":true},{"key":"app_events_killswitch","value":false}]}]}
+
+..........UMo.0./>...sS..0.oF.v.........G...".}...i...n........D.C2....`.#vHqz......}5.X pO......9.K.p=&3..Ow..S....$.+Or.
+#....8...u.d..p...a................J../..#...(.U.1......$;..j,:-.X7......(|Iv..XR`.../.)....*.	c....
+...(.b],.85+..c.M...9.8. .;m(....C..m|.4.Y.rfI.C..w.^.!...Y...OC..b......\..-........2.#...~..._./)...T./...[...O..A.o..@g+r9.3x....m.O.K..Uy.;o......cl........A............O..U.`...}vv..(..{=......Fv.*.q.^.0m.,.Z.UY...[.J...S.+..B...mDZ..'v.."...........6.s..`6..^.7.Q....i..O.......^...
+
+
+{
+  "data": [
+    {
+      "gatekeepers": [
+        {
+          "key": "FBSDKFeatureInstrument",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureCrashReport",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAnrReport",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureRestrictiveDataFiltering",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureCodelessEvents",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureErrorReport",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureAAMR1",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAAMR2",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAAM",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureSuggestedEvents",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureCrashShield",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureThreadCheck",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeaturePrivacyProtection",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeaturePIIFiltering",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAddressDetectionSample",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureMTML",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureModelRequest",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureEventDeactivation",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureChromeCustomTabsUpdate",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureChromeCustomTabsPrefetching",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureIntelligentIntegrity",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureIntegritySample",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureMonitoring",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureATELogging",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureOnDeviceEventProcessing",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureOnDevicePostInstallEventProcessing",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureSKAdNetwork",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureSKAdNetworkConversionValue",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureIAPLogging",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureIAPLoggingLib2",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureUshbaLogin",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureBypassAppSwitch",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureWebViewSchemeFiltering",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAEM",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureAppEventsCloudbridge",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureServiceUpdateCompliance",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureAEMConversionFiltering",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAEMCatalogMatching",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureAEMAdvertiserRuleMatchInServer",
+          "value": "false",
+        },
+        {
+          "key": "app_events_if_auto_log_subs",
+          "value": "true",
+        },
+        {
+          "key": "app_events_killswitch",
+          "value": "false",
+        },
+      ],
+    },
+  ],
+},
+
+--------------------------------
+(packet) 10105 inbound to graph.facebook.com:0 () encrypted at time Mon Aug 15 16:54:2.3207 2022 (1660582467320)
+--------------------------------
+HTTP/1.1 200 OK
+Content-Encoding: gzip
+ETag: "7fd2ac7a5e15116bc7d9d6abbb5e160e8eb80a59"
+Content-Type: text/javascript; charset=UTF-8
+Vary: Origin
+Vary: Accept-Encoding
+x-fb-rlafr: 0
+Access-Control-Allow-Origin: *
+facebook-api-version: v8.0
+Strict-Transport-Security: max-age=15552000; preload
+Pragma: no-cache
+Cache-Control: private, no-cache, no-store, must-revalidate
+Expires: Sat, 01 Jan 2000 00:00:00 GMT
+x-fb-request-id: AwA8xYsgaI1v1ipA3ccYFdx
+x-fb-trace-id: DchafQbOXwR
+x-fb-rev: 1006024898
+X-FB-Debug: RLIc51Ap3uwJrJFKEHuDx3T6xqg4VTNoA0t1D1NDnZ3sPortSjtdH9bDu9aXv+jBkeKE8TBj/sKDqANY1Fz8ww==
+Date: Mon, 15 Aug 2022 16:54:27 GMT
+Priority: u=3,i
+Alt-Svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+Connection: keep-alive
+Content-Length: 562
+
+{"supports_implicit_sdk_logging":true,"gdpv4_nux_enabled":false,"android_sdk_error_categories":[{"name":"login_recoverable","items":[{"code":102},{"code":190}],"recovery_message":"Please log into this app again to reconnect your Facebook account."}],"app_events_session_timeout":60,"app_events_feature_bitmask":81413,"seamless_login":1,"smart_login_bookmark_icon_url":"https:\/\/static.xx.fbcdn.net\/rsrc.php\/v3\/y6\/r\/yJMnJy6rFT-.png","smart_login_menu_icon_url":"https:\/\/static.xx.fbcdn.net\/rsrc.php\/v3\/yT\/r\/KNd968JWj-b.png","restrictive_data_filter_params":"{}","aam_rules":"{\"r1\":{\"k\":\"email,e-mail,em,electronicmail\",\"v\":\"^([A-Z0-9a-z._\\u0025+-]+\\u0040[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,})$\"},\"r2\":{\"k\":\"phone,mobile,contact\",\"v\":\"^([0-9]{5,15})$\"}}","suggested_events_setting":"{\"production_events\":[],\"eligible_for_prediction_events\":[]}","id":"176063449849557"}
+
+...........Mo.1....j.C.x...	{...z.T.1...aq...x.. .{e..r...|....GHc..8);Dg.e...r.....a.Q@...\..E.......v	.h.Q..9	..)...@..4.G.z@h...zEh..)K...8\.L...i=;...U}Zx.8..S.}...P',\..9.....1.........=...a..A.lC....0z. +.....sR	S..+.....Y.W.j.	Uky.i...t>...P..S.......4h..[e..i..	^....-sL...Ib..T//..5..<..P"S.m.......rBrrx....Kzx*..{.....'<.	_.u......e.F LL.....4k....T.....x..Z..F.GG	4....4.p..	,/. ..a
+..l. $....>>.....J....r.....\....:{u.Z...l..z3..3q..A.IH........Z.P..Y..f..j}\......Ic.cb..7....ry.B7...rqKh..B.:......R............w.zy;........N..M4B?....HTTP/1.1 200 OK
+Content-Encoding: gzip
+ETag: "8b65ff7b9798f7bc52e463bacda91b875b4ed5f8"
+Content-Type: text/javascript; charset=UTF-8
+Vary: Origin
+Vary: Accept-Encoding
+x-fb-rlafr: 0
+Access-Control-Allow-Origin: *
+facebook-api-version: v8.0
+Strict-Transport-Security: max-age=15552000; preload
+Pragma: no-cache
+Cache-Control: private, no-cache, no-store, must-revalidate
+Expires: Sat, 01 Jan 2000 00:00:00 GMT
+x-fb-request-id: AGCEK407Dps12NPNkS9qRy5
+x-fb-trace-id: GDaDEmPlUCV
+x-fb-rev: 1006024898
+X-FB-Debug: SEfpnBucJ5OMuA6QkJoiQ2jBI9mlY6xmvm/YTj/y92mXyBSn1BWaZYWpiMFbysbJ5LsyV5mAi0aTmuk+8Q7IfQ==
+Date: Mon, 15 Aug 2022 16:54:27 GMT
+Alt-Svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+Connection: keep-alive
+Content-Length: 519
+
+{"data":[{"gatekeepers":[{"key":"FBSDKFeatureInstrument","value":true},{"key":"FBSDKFeatureCrashReport","value":true},{"key":"FBSDKFeatureAnrReport","value":true},{"key":"FBSDKFeatureRestrictiveDataFiltering","value":true},{"key":"FBSDKFeatureCodelessEvents","value":true},{"key":"FBSDKFeatureErrorReport","value":false},{"key":"FBSDKFeatureAAMR1","value":true},{"key":"FBSDKFeatureAAMR2","value":true},{"key":"FBSDKFeatureAAM","value":true},{"key":"FBSDKFeatureSuggestedEvents","value":false},{"key":"FBSDKFeatureCrashShield","value":true},{"key":"FBSDKFeatureThreadCheck","value":false},{"key":"FBSDKFeaturePrivacyProtection","value":true},{"key":"FBSDKFeaturePIIFiltering","value":true},{"key":"FBSDKFeatureAddressDetectionSample","value":false},{"key":"FBSDKFeatureMTML","value":true},{"key":"FBSDKFeatureModelRequest","value":true},{"key":"FBSDKFeatureEventDeactivation","value":true},{"key":"FBSDKFeatureChromeCustomTabsUpdate","value":true},{"key":"FBSDKFeatureChromeCustomTabsPrefetching","value":false},{"key":"FBSDKFeatureIntelligentIntegrity","value":false},{"key":"FBSDKFeatureIntegritySample","value":false},{"key":"FBSDKFeatureMonitoring","value":false},{"key":"FBSDKFeatureATELogging","value":true},{"key":"FBSDKFeatureOnDeviceEventProcessing","value":false},{"key":"FBSDKFeatureOnDevicePostInstallEventProcessing","value":false},{"key":"FBSDKFeatureSKAdNetwork","value":true},{"key":"FBSDKFeatureSKAdNetworkConversionValue","value":true},{"key":"FBSDKFeatureIAPLogging","value":true},{"key":"FBSDKFeatureIAPLoggingLib2","value":true},{"key":"FBSDKFeatureUshbaLogin","value":true},{"key":"FBSDKFeatureBypassAppSwitch","value":false},{"key":"FBSDKFeatureWebViewSchemeFiltering","value":true},{"key":"FBSDKFeatureAEM","value":false},{"key":"FBSDKFeatureAppEventsCloudbridge","value":false},{"key":"FBSDKFeatureServiceUpdateCompliance","value":false},{"key":"FBSDKFeatureAEMConversionFiltering","value":true},{"key":"FBSDKFeatureAEMCatalogMatching","value":false},{"key":"FBSDKFeatureAEMAdvertiserRuleMatchInServer","value":false},{"key":"app_events_if_auto_log_subs","value":true},{"key":"app_events_killswitch","value":false}]}]}
+
+..........U.n.0....si..1...R.r.C..+qM..Hv..a...BJ.8mlP.....fv..H`H.?^....D.....O."Y.W.......L}....d..c.`..|..:....(.....``..........U1..I4.B6.......?....+x!.....#.k$0.V.Ja`...v..I...hdL.mK.2m.9D./I...Jr.kgc..y>KR!
+K...................1D9tR`.0z.b.N[r..}`.m..O^._...,	..M.a.7..[Fc.B..."..h...3sg5......m.vJEz..]...7.Jr......t..c...O..A.G......^..<uv@
+.......E9c:.....N.ShkX;...|......:jn..q}..Y..jZ.p..g.g.F....EL..eMZ.8.VH....0u.7.l...Y.....R`0N.0c.EV.9 ..H..................~.=..qj.......r...O.~9.....|.._...
+
+
+{
+  "aam_rules": "{\"r1\":{\"k\":\"email,e-mail,em,electronicmail\",\"v\":\"^([A-Z0-9a-z._\\u0025+-]+\\u0040[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,})$\"},\"r2\":{\"k\":\"phone,mobile,contact\",\"v\":\"^([0-9]{5,15})$\"}}",
+  "android_sdk_error_categories": [
+    {
+      "items": [
+        {
+          "code": "102",
+        },
+        {
+          "code": "190",
+        },
+      ],
+      "name": "login_recoverable",
+      "recovery_message": "Please log into this app again to reconnect your Facebook account.",
+    },
+  ],
+  "app_events_feature_bitmask": "81413",
+  "app_events_session_timeout": "60",
+  "gdpv4_nux_enabled": "false",
+  "id": "176063449849557",
+  "restrictive_data_filter_params": "{}",
+  "seamless_login": "1",
+  "smart_login_bookmark_icon_url": "https:\/\/static.xx.fbcdn.net\/rsrc.php\/v3\/y6\/r\/yJMnJy6rFT-.png",
+  "smart_login_menu_icon_url": "https:\/\/static.xx.fbcdn.net\/rsrc.php\/v3\/yT\/r\/KNd968JWj-b.png",
+  "suggested_events_setting": "{\"production_events\":[],\"eligible_for_prediction_events\":[]}",
+  "supports_implicit_sdk_logging": "true",
+},
+
+{
+  "data": [
+    {
+      "gatekeepers": [
+        {
+          "key": "FBSDKFeatureInstrument",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureCrashReport",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAnrReport",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureRestrictiveDataFiltering",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureCodelessEvents",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureErrorReport",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureAAMR1",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAAMR2",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAAM",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureSuggestedEvents",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureCrashShield",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureThreadCheck",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeaturePrivacyProtection",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeaturePIIFiltering",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAddressDetectionSample",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureMTML",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureModelRequest",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureEventDeactivation",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureChromeCustomTabsUpdate",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureChromeCustomTabsPrefetching",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureIntelligentIntegrity",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureIntegritySample",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureMonitoring",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureATELogging",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureOnDeviceEventProcessing",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureOnDevicePostInstallEventProcessing",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureSKAdNetwork",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureSKAdNetworkConversionValue",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureIAPLogging",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureIAPLoggingLib2",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureUshbaLogin",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureBypassAppSwitch",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureWebViewSchemeFiltering",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAEM",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureAppEventsCloudbridge",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureServiceUpdateCompliance",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureAEMConversionFiltering",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAEMCatalogMatching",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureAEMAdvertiserRuleMatchInServer",
+          "value": "false",
+        },
+        {
+          "key": "app_events_if_auto_log_subs",
+          "value": "true",
+        },
+        {
+          "key": "app_events_killswitch",
+          "value": "false",
+        },
+      ],
+    },
+  ],
+},
+
+--------------------------------
+(packet) 10105 inbound to graph.facebook.com:0 () encrypted at time Mon Aug 15 16:54:2.3457 2022 (1660582467345)
+--------------------------------
+HTTP/1.1 200 OK
+Content-Encoding: gzip
+ETag: "7fd2ac7a5e15116bc7d9d6abbb5e160e8eb80a59"
+Content-Type: text/javascript; charset=UTF-8
+Vary: Origin
+Vary: Accept-Encoding
+x-fb-rlafr: 0
+Access-Control-Allow-Origin: *
+facebook-api-version: v8.0
+Strict-Transport-Security: max-age=15552000; preload
+Pragma: no-cache
+Cache-Control: private, no-cache, no-store, must-revalidate
+Expires: Sat, 01 Jan 2000 00:00:00 GMT
+x-fb-request-id: ARkAFWmJfoXk2qUO88Vp4tU
+x-fb-trace-id: CJfuQ7Od2nd
+x-fb-rev: 1006024898
+X-FB-Debug: YFAfIUQy2LSGHn0/UuN0lI9O0ImGJ9+qctxtWr8Gu2CB3SvU1DWX6Dzh6/P6rSRJVhBEseXyNKQl9zu0/LhN/A==
+Date: Mon, 15 Aug 2022 16:54:27 GMT
+Alt-Svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+Connection: keep-alive
+Content-Length: 562
+
+{"supports_implicit_sdk_logging":true,"gdpv4_nux_enabled":false,"android_sdk_error_categories":[{"name":"login_recoverable","items":[{"code":102},{"code":190}],"recovery_message":"Please log into this app again to reconnect your Facebook account."}],"app_events_session_timeout":60,"app_events_feature_bitmask":81413,"seamless_login":1,"smart_login_bookmark_icon_url":"https:\/\/static.xx.fbcdn.net\/rsrc.php\/v3\/y6\/r\/yJMnJy6rFT-.png","smart_login_menu_icon_url":"https:\/\/static.xx.fbcdn.net\/rsrc.php\/v3\/yT\/r\/KNd968JWj-b.png","restrictive_data_filter_params":"{}","aam_rules":"{\"r1\":{\"k\":\"email,e-mail,em,electronicmail\",\"v\":\"^([A-Z0-9a-z._\\u0025+-]+\\u0040[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,})$\"},\"r2\":{\"k\":\"phone,mobile,contact\",\"v\":\"^([0-9]{5,15})$\"}}","suggested_events_setting":"{\"production_events\":[],\"eligible_for_prediction_events\":[]}","id":"176063449849557"}
+
+...........Mo.1....j.C.x...	{...z.T.1...aq...x.. .{e..r...|....GHc..8);Dg.e...r.....a.Q@...\..E.......v	.h.Q..9	..)...@..4.G.z@h...zEh..)K...8\.L...i=;...U}Zx.8..S.}...P',\..9.....1.........=...a..A.lC....0z. +.....sR	S..+.....Y.W.j.	Uky.i...t>...P..S.......4h..[e..i..	^....-sL...Ib..T//..5..<..P"S.m.......rBrrx....Kzx*..{.....'<.	_.u......e.F LL.....4k....T.....x..Z..F.GG	4....4.p..	,/. ..a
+..l. $....>>.....J....r.....\....:{u.Z...l..z3..3q..A.IH........Z.P..Y..f..j}\......Ic.cb..7....ry.B7...rqKh..B.:......R............w.zy;........N..M4B?....
+
+
+{
+  "aam_rules": "{\"r1\":{\"k\":\"email,e-mail,em,electronicmail\",\"v\":\"^([A-Z0-9a-z._\\u0025+-]+\\u0040[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,})$\"},\"r2\":{\"k\":\"phone,mobile,contact\",\"v\":\"^([0-9]{5,15})$\"}}",
+  "android_sdk_error_categories": [
+    {
+      "items": [
+        {
+          "code": "102",
+        },
+        {
+          "code": "190",
+        },
+      ],
+      "name": "login_recoverable",
+      "recovery_message": "Please log into this app again to reconnect your Facebook account.",
+    },
+  ],
+  "app_events_feature_bitmask": "81413",
+  "app_events_session_timeout": "60",
+  "gdpv4_nux_enabled": "false",
+  "id": "176063449849557",
+  "restrictive_data_filter_params": "{}",
+  "seamless_login": "1",
+  "smart_login_bookmark_icon_url": "https:\/\/static.xx.fbcdn.net\/rsrc.php\/v3\/y6\/r\/yJMnJy6rFT-.png",
+  "smart_login_menu_icon_url": "https:\/\/static.xx.fbcdn.net\/rsrc.php\/v3\/yT\/r\/KNd968JWj-b.png",
+  "suggested_events_setting": "{\"production_events\":[],\"eligible_for_prediction_events\":[]}",
+  "supports_implicit_sdk_logging": "true",
+},
+
+--------------------------------
+(packet) 10105 outbound to graph.facebook.com:0 () encrypted at time Mon Aug 15 16:54:2.3947 2022 (1660582467394)
+--------------------------------
+GET /v8.0/176063449849557/mobile_sdk_gk?fields=gatekeepers&format=json&sdk_version=8.2.0&sdk=android&platform=android HTTP/1.1
+User-Agent: FBAndroidSDK.8.2.0
+Accept-Language: en_US
+Content-Type: application/x-www-form-urlencoded
+Content-Encoding: gzip
+Host: graph.facebook.com
+Connection: Keep-Alive
+Accept-Encoding: gzip
+
+
+
+
+--------------------------------
+(packet) 10105 outbound to graph.facebook.com:0 () encrypted at time Mon Aug 15 16:54:3.4280 2022 (1660582470428)
+--------------------------------
+GET /v8.0/176063449849557/mobile_sdk_gk?fields=gatekeepers&format=json&sdk_version=8.2.0&sdk=android&platform=android HTTP/1.1
+User-Agent: FBAndroidSDK.8.2.0
+Accept-Language: en_US
+Content-Type: application/x-www-form-urlencoded
+Content-Encoding: gzip
+Host: graph.facebook.com
+Connection: Keep-Alive
+Accept-Encoding: gzip
+
+GET /v8.0/176063449849557/mobile_sdk_gk?fields=gatekeepers&format=json&sdk_version=8.2.0&sdk=android&platform=android HTTP/1.1
+User-Agent: FBAndroidSDK.8.2.0
+Accept-Language: en_US
+Content-Type: application/x-www-form-urlencoded
+Content-Encoding: gzip
+Host: graph.facebook.com
+Connection: Keep-Alive
+Accept-Encoding: gzip
+
+
+
+
+--------------------------------
+(packet) 10105 outbound to graph.facebook.com:0 () encrypted at time Mon Aug 15 16:54:3.4370 2022 (1660582470437)
+--------------------------------
+GET /v8.0/176063449849557?fields=supports_implicit_sdk_logging,gdpv4_nux_content,gdpv4_nux_enabled,android_dialog_configs,android_sdk_error_categories,app_events_session_timeout,app_events_feature_bitmask,auto_event_mapping_android,seamless_login,smart_login_bookmark_icon_url,smart_login_menu_icon_url,restrictive_data_filter_params,aam_rules,suggested_events_setting&format=json&sdk=android HTTP/1.1
+User-Agent: FBAndroidSDK.8.2.0
+Accept-Language: en_US
+Content-Type: application/x-www-form-urlencoded
+Content-Encoding: gzip
+Host: graph.facebook.com
+Connection: Keep-Alive
+Accept-Encoding: gzip
+
+
+
+
+--------------------------------
+(packet) 10105 outbound to graph.facebook.com:0 () encrypted at time Mon Aug 15 16:54:3.4380 2022 (1660582470438)
+--------------------------------
+GET /v8.0/176063449849557?fields=supports_implicit_sdk_logging,gdpv4_nux_content,gdpv4_nux_enabled,android_dialog_configs,android_sdk_error_categories,app_events_session_timeout,app_events_feature_bitmask,auto_event_mapping_android,seamless_login,smart_login_bookmark_icon_url,smart_login_menu_icon_url,restrictive_data_filter_params,aam_rules,suggested_events_setting&format=json&sdk=android HTTP/1.1
+User-Agent: FBAndroidSDK.8.2.0
+Accept-Language: en_US
+Content-Type: application/x-www-form-urlencoded
+Content-Encoding: gzip
+Host: graph.facebook.com
+Connection: Keep-Alive
+Accept-Encoding: gzip
+
+
+
+
+--------------------------------
+(packet) 10105 inbound to graph.facebook.com:0 () encrypted at time Mon Aug 15 16:54:3.4760 2022 (1660582470476)
+--------------------------------
+HTTP/1.1 200 OK
+Content-Encoding: gzip
+ETag: "8b65ff7b9798f7bc52e463bacda91b875b4ed5f8"
+Content-Type: text/javascript; charset=UTF-8
+Vary: Origin
+Vary: Accept-Encoding
+x-fb-rlafr: 0
+Access-Control-Allow-Origin: *
+facebook-api-version: v8.0
+Strict-Transport-Security: max-age=15552000; preload
+Pragma: no-cache
+Cache-Control: private, no-cache, no-store, must-revalidate
+Expires: Sat, 01 Jan 2000 00:00:00 GMT
+x-fb-request-id: AmKLVdEnIhuw_nLxTUyXTuP
+x-fb-trace-id: HgKHt9jD4U4
+x-fb-rev: 1006024898
+X-FB-Debug: wUV2m5a6p8aKI6wSA6sf2bHurRIlZBY1o9TCUoUGJ7Zbqhe0T5cDskGdDew+5SwmIEvWLubyootddwIy5KDYzA==
+Date: Mon, 15 Aug 2022 16:54:30 GMT
+Alt-Svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+Connection: keep-alive
+Content-Length: 519
+
+{"data":[{"gatekeepers":[{"key":"FBSDKFeatureInstrument","value":true},{"key":"FBSDKFeatureCrashReport","value":true},{"key":"FBSDKFeatureAnrReport","value":true},{"key":"FBSDKFeatureRestrictiveDataFiltering","value":true},{"key":"FBSDKFeatureCodelessEvents","value":true},{"key":"FBSDKFeatureErrorReport","value":false},{"key":"FBSDKFeatureAAMR1","value":true},{"key":"FBSDKFeatureAAMR2","value":true},{"key":"FBSDKFeatureAAM","value":true},{"key":"FBSDKFeatureSuggestedEvents","value":false},{"key":"FBSDKFeatureCrashShield","value":true},{"key":"FBSDKFeatureThreadCheck","value":false},{"key":"FBSDKFeaturePrivacyProtection","value":true},{"key":"FBSDKFeaturePIIFiltering","value":true},{"key":"FBSDKFeatureAddressDetectionSample","value":false},{"key":"FBSDKFeatureMTML","value":true},{"key":"FBSDKFeatureModelRequest","value":true},{"key":"FBSDKFeatureEventDeactivation","value":true},{"key":"FBSDKFeatureChromeCustomTabsUpdate","value":true},{"key":"FBSDKFeatureChromeCustomTabsPrefetching","value":false},{"key":"FBSDKFeatureIntelligentIntegrity","value":false},{"key":"FBSDKFeatureIntegritySample","value":false},{"key":"FBSDKFeatureMonitoring","value":false},{"key":"FBSDKFeatureATELogging","value":true},{"key":"FBSDKFeatureOnDeviceEventProcessing","value":false},{"key":"FBSDKFeatureOnDevicePostInstallEventProcessing","value":false},{"key":"FBSDKFeatureSKAdNetwork","value":true},{"key":"FBSDKFeatureSKAdNetworkConversionValue","value":true},{"key":"FBSDKFeatureIAPLogging","value":true},{"key":"FBSDKFeatureIAPLoggingLib2","value":true},{"key":"FBSDKFeatureUshbaLogin","value":true},{"key":"FBSDKFeatureBypassAppSwitch","value":false},{"key":"FBSDKFeatureWebViewSchemeFiltering","value":true},{"key":"FBSDKFeatureAEM","value":false},{"key":"FBSDKFeatureAppEventsCloudbridge","value":false},{"key":"FBSDKFeatureServiceUpdateCompliance","value":false},{"key":"FBSDKFeatureAEMConversionFiltering","value":true},{"key":"FBSDKFeatureAEMCatalogMatching","value":false},{"key":"FBSDKFeatureAEMAdvertiserRuleMatchInServer","value":false},{"key":"app_events_if_auto_log_subs","value":true},{"key":"app_events_killswitch","value":false}]}]}
+
+..........U.n.0....si..1...R.r.C..+qM..Hv..a...BJ.8mlP.....fv..H`H.?^....D.....O."Y.W.......L}....d..c.`..|..:....(.....``..........U1..I4.B6.......?....+x!.....#.k$0.V.Ja`...v..I...hdL.mK.2m.9D./I...Jr.kgc..y>KR!
+K...................1D9tR`.0z.b.N[r..}`.m..O^._...,	..M.a.7..[Fc.B..."..h...3sg5......m.vJEz..]...7.Jr......t..c...O..A.G......^..<uv@
+.......E9c:.....N.ShkX;...|......:jn..q}..Y..jZ.p..g.g.F....EL..eMZ.8.VH....0u.7.l...Y.....R`0N.0c.EV.9 ..H..................~.=..qj.......r...O.~9.....|.._...HTTP/1.1 200 OK
+Content-Encoding: gzip
+ETag: "8b65ff7b9798f7bc52e463bacda91b875b4ed5f8"
+Content-Type: text/javascript; charset=UTF-8
+Vary: Origin
+Vary: Accept-Encoding
+x-fb-rlafr: 0
+Access-Control-Allow-Origin: *
+facebook-api-version: v8.0
+Strict-Transport-Security: max-age=15552000; preload
+Pragma: no-cache
+Cache-Control: private, no-cache, no-store, must-revalidate
+Expires: Sat, 01 Jan 2000 00:00:00 GMT
+x-fb-request-id: A-w9-CxLajBQ3_6y4PvofRN
+x-fb-trace-id: FvcfwN600sd
+x-fb-rev: 1006024898
+X-FB-Debug: 5AsGBy/UWueTF43GXuZzCVoLeXpaU9jmCKffpdZawLg0cchpVgO3xwYuH97+aUGzjv6S4x3Up1HHPviSCTsgkg==
+Date: Mon, 15 Aug 2022 16:54:30 GMT
+Alt-Svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+Connection: keep-alive
+Content-Length: 519
+
+{"data":[{"gatekeepers":[{"key":"FBSDKFeatureInstrument","value":true},{"key":"FBSDKFeatureCrashReport","value":true},{"key":"FBSDKFeatureAnrReport","value":true},{"key":"FBSDKFeatureRestrictiveDataFiltering","value":true},{"key":"FBSDKFeatureCodelessEvents","value":true},{"key":"FBSDKFeatureErrorReport","value":false},{"key":"FBSDKFeatureAAMR1","value":true},{"key":"FBSDKFeatureAAMR2","value":true},{"key":"FBSDKFeatureAAM","value":true},{"key":"FBSDKFeatureSuggestedEvents","value":false},{"key":"FBSDKFeatureCrashShield","value":true},{"key":"FBSDKFeatureThreadCheck","value":false},{"key":"FBSDKFeaturePrivacyProtection","value":true},{"key":"FBSDKFeaturePIIFiltering","value":true},{"key":"FBSDKFeatureAddressDetectionSample","value":false},{"key":"FBSDKFeatureMTML","value":true},{"key":"FBSDKFeatureModelRequest","value":true},{"key":"FBSDKFeatureEventDeactivation","value":true},{"key":"FBSDKFeatureChromeCustomTabsUpdate","value":true},{"key":"FBSDKFeatureChromeCustomTabsPrefetching","value":false},{"key":"FBSDKFeatureIntelligentIntegrity","value":false},{"key":"FBSDKFeatureIntegritySample","value":false},{"key":"FBSDKFeatureMonitoring","value":false},{"key":"FBSDKFeatureATELogging","value":true},{"key":"FBSDKFeatureOnDeviceEventProcessing","value":false},{"key":"FBSDKFeatureOnDevicePostInstallEventProcessing","value":false},{"key":"FBSDKFeatureSKAdNetwork","value":true},{"key":"FBSDKFeatureSKAdNetworkConversionValue","value":true},{"key":"FBSDKFeatureIAPLogging","value":true},{"key":"FBSDKFeatureIAPLoggingLib2","value":true},{"key":"FBSDKFeatureUshbaLogin","value":true},{"key":"FBSDKFeatureBypassAppSwitch","value":false},{"key":"FBSDKFeatureWebViewSchemeFiltering","value":true},{"key":"FBSDKFeatureAEM","value":false},{"key":"FBSDKFeatureAppEventsCloudbridge","value":false},{"key":"FBSDKFeatureServiceUpdateCompliance","value":false},{"key":"FBSDKFeatureAEMConversionFiltering","value":true},{"key":"FBSDKFeatureAEMCatalogMatching","value":false},{"key":"FBSDKFeatureAEMAdvertiserRuleMatchInServer","value":false},{"key":"app_events_if_auto_log_subs","value":true},{"key":"app_events_killswitch","value":false}]}]}
+
+..........U.n.0....si..1...R.r.C..+qM..Hv..a...BJ.8mlP.....fv..H`H.?^....D.....O."Y.W.......L}....d..c.`..|..:....(.....``..........U1..I4.B6.......?....+x!.....#.k$0.V.Ja`...v..I...hdL.mK.2m.9D./I...Jr.kgc..y>KR!
+K...................1D9tR`.0z.b.N[r..}`.m..O^._...,	..M.a.7..[Fc.B..."..h...3sg5......m.vJEz..]...7.Jr......t..c...O..A.G......^..<uv@
+.......E9c:.....N.ShkX;...|......:jn..q}..Y..jZ.p..g.g.F....EL..eMZ.8.VH....0u.7.l...Y.....R`0N.0c.EV.9 ..H..................~.=..qj.......r...O.~9.....|.._...
+
+
+{
+  "data": [
+    {
+      "gatekeepers": [
+        {
+          "key": "FBSDKFeatureInstrument",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureCrashReport",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAnrReport",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureRestrictiveDataFiltering",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureCodelessEvents",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureErrorReport",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureAAMR1",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAAMR2",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAAM",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureSuggestedEvents",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureCrashShield",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureThreadCheck",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeaturePrivacyProtection",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeaturePIIFiltering",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAddressDetectionSample",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureMTML",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureModelRequest",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureEventDeactivation",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureChromeCustomTabsUpdate",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureChromeCustomTabsPrefetching",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureIntelligentIntegrity",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureIntegritySample",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureMonitoring",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureATELogging",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureOnDeviceEventProcessing",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureOnDevicePostInstallEventProcessing",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureSKAdNetwork",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureSKAdNetworkConversionValue",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureIAPLogging",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureIAPLoggingLib2",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureUshbaLogin",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureBypassAppSwitch",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureWebViewSchemeFiltering",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAEM",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureAppEventsCloudbridge",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureServiceUpdateCompliance",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureAEMConversionFiltering",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAEMCatalogMatching",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureAEMAdvertiserRuleMatchInServer",
+          "value": "false",
+        },
+        {
+          "key": "app_events_if_auto_log_subs",
+          "value": "true",
+        },
+        {
+          "key": "app_events_killswitch",
+          "value": "false",
+        },
+      ],
+    },
+  ],
+},
+
+{
+  "data": [
+    {
+      "gatekeepers": [
+        {
+          "key": "FBSDKFeatureInstrument",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureCrashReport",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAnrReport",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureRestrictiveDataFiltering",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureCodelessEvents",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureErrorReport",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureAAMR1",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAAMR2",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAAM",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureSuggestedEvents",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureCrashShield",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureThreadCheck",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeaturePrivacyProtection",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeaturePIIFiltering",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAddressDetectionSample",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureMTML",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureModelRequest",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureEventDeactivation",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureChromeCustomTabsUpdate",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureChromeCustomTabsPrefetching",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureIntelligentIntegrity",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureIntegritySample",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureMonitoring",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureATELogging",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureOnDeviceEventProcessing",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureOnDevicePostInstallEventProcessing",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureSKAdNetwork",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureSKAdNetworkConversionValue",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureIAPLogging",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureIAPLoggingLib2",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureUshbaLogin",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureBypassAppSwitch",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureWebViewSchemeFiltering",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAEM",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureAppEventsCloudbridge",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureServiceUpdateCompliance",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureAEMConversionFiltering",
+          "value": "true",
+        },
+        {
+          "key": "FBSDKFeatureAEMCatalogMatching",
+          "value": "false",
+        },
+        {
+          "key": "FBSDKFeatureAEMAdvertiserRuleMatchInServer",
+          "value": "false",
+        },
+        {
+          "key": "app_events_if_auto_log_subs",
+          "value": "true",
+        },
+        {
+          "key": "app_events_killswitch",
+          "value": "false",
+        },
+      ],
+    },
+  ],
+},
+
+--------------------------------
+(packet) 10105 inbound to graph.facebook.com:0 () encrypted at time Mon Aug 15 16:54:3.4750 2022 (1660582470475)
+--------------------------------
+HTTP/1.1 200 OK
+Content-Encoding: gzip
+ETag: "7fd2ac7a5e15116bc7d9d6abbb5e160e8eb80a59"
+Content-Type: text/javascript; charset=UTF-8
+Vary: Origin
+Vary: Accept-Encoding
+x-fb-rlafr: 0
+Access-Control-Allow-Origin: *
+facebook-api-version: v8.0
+Strict-Transport-Security: max-age=15552000; preload
+Pragma: no-cache
+Cache-Control: private, no-cache, no-store, must-revalidate
+Expires: Sat, 01 Jan 2000 00:00:00 GMT
+x-fb-request-id: AxDb50C5DfExguOttmq6xZl
+x-fb-trace-id: BYrdYThvyts
+x-fb-rev: 1006024898
+X-FB-Debug: q6T263LGFuuNndKKP0e10i+IUhfaq1QSBvkbDKDBVbnf80IigSHH4dqxhCLOWv4mSldgIeEVekVPPweChjEqtQ==
+Date: Mon, 15 Aug 2022 16:54:30 GMT
+Alt-Svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+Connection: keep-alive
+Content-Length: 562
+
+{"supports_implicit_sdk_logging":true,"gdpv4_nux_enabled":false,"android_sdk_error_categories":[{"name":"login_recoverable","items":[{"code":102},{"code":190}],"recovery_message":"Please log into this app again to reconnect your Facebook account."}],"app_events_session_timeout":60,"app_events_feature_bitmask":81413,"seamless_login":1,"smart_login_bookmark_icon_url":"https:\/\/static.xx.fbcdn.net\/rsrc.php\/v3\/y6\/r\/yJMnJy6rFT-.png","smart_login_menu_icon_url":"https:\/\/static.xx.fbcdn.net\/rsrc.php\/v3\/yT\/r\/KNd968JWj-b.png","restrictive_data_filter_params":"{}","aam_rules":"{\"r1\":{\"k\":\"email,e-mail,em,electronicmail\",\"v\":\"^([A-Z0-9a-z._\\u0025+-]+\\u0040[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,})$\"},\"r2\":{\"k\":\"phone,mobile,contact\",\"v\":\"^([0-9]{5,15})$\"}}","suggested_events_setting":"{\"production_events\":[],\"eligible_for_prediction_events\":[]}","id":"176063449849557"}
+
+...........Mo.1....j.C.x...	{...z.T.1...aq...x.. .{e..r...|....GHc..8);Dg.e...r.....a.Q@...\..E.......v	.h.Q..9	..)...@..4.G.z@h...zEh..)K...8\.L...i=;...U}Zx.8..S.}...P',\..9.....1.........=...a..A.lC....0z. +.....sR	S..+.....Y.W.j.	Uky.i...t>...P..S.......4h..[e..i..	^....-sL...Ib..T//..5..<..P"S.m.......rBrrx....Kzx*..{.....'<.	_.u......e.F LL.....4k....T.....x..Z..F.GG	4....4.p..	,/. ..a
+..l. $....>>.....J....r.....\....:{u.Z...l..z3..3q..A.IH........Z.P..Y..f..j}\......Ic.cb..7....ry.B7...rqKh..B.:......R............w.zy;........N..M4B?....
+
+
+{
+  "aam_rules": "{\"r1\":{\"k\":\"email,e-mail,em,electronicmail\",\"v\":\"^([A-Z0-9a-z._\\u0025+-]+\\u0040[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,})$\"},\"r2\":{\"k\":\"phone,mobile,contact\",\"v\":\"^([0-9]{5,15})$\"}}",
+  "android_sdk_error_categories": [
+    {
+      "items": [
+        {
+          "code": "102",
+        },
+        {
+          "code": "190",
+        },
+      ],
+      "name": "login_recoverable",
+      "recovery_message": "Please log into this app again to reconnect your Facebook account.",
+    },
+  ],
+  "app_events_feature_bitmask": "81413",
+  "app_events_session_timeout": "60",
+  "gdpv4_nux_enabled": "false",
+  "id": "176063449849557",
+  "restrictive_data_filter_params": "{}",
+  "seamless_login": "1",
+  "smart_login_bookmark_icon_url": "https:\/\/static.xx.fbcdn.net\/rsrc.php\/v3\/y6\/r\/yJMnJy6rFT-.png",
+  "smart_login_menu_icon_url": "https:\/\/static.xx.fbcdn.net\/rsrc.php\/v3\/yT\/r\/KNd968JWj-b.png",
+  "suggested_events_setting": "{\"production_events\":[],\"eligible_for_prediction_events\":[]}",
+  "supports_implicit_sdk_logging": "true",
+},
+
+--------------------------------
+(packet) 10105 inbound to graph.facebook.com:0 () encrypted at time Mon Aug 15 16:54:3.4750 2022 (1660582470475)
+--------------------------------
+HTTP/1.1 200 OK
+Content-Encoding: gzip
+ETag: "7fd2ac7a5e15116bc7d9d6abbb5e160e8eb80a59"
+Content-Type: text/javascript; charset=UTF-8
+Vary: Origin
+Vary: Accept-Encoding
+x-fb-rlafr: 0
+Access-Control-Allow-Origin: *
+facebook-api-version: v8.0
+Strict-Transport-Security: max-age=15552000; preload
+Pragma: no-cache
+Cache-Control: private, no-cache, no-store, must-revalidate
+Expires: Sat, 01 Jan 2000 00:00:00 GMT
+x-fb-request-id: APpwdBnRGhFGIQzgTYctR5H
+x-fb-trace-id: CMjizGMiPIw
+x-fb-rev: 1006024898
+X-FB-Debug: yt2ggqP8x8BjNbaGZxdzNEdmY0EyI4gcNyzjHeg7Dse8YRyZPbs1329U3+G+PcM1hAKMghSRG8gevwd53MiZkw==
+Date: Mon, 15 Aug 2022 16:54:30 GMT
+Priority: u=3,i
+Alt-Svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+Connection: keep-alive
+Content-Length: 562
+
+{"supports_implicit_sdk_logging":true,"gdpv4_nux_enabled":false,"android_sdk_error_categories":[{"name":"login_recoverable","items":[{"code":102},{"code":190}],"recovery_message":"Please log into this app again to reconnect your Facebook account."}],"app_events_session_timeout":60,"app_events_feature_bitmask":81413,"seamless_login":1,"smart_login_bookmark_icon_url":"https:\/\/static.xx.fbcdn.net\/rsrc.php\/v3\/y6\/r\/yJMnJy6rFT-.png","smart_login_menu_icon_url":"https:\/\/static.xx.fbcdn.net\/rsrc.php\/v3\/yT\/r\/KNd968JWj-b.png","restrictive_data_filter_params":"{}","aam_rules":"{\"r1\":{\"k\":\"email,e-mail,em,electronicmail\",\"v\":\"^([A-Z0-9a-z._\\u0025+-]+\\u0040[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,})$\"},\"r2\":{\"k\":\"phone,mobile,contact\",\"v\":\"^([0-9]{5,15})$\"}}","suggested_events_setting":"{\"production_events\":[],\"eligible_for_prediction_events\":[]}","id":"176063449849557"}
+
+...........Mo.1....j.C.x...	{...z.T.1...aq...x.. .{e..r...|....GHc..8);Dg.e...r.....a.Q@...\..E.......v	.h.Q..9	..)...@..4.G.z@h...zEh..)K...8\.L...i=;...U}Zx.8..S.}...P',\..9.....1.........=...a..A.lC....0z. +.....sR	S..+.....Y.W.j.	Uky.i...t>...P..S.......4h..[e..i..	^....-sL...Ib..T//..5..<..P"S.m.......rBrrx....Kzx*..{.....'<.	_.u......e.F LL.....4k....T.....x..Z..F.GG	4....4.p..	,/. ..a
+..l. $....>>.....J....r.....\....:{u.Z...l..z3..3q..A.IH........Z.P..Y..f..j}\......Ic.cb..7....ry.B7...rqKh..B.:......R............w.zy;........N..M4B?....
+
+
+{
+  "aam_rules": "{\"r1\":{\"k\":\"email,e-mail,em,electronicmail\",\"v\":\"^([A-Z0-9a-z._\\u0025+-]+\\u0040[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,})$\"},\"r2\":{\"k\":\"phone,mobile,contact\",\"v\":\"^([0-9]{5,15})$\"}}",
+  "android_sdk_error_categories": [
+    {
+      "items": [
+        {
+          "code": "102",
+        },
+        {
+          "code": "190",
+        },
+      ],
+      "name": "login_recoverable",
+      "recovery_message": "Please log into this app again to reconnect your Facebook account.",
+    },
+  ],
+  "app_events_feature_bitmask": "81413",
+  "app_events_session_timeout": "60",
+  "gdpv4_nux_enabled": "false",
+  "id": "176063449849557",
+  "restrictive_data_filter_params": "{}",
+  "seamless_login": "1",
+  "smart_login_bookmark_icon_url": "https:\/\/static.xx.fbcdn.net\/rsrc.php\/v3\/y6\/r\/yJMnJy6rFT-.png",
+  "smart_login_menu_icon_url": "https:\/\/static.xx.fbcdn.net\/rsrc.php\/v3\/yT\/r\/KNd968JWj-b.png",
+  "suggested_events_setting": "{\"production_events\":[],\"eligible_for_prediction_events\":[]}",
+  "supports_implicit_sdk_logging": "true",
+},
+
+--------------------------------
+(packet) 10105 outbound to firebaseinstallations.googleapis.com:0 () encrypted at time Mon Aug 15 16:54:3.5390 2022 (1660582470539)
+--------------------------------
+POST /v1/projects/kapp-prod-c10ed/installations HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+Content-Encoding: gzip
+Cache-Control: no-cache
+X-Android-Package: ai.kanghealth
+X-Android-Cert: 970138E435610D45EA684C6C91B3C597FDEA2466
+x-goog-api-key: AIzaSyDq2DFalZbH9xDXL28IfVAu4CSrP9SdETc
+User-Agent: Dalvik/2.1.0 (Linux; U; Android 9; Pixel 3a Build/OPM7.181205.001)
+Host: firebaseinstallations.googleapis.com
+Connection: Keep-Alive
+Accept-Encoding: gzip
+Content-Length: 140
+
+{"fid":"ey620KZyRAKtpaIjYBxfhI","appId":"1:275086860740:android:60b2d980cfd2b172208491","authVersion":"FIS_v2","sdkVersion":"a:16.3.5"}
+
+..........VJ.LQ.RJ.432...r..)H...t.H..T.QJ,(..)0.2275.0.03071.J.K)..L.23H2J..0HNK1J24722.0.4..+-..K-*.....v../3.
+..d#D......L.j...*.....
+
+
+{
+  "appId": "1:275086860740:android:60b2d980cfd2b172208491",
+  "authVersion": "FIS_v2",
+  "fid": "ey620KZyRAKtpaIjYBxfhI",
+  "sdkVersion": "a:16.3.5",
+},
+
+--------------------------------
+(packet) 10105 inbound to firebaseinstallations.googleapis.com:0 () encrypted at time Mon Aug 15 16:54:3.8820 2022 (1660582470882)
+--------------------------------
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=UTF-8
+Vary: Origin
+Vary: X-Origin
+Vary: Referer
+Content-Encoding: gzip
+Date: Mon, 15 Aug 2022 16:54:30 GMT
+Server: ESF
+Cache-Control: private
+X-XSS-Protection: 0
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+Alt-Svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000,h3-Q050=":443"; ma=2592000,h3-Q046=":443"; ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443"; ma=2592000; v="46,43"
+Transfer-Encoding: chunked
+
+00000001
+.
+00000001
+.
+00000001
+.
+00000001
+.
+00000001
+.
+00000001
+.
+00000001
+.
+00001ef
+...}.Ks.P....
+..$......^@.6)@..[@/....djf9.>}....\,..:........<......	..Xb..o....,..5u.v.{.c.
+d.R.....W.fN..3....I...8M......m..bm...U..E..d.}..Z\...;....VJs.R2j.G..@'..DL;.L.M.l...".f..)....G[c.Q.....P...LwX....o...O.).#...12.....4..Am.c...hO......X..`.s.......2....J...v.=.....
+.MI..
+N~..z..)..n?....p..).....h].(....
+......;.e.X......#.>......jK....G.......px..3J.bBW.W^........W.`..Yx.v._...Ct.LO....MZ....S....@..[........'.Q........6.......2.H.S...dl.sj..)K0.A....k........v...
+0
+
+
+
+.... HwCNt. .... HwCN:. .... HwCN7. 
+--------------------------------
+(packet) 10028 outbound to connectivitycheck.gstatic.com:0 () encrypted at time Mon Aug 15 16:54:3.2001 2022 (1660582471200)
+--------------------------------
+GET /generate_204 HTTP/1.1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.32 Safari/537.36
+Host: connectivitycheck.gstatic.com
+Connection: Keep-Alive
+Accept-Encoding: gzip
+
+GET /generate_204 HTTP/1.1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.32 Safari/537.36
+Host: connectivitycheck.gstatic.com
+Connection: Keep-Alive
+Accept-Encoding: gzip
+
+
+
+
+--------------------------------
+(packet) 10028 inbound to connectivitycheck.gstatic.com:0 () encrypted at time Mon Aug 15 16:54:3.2241 2022 (1660582471224)
+--------------------------------
+HTTP/1.1 204 No Content
+Content-Length: 0
+Cross-Origin-Resource-Policy: cross-origin
+Date: Mon, 15 Aug 2022 16:54:31 GMT
+Alt-Svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000,h3-Q050=":443"; ma=2592000,h3-Q046=":443"; ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443"; ma=2592000; v="46,43"
+
+HTTP/1.1 204 No Content
+Content-Length: 0
+Cross-Origin-Resource-Policy: cross-origin
+Date: Mon, 15 Aug 2022 16:54:33 GMT
+Alt-Svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000,h3-Q050=":443"; ma=2592000,h3-Q046=":443"; ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443"; ma=2592000; v="46,43"
+
+
+
+.... HwCNt. .... HwCN:. .... HwCN7. .... HwCNt. .... HwCN:. .... HwCN7. 
+--------------------------------
+(packet) 10015 inbound to gmscompliance-pa.googleapis.com:443 (142.251.46.170) not encrypted at time Mon Aug 15 16:50:4.6648 2022 (1660582248664)
+--------------------------------
+....D..K.<G...`.6on.C}f:.H`c.e..I..0...hJ`.cDu..79*I.....|.{........'.L.Y....D..K.<G...`.6on.C}f:.H`c.e..I..0...hJ`.cDu..79*I.....|.{........'.L.Y
+
+
+--------------------------------
+(packet) 10015 outbound to gmscompliance-pa.googleapis.com:443 (142.251.46.170) not encrypted at time Mon Aug 15 16:50:4.6618 2022 (1660582248661)
+--------------------------------
+...."..QxMd U...s.'O.-.G.aX.Q.....G.l._.|...f....;.A'._2..t..d'.r.Sq D..^..s.C.D..1.o.D......L....0....|7.F.e............f....9\..Ma.......JN..<.N...9+l`.&.".
+..-m.g.2.3|HE..A..&[....VA!.!....y.....$.k...kk.9...sKb(.N.|..Y...z[....Ta',....*......4o.M}.YFG....Iz.j.af_......PE.{.n....s$n...:..n......J.^.!6*...........h\'v...n.H.`.v?..i.vs....9....@...:.q.i}..89C.r,-Q'..8.'t0.....ja..XUe.mh....)..7....7..NL.8....?Co"^.1...).5.....|...P.!.A...av......Sf.h._j.k.h...0S.....(...s..f..+..m.8:.B.....;4....w.j..xA.s.U.....sK...+...G...@...h..od.. .8Y.da../.-.....l_<.![].?m....x...9;.....C.......9.W.......y...+...."zI..Q.
+....c.).t.].............d>........-...b._....!.k../............}.2..W.8...8^.P..u.	j`..9..]."Ho[.P.........n... @=.R....`;.9z2.	..iE...H.zn..H..0vO........fGH..ys.?.H$y.G........m}...l.....P3G+]..7`N...........4..t..p<c.G.. ..!
+....!.j`d..2._...,ts..fA6...a.6.C`y.s".w..EW.j.$.X.. .
+.0Y.C.!..5Gg......?.C..'....5A.U<=..on..ew.....,/..9.'k.....(.H...........bE..3.(......$T....OOA._U	....$...|"'-....	....t).^..e.v[_D...6./m@.|".... l.hT;..Kf.9.z:.R..[unU....K
+t....../.9.I..h..M..X.[0..n..29..;.+.OS.TcVC.*.....M.J.oc.}..n!....Up....qC....Nv7..}qyg..\.^.v..}......(....4.o.:.....A..........JJ....#..y.......o...A.QX...A#2.......~..(........{...y..bI.Y,...|#......xg..?g.Q..6..Z.[..f.<r...+.5..Zil..T.....a.3...
+......AI.)G....	D.+x.O.	6....{.8E....$sSj...c.2.Tu.D_y.;:.M..lO......B......	....C...K@+w.3.......*.>...VL.....L. .......:.	t1...Ls.q...........A.0...(.....T.....L..9c.tN.=...C...-...0....7H..sHpb....*f.......A6). .7.$s.W..r.!...6...7....3	hhq_.#.o...G<.{.->(....szq1.0..Q^x-9V.._...e........O....
+..E.Hn............WL.K.-'...@...,.u .<.Hv'..U0..c...Ci;).6q.....H.d^.p...z..o&bP.5DQ.{Dw..
+.l..s....X.....h..a.@..|...Ek..bUp."...... .........PQ;.WW...t".......K..N.^.*.......!.==. 7...(.2..]U...lQg..j......pr."..O.n..&:..G...R....+sJ.1woKx....A.-V....(w...O.......[[..o....kp.L_..J.......'HM.n..f.21...\...X.: ...1..E..I.;........).A....,1...bZc#.2...ot.lG.c{.@.b	.....TE.C.C..Ap....{....B>..7.]66..8..h.k.....d	.?Q.@..
+.atf...R/.@;_V.....K.!fs..~...O.o.1@.U.5..l..+..g....3..................;....#D...ut[@$...-._..v]....a.<.....=)...7..ogGQ.9......U.h.{..iu......j.... .....v_...... .....ST....m....F..S4..j..s....&Vzu...z6M.1!P:..e..<wxe.v...vn.{...".i.N..QAM.("......M....dZ.......5.w....!...........0...yu..22F.Vk............q..#.2......'..NZqL..P@...]....$....|...? ....E,...j'.<'. .U1.......i.X{.G]".a.t..^5Z........w........;..NKx.....a..Ns.7.JJ.).di..;1.=..V.{..@.|..P...Q.9F.w.cD|(C.;mJ.&.\...;...".$.t..A.7n.8N.uR]..I!e...O...KTW...i@3...u..=J.W*..WN..c..v..f......A.0.)	....... ...8.....[...r...C@..A.~0.[.\e.uN..d.....Nc..c6[...a 6.v..."..l.....0Z`.L..}..t...j8.Q.'7w..3...c.2..a.	.......}.......0b...3c..PmcP$...n.._9#+...cY.bW...v~5.l.....oG...?!.:....
+.3....ir...@.....".*.}.v....6..i..u..
+n...-.....D.g.f.................	W..\.~.......D.$.(.Ao...j.-r.c....U.LA&......8.......);.....S....@.C...~.L.N..F.Zq.m;.3_sA......^..........N..M.f.b..k1<.2.....!...~Dp...._..y
+0w.c0R.....WZ.. ....W.0.....kx..}GQ.<U...cV..0V..Eb...(... ..H7i...*X.uF`#(.}Y/.......y..K.$..
+.tzt.^.MOl.f.)....].0.^x...Ov._b....B..=...<..i..:......n..v&.Z.].l-...,.....-. ^.... v.3..p...G.mm&X.-..n[.....E{dG..u.....9.....v........4....l.......">..Z{4.Z.EK+...bo.S`.......@<B..a..A..+2S..\`.!(}I......]._7..k.....-..Lu$.ld..0XR......2U...<z.4...
+~Q.T....`t	^.('.V.....b....?UG....U.q....H..B....g.;.Yf.wbJ...D.z..]l{O.../..u...i......Dax..{.S!J...I!~^.z]:x|...r...o.......h..&-n....."..
+r8
+.!9.G.7....\.....k	...:....qQ:v!..,5....oG.L.j(...c....+X..... ...S5Mw.
+..#.W.;..>....X..v.\......E..L...s{;1..Hq..`-...4.Y&..?e;.$..99_...~...`.............&...I...n..x...$Uo..../.<..e.....@......*.................T,.?
+..B...C.(...R..B..b.g"..........v..-E..3.{.....h..}.8.8.}W........q.x..Z.. ;7.. .<<xk$..t....?.m.Tt ..
+.[{
+...6.....r	.......F.....}.5.......S.....x$C?_.4:...Q...s"0.."..H&ly....d.5...p...`..m....e.F....p.......<...S.u. .....?.4X.......EZo.F...9d......Rct&.v..H..;P.:......*.u...rT$,&.!..>.i.-wT.O|.}...;...l bv.....[.&kG....n.jE.Z... t...M...~..&.?......R.....A.p..2.mL.*)j..p..z....c0.\.P.....K ......Ji[.L...c..no..S.*Z4>z.....bp'p..`x....|..b,.....4.. .@..<..a.."b7.F;..V........wf.....&.?l.........-0......n8.|.7....u.."..x.z..E.j.Cs..
+.....VP....f....~..$.".&....i.Yg.X.uA........-*..Q.#...9...(K..iE;&.-..>..?FpQX.iS...?.4]..>/}1..d....\8...}.<.n..J..+...)...~.....z.;.....9y..WY....|j...D..Q......~.....k..p.,..../}.h..8~&.....\....N.5...C.y.X...Q...zs4...(=.N...*h.....n/..d....ah....q.'...f.EL.	..(.....I....n....u4.@..	...u}."....O=.?..d.U.g...g...M..o....R...}.U..v....U]^...^P.....>\..b.PA.4..._..q@.@P`......4..~....*..?.\....y[...M..d..`$8.I{.r....e.=^..&...Q...S.....'.(...W......FM....]...'[0.."..zV...kOXLq{..
+.....`...V.s.2..	...G.+..nf....-.[......o.2.....q..h..0...V.}...K]........A8.RT`i....o......7.....!U..W.*@EW.p.p...o..y.....W.(g..W.n..dr.Y..G5....?.??.H#\..l...k...P...AW.......}..N.Uu(..[..W3..K.`...../ u..............>.;.S.S.....M.......&F...b+.8......(Z?gp...`^:.1..Hv..V.QO.}.#M0&...',s....A......@3(4A.....G......T_.`=..$.W}..P?7.P.5.1...2.....D....XO(..&..1..0..p^X{.....I.C....rP....-.O...N..[$.n."....:..\ ...).*.....sq...>...p<1o9.v".9..QEC...2S.]s6_....p..t...E..m..AS......"'...."g&.g......6....M.e.ns...	{t...[-.gF..G8.<x.9N...44z.l.v..v#.._..Q...2.'...,@....k..r.z......\.....S...D(i....'....@4r.._t.0=........7...QPI...V.s..e*..;g.>'c4ba>.......d..'.@.l...../...........!.)..:A......i	..b.H..s.[.....a.... .CA..D.`....)...,...8.{...EM..X................}..wqP.r.H".....0..t5L.aQ..._..A.H....F.Kn.!r.:.j......W.fQ.\.....YY$.c...3D.S.....p ..>....[...w..3i.wO.-..A..?.....5X.D.....
+!^Gd..p6M/f....)E.p..W...b5.!~.9.wz.....1.9.|.5...da...G. f`..*...u.....<....3A"P.y..S.XU....y...zs1.>....|..q(`^L..rC.V.4~.....>dzL.E..B..C./..g..8ye.v=.0.7J....C.q.^.=G..L.+K	v$Z...!u.&V.r.P.z{..@.Z...?!.G.R.Ip.@.-.]1..xz.....g......F|.....^..
+....XRJT..[/R..,..l...)$.[!i.0E.t..2....c..3r.r..g..bS&kP.qL..^.D.i..<k.a.......	....l3y.4.... V...t..4X...V..|.9H.k..":.=.....5.......,{....n.zV...Lu.H...fU.u2?E.RW....+<&JR...	....!."h;.I.|p/..{.....V......#*.]g..|...O..U.<..@8A...U..g.W6.......Sg0.cJ..a.................3._=q..R.....v@......]t...........C....j....]...	b#..yB..yb8l.>k...s.pAd..A.......Uc.(.t.c6.l..{.c.~.O...H....VX....1.`.Q....X...u....W...ha..Aa1V........DY...q.......!>....Q.5.....X..Hf..t....7....#~
+.T.<)B...,...d=..H.p....`..aU`+..8..5..n..z..........Q.C..J.GU...L-Y7E.E;39....u.e...L.NR&*.H..V...j..b=I[Q.Y...w.3.$tW............h..7..:.@~..#,vm{.N.C...a....O...H]9..../LwJ .
+.r...zka.j/..\..1?.....g....?.+i`'8@.....)y...E.BZ ..*.>...GD6.[..{.F...;.3....-..na..[}F.q...Q...3Ix....$,.Rm.z..Vs.l..O.5.f......I......7...3.u6.#......q:..{.j.....].k.7.,k...|.............z...A}q. .."Q..	@..7.*D.......?...:..L$.....6.g1...<.....h.x~D..!Q.c?.......*].'.Z...K..4.....wf....>..h.....yfIR.;YH.b#n...]}.. .
+...u.*....o8..)..jJ!...X.}.!.P..f..A...t...@...........4.0.S!w....'....>...Q.....#.$.	. .VT...|...WhL.p^qF.~..:....?C.ad.....yN...Q...N'b.....g....#.!.V.c.
+.........J...FQ..G.......l7...gHOU.U..y.fbU.....6...O.9..EE..;h.... .p.}ob......-..........?..`...d^.*....Nb$7.]..3....._.28\c......r.g......,...5..hj.E.....$..X.....*].8........+Z...U..x..t.^.~..=.`..C...K...6..B.."...........,3.h.A......=yq.....B"..}.....}.f.....T1..x.....&..aA.)
+....v.J...).i..&...2.~...$/.h0.X.....kgO.....>.
+..1.b|."..f..)...fY.x..,.L..5......c..?.r....L..@....vKa.....[.}.....<S...dC.+....C....v.... 
+.X.	............}+....@..."..x.9......*..1F.X..*......................B...Q..L.....R........L...j.J_..M..*......V'...G...S.J.x.. k.v(2M....-..WJm]...{....y..{O`..........~.S.l.s.Z.......\*.Z...z .h..W...?..eNh.V]FN...dm.[c.o...bj3..c..Rz.l....K..>.....8C..U.7o.Y....\N.E..D..e...C...	.]].._...S~..#|.Z.}..D....A....R..Y..=.Q.....[.f	.`.W....8.`......<3+S...W...0.....0......	..!...l...Jh.q..-.J|{.l.0.
+..q.+........,.2..,.hO.f..p.|...........j)T.....4.~B..#?.2.*.m^`....	.g$...."uQ..02.:hJ?.IL.).$k$.|.#M.qSU.G....]...F.59...w.....wen.^>.D4.X.h4..z.6}...;..	.K^..4......V(...Dlw.Xw..4..}....$}
+.....]..w..|..[].......................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................a.}.!..c.wQ.......aX.Q.....G.l._.|...f....;.A'._2..t..d'.r.Sq D..^..s.C.D..1.o.D......L....0....|7.F.e............f....9\..Ma.......JN..<.N...9+l`.&.".
+..-m.g.2.3|HE..A..&[....VA!.!....y.....$.k...kk.9...sKb(.N.|..Y...z[....Ta',....*......4o.M}.YFG....Iz.j.af_......PE.{.n....s$n...:..n......J.^.!6*...........h\'v...n.H.`.v?..i.vs....9....@...:.q.i}..89C.r,-Q'..8.'t0.....ja..XUe.mh....)..7....7..NL.8....?Co"^.1...).5.....|...P.!.A...av......Sf.h._j.k.h...0S.....(...s..f..+..m.8:.B.....;4....w.j..xA.s.U.....sK...+...G...@...h..od.. .8Y.da../.-.....l_<.![].?m....x...9;.....C.......9.W.......y...+...."zI..Q.
+....c.).t.].............d>........-...b._....!.k../............}.2..W.8...8^.P..u.	j`..9..]."Ho[.P.........n... @=.R....`;.9z2.	..iE...H.zn..H..0vO........fGH..ys.?.H$y.G........m}...l.....P3G+]..7`N...........4..t..p<c.G.. ..!
+....!.j`d..2._...,ts..fA6...a.6.C`y.s".w..EW.j.$.X.. .
+.0Y.C.!..5Gg......?.C..'....5A.U<=..on..ew.....,/..9.'k.....(.H...........bE..3.(......$T....OOA._U	....$...|"'-....	....t).^..e.v[_D...6./m@.|".... l.hT;..Kf.9.z:.R..[unU....K
+t....../.9.I..h..M..X.[0..n..29..;.+.OS.TcVC.*.....M.J.oc.}..n!....Up....qC....Nv7..}qyg..\.^.v..}......(....4.o.:.....A..........JJ....#..y.......o...A.QX...A#2.......~..(........{...y..bI.Y,...|#......xg..?g.Q..6..Z.[..f.<r...+.5..Zil..T.....a.3...
+......AI.)G....	D.+x.O.	6....{.8E....$sSj...c.2.Tu.D_y.;:.M..lO......B......	....C...K@+w.3.......*.>...VL.....L. .......:.	t1...Ls.q...........A.0...(.....T.....L..9c.tN.=...C...-...0....7H..sHpb....*f.......A6). .7.$s.W..r.!...6...7....3	hhq_.#.o...G<.{.->(....szq1.0..Q^x-9V.._...e........O....
+..E.Hn............WL.K.-'...@...,.u .<.Hv'..U0..c...Ci;).6q.....H.d^.p...z..o&bP.5DQ.{Dw..
+.l..s....X.....h..a.@..|...Ek..bUp."...... .........PQ;.WW...t".......K..N.^.*.......!.==. 7...(.2..]U...lQg..j......pr."..O.n..&:..G...R....+sJ.1woKx....A.-V....(w...O.......[[..o....kp.L_..J.......'HM.n..f.21...\...X.: ...1..E..I.;........).A....,1...bZc#.2...ot.lG.c{.@.b	.....TE.C.C..Ap....{....B>..7.]66..8..h.k.....d	.?Q.@..
+.atf...R/.@;_V.....K.!fs..~...O.o.1@.U.5..l..+..g....3..................;....#D...ut[@$...-._..v]....a.<.....=)...7..ogGQ.9......U.h.{..iu......j.... .....v_...... .....ST....m....F..S4..j..s....&Vzu...z6M.1!P:..e..<wxe.v...vn.{...".i.N..QAM.("......M....dZ.......5.w....!...........0...yu..22F.Vk............q..#.2......'..NZqL..P@...]....$....|...? ....E,...j'.<'. .U1.......i.X{.G]".a.t..^5Z........w........;..NKx.....a..Ns.7.JJ.).di..;1.=..V.{..@.|..P...Q.9F.w.cD|(C.;mJ.&.\...;...".$.t..A.7n.8N.uR]..I!e...O...KTW...i@3...u..=J.W*..WN..c..v..f......A.0.)	....... ...8.....[...r...C@..A.~0.[.\e.uN..d.....Nc..c6[...a 6.v..."..l.....0Z`.L..}..t...j8.Q.'7w..3...c.2..a.	.......}.......0b...3c..PmcP$...n.._9#+...cY.bW...v~5.l.....oG...?!.:....
+.3....ir...@.....".*.}.v....6..i..u..
+n...-.....D.g.f.................	W..\.~.......D.$.(.Ao...j.-r.c....U.LA&......8.......);.....S....@.C...~.L.N..F.Zq.m;.3_sA......^..........N..M.f.b..k1<.2.....!...~Dp...._..y
+0w.c0R.....WZ.. ....W.0.....kx..}GQ.<U...cV..0V..Eb...(... ..H7i...*X.uF`#(.}Y/.......y..K.$..
+.tzt.^.MOl.f.)....].0.^x...Ov._b....B..=...<..i..:......n..v&.Z.].l-...,.....-. ^.... v.3..p...G.mm&X.-..n[.....E{dG..u.....9.....v........4....l.......">..Z{4.Z.EK+...bo.S`.......@<B..a..A..+2S..\`.!(}I......]._7..k.....-..Lu$.ld..0XR......2U...<z.4...
+~Q.T....`t	^.('.V.....b....?UG....U.q....H..B....g.;.Yf.wbJ...D.z..]l{O.../..u...i......Dax..{.S!J...I!~^.z]:x|...r...o.......h..&-n....."..
+r8
+.!9.G.7....\.....k	...:....qQ:v!..,5....oG.L.j(...c....+X..... ...S5Mw.
+..#.W.;..>....X..v.\......E..L...s{;1..Hq..`-...4.Y&..?e;.$..99_...~...`.............&...I...n..x...$Uo..../.<..e.....@......*.................T,.?
+..B...C.(...R..B..b.g"..........v..-E..3.{.....h..}.8.8.}W........q.x..Z.. ;7.. .<<xk$..t....?.m.Tt ..
+.[{
+...6.....r	.......F.....}.5.......S.....x$C?_.4:...Q...s"0.."..H&ly....d.5...p...`..m....e.F....p.......<...S.u. .....?.4X.......EZo.F...9d......Rct&.v..H..;P.:......*.u...rT$,&.!..>.i.-wT.O|.}...;...l bv.....[.&kG....n.jE.Z... t...M...~..&.?......R.....A.p..2.mL.*)j..p..z....c0.\.P.....K ......Ji[.L...c..no..S.*Z4>z.....bp'p..`x....|..b,.....4.. .@..<..a.."b7.F;..V........wf.....&.?l.........-0......n8.|.7....u.."..x.z..E.j.Cs..
+.....VP....f....~..$.".&....i.Yg.X.uA........-*..Q.#...9...(K..iE;&.-..>..?FpQX.iS...?.4]..>/}1..d....\8...}.<.n..J..+...)...~.....z.;.....9y..WY....|j...D..Q......~.....k..p.,..../}.h..8~&.....\....N.5...C.y.X...Q...zs4...(=.N...*h.....n/..d....ah....q.'...f.EL.	..(.....I....n....u4.@..	...u}."....O=.?..d.U.g...g...M..o....R...}.U..v....U]^...^P.....>\..b.PA.4..._..q@.@P`......4..~....*..?.\....y[...M..d..`$8.I{.r....e.=^..&...Q...S.....'.(...W......FM....]...'[0.."..zV...kOXLq{..
+.....`...V.s.2..	...G.+..nf....-.[......o.2.....q..h..0...V.}...K]........A8.RT`i....o......7.....!U..W.*@EW.p.p...o..y.....W.(g..W.n..dr.Y..G5....?.??.H#\..l...k...P...AW.......}..N.Uu(..[..W3..K.`...../ u..............>.;.S.S.....M.......&F...b+.8......(Z?gp...`^:.1..Hv..V.QO.}.#M0&...',s....A......@3(4A.....G......T_.`=..$.W}..P?7.P.5.1...2.....D....XO(..&..1..0..p^X{.....I.C....rP....-.O...N..[$.n."....:..\ ...).*.....sq...>...p<1o9.v".9..QEC...2S.]s6_....p..t...E..m..AS......"'...."g&.g......6....M.e.ns...	{t...[-.gF..G8.<x.9N...44z.l.v..v#.._..Q...2.'...,@....k..r.z......\.....S...D(i....'....@4r.._t.0=........7...QPI...V.s..e*..;g.>'c4ba>.......d..'.@.l...../...........!.)..:A......i	..b.H..s.[.....a.... .CA..D.`....)...,...8.{...EM..X................}..wqP.r.H".....0..t5L.aQ..._..A.H....F.Kn.!r.:.j......W.fQ.\.....YY$.c...3D.S.....p ..>....[...w..3i.wO.-..A..?.....5X.D.....
+!^Gd..p6M/f....)E.p..W...b5.!~.9.wz.....1.9.|.5...da...G. f`..*...u.....<....3A"P.y..S.XU....y...zs1.>....|..q(`^L..rC.V.4~.....>dzL.E..B..C./..g..8ye.v=.0.7J....C.q.^.=G..L.+K	v$Z...!u.&V.r.P.z{..@.Z...?!.G.R.Ip.@.-.]1..xz.....g......F|.....^..
+....XRJT..[/R..,..l...)$.[!i.0E.t..2....c..3r.r..g..bS&kP.qL..^.D.i..<k.a.......	....l3y.4.... V...t..4X...V..|.9H.k..":.=.....5.......,{....n.zV...Lu.H...fU.u2?E.RW....+<&JR...	....!."h;.I.|p/..{.....V......#*.]g..|...O..U.<..@8A...U..g.W6.......Sg0.cJ..a.................3._=q..R.....v@......]t...........C....j....]...	b#..yB..yb8l.>k...s.pAd..A.......Uc.(.t.c6.l..{.c.~.O...H....VX....1.`.Q....X...u....W...ha..Aa1V........DY...q.......!>....Q.5.....X..Hf..t....7....#~
+.T.<)B...,...d=..H.p....`..aU`+..8..5..n..z..........Q.C..J.GU...L-Y7E.E;39....u.e...L.NR&*.H..V...j..b=I[Q.Y...w.3.$tW............h..7..:.@~..#,vm{.N.C...a....O...H]9..../LwJ .
+.r...zka.j/..\..1?.....g....?.+i`'8@.....)y...E.BZ ..*.>...GD6.[..{.F...;.3....-..na..[}F.q...Q...3Ix....$,.Rm.z..Vs.l..O.5.f......I......7...3.u6.#......q:..{.j.....].k.7.,k...|.............z...A}q. .."Q..	@..7.*D.......?...:..L$.....6.g1...<.....h.x~D..!Q.c?.......*].'.Z...K..4.....wf....>..h.....yfIR.;YH.b#n...]}.. .
+...u.*....o8..)..jJ!...X.}.!.P..f..A...t...@...........4.0.S!w....'....>...Q.....#.$.	. .VT...|...WhL.p^qF.~..:....?C.ad.....yN...Q...N'b.....g....#.!.V.c.
+.........J...FQ..G.......l7...gHOU.U..y.fbU.....6...O.9..EE..;h.... .p.}ob......-..........?..`...d^.*....Nb$7.]..3....._.28\c......r.g......,...5..hj.E.....$..X.....*].8........+Z...U..x..t.^.~..=.`..C...K...6..B.."...........,3.h.A......=yq.....B"..}.....}.f.....T1..x.....&..aA.)
+....v.J...).i..&...2.~...$/.h0.X.....kgO.....>.
+..1.b|."..f..)...fY.x..,.L..5......c..?.r....L..@....vKa.....[.}.....<S...dC.+....C....v.... 
+.X.	............}+....@..."..x.9......*..1F.X..*......................B...Q..L.....R........L...j.J_..M..*......V'...G...S.J.x.. k.v(2M....-..WJm]...{....y..{O`..........~.S.l.s.Z.......\*.Z...z .h..W...?..eNh.V]FN...dm.[c.o...bj3..c..Rz.l....K..>.....8C..U.7o.Y....\N.E..D..e...C...	.]].._...S~..#|.Z.}..D....A....R..Y..=.Q.....[.f	.`.W....8.`......<3+S...W...0.....0......	..!...l...Jh.q..-.J|{.l.0.
+..q.+........,.2..,.hO.f..p.|...........j)T.....4.~B..#?.2.*.m^`....	.g$...."uQ..02.:hJ?.IL.).$k$.|.#M.qSU.G....]...F.59...w.....wen.^>.D4.X.h4..z.6}...;..	.K^..4......V(...Dlw.Xw..4..}....$}
+.....]..w..|..[]................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+
+. .4..%. . q/.... . .4..%. . q/.... 
+--------------------------------
+(packet) 10015 inbound to playatoms-pa.googleapis.com:443 (142.250.189.202) not encrypted at time Mon Aug 15 16:51:0.8679 2022 (1660582269867)
+--------------------------------
+....D....X.. .).ds..HN...+{.J.....0`.nd.qEF...:.........w..<..s.
+...yA.....D....X.. .).ds..HN...+{.J.....0`.nd.qEF...:.........w..<..s.
+...yA.
+
+
+--------------------------------
+(packet) 10015 outbound to playatoms-pa.googleapis.com:443 (142.250.189.202) not encrypted at time Mon Aug 15 16:51:0.8579 2022 (1660582269857)
+--------------------------------
+...."..s.u.J4.8id...Ym....Gh..\7$..o.tB.......,O......*..@. ..j>.)..n....&...,.#.2...K.=.....r[PX	.^........dqj.=.v..6......7@H....5.....5Q...B_.a.d.;.w...*.q.-x..r.cG.-
+Q.2......<s..L.N.j..D.........a.......\;.+..I...qS.e.nc[......J....8.....!.F...(.f5.pF..5+.0..8.i.......s.'.....\.}.......S...........Br..>.....TW..y...	.}.._...Xx.q.9r.....l.2y.c.....I....a...{}[..........}...
+<.R.t.5ye..l|.....,...........6.f....>v.m......c>`*..Z.-;..0pGZj....i.t+#.$....4(_...Q..|.$9....|SI...b.\~....l*."Ngjo*T.F.....R..M.n ......(...l.,..tE~y).t.(y.*..p....'8):...p^.B...hZ.]L....~Zw6..nz.T..V.Z..<y.4....d.6...g..2(.Se,..L...2.A..T..a..]#.....{......K[1P..i......
+
+8B.0....>..Q.w...g..~Xs.....Cv..$F.g.....f....q...oaB!..H)O.$..*... .Z.\..w..._....Wv/]Qc.$#2u........ih....@.V<....o..L...a.Cn...............S.7dA.p.|}v....*..]w...a....8s......=J..J.h)A.6.4,.fX.`:..V.D.......v..E....Y..t$A.=..it.`..........8N...j.(.M..s.@w...I..X.f7"..D...D..M..0....gxh:F.lb..4........s...@..
+...3.@.M...M
+w...7........H''T'.....L7.N..;.{.....v.j..._.1.A.../L..6......N....;D....*&.j....g.:.`Wu.. ....E.~.. ./.T6.vW.0.V......Kg.11......H.W.........).../.\.w....h....ZMj......}._.....4n....;.t.&......A...U..w".=...p.{.....}............t
+.o.x....n.$.....y>..X.uK.n8a5M=...I...v......e....F~9p...j0@s,.S.....0................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................o..J....U_...d.8...Gh..\7$..o.tB.......,O......*..@. ..j>.)..n....&...,.#.2...K.=.....r[PX	.^........dqj.=.v..6......7@H....5.....5Q...B_.a.d.;.w...*.q.-x..r.cG.-
+Q.2......<s..L.N.j..D.........a.......\;.+..I...qS.e.nc[......J....8.....!.F...(.f5.pF..5+.0..8.i.......s.'.....\.}.......S...........Br..>.....TW..y...	.}.._...Xx.q.9r.....l.2y.c.....I....a...{}[..........}...
+<.R.t.5ye..l|.....,...........6.f....>v.m......c>`*..Z.-;..0pGZj....i.t+#.$....4(_...Q..|.$9....|SI...b.\~....l*."Ngjo*T.F.....R..M.n ......(...l.,..tE~y).t.(y.*..p....'8):...p^.B...hZ.]L....~Zw6..nz.T..V.Z..<y.4....d.6...g..2(.Se,..L...2.A..T..a..]#.....{......K[1P..i......
+
+8B.0....>..Q.w...g..~Xs.....Cv..$F.g.....f....q...oaB!..H)O.$..*... .Z.\..w..._....Wv/]Qc.$#2u........ih....@.V<....o..L...a.Cn...............S.7dA.p.|}v....*..]w...a....8s......=J..J.h)A.6.4,.fX.`:..V.D.......v..E....Y..t$A.=..it.`..........8N...j.(.M..s.@w...I..X.f7"..D...D..M..0....gxh:F.lb..4........s...@..
+...3.@.M...M
+w...7........H''T'.....L7.N..;.{.....v.j..._.1.A.../L..6......N....;D....*&.j....g.:.`Wu.. ....E.~.. ./.T6.vW.0.V......Kg.11......H.W.........).../.\.w....h....ZMj......}._.....4n....;.t.&......A...U..w".=...p.{.....}............t
+.o.x....n.$.....y>..X.uK.n8a5M=...I...v......e....F~9p...j0@s,.S.....0.........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+
+
+{
+},
+
+{
+},
+
+--------------------------------

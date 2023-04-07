@@ -138,7 +138,7 @@ class PyLogAnalyze:
         Analyze the log file for identifiers.
         """
         try:
-            with open(appPath / "log", "r") as file:
+            with open(appPath / "log", "r", errors='ignore') as file:
                 for line in file:
                     if "DNS:" in line:
                         currentDomain = line.split("DNS:")[1]

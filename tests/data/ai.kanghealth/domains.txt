@@ -1,0 +1,20 @@
+net_log
+
+(packet) 10105 inbound to firebaseinstallations.googleapis.com:0 
+(packet) 10015 inbound to gmscompliance-pa.googleapis.com:443 (142.251.46.170) not encrypted at time Mon Aug 15 16:50:4.6648 2022 (1660582248664)
+
+(packet) 10015 outbound to playatoms-pa.googleapis.com:443 (142.250.189.202) not encrypted at time Mon Aug 15 16:51:0.8579 2022 (1660582269857)
+
+(packet) 10105 outbound to graph.facebook.com:0 
+(packet) 10015 inbound to playatoms-pa.googleapis.com:443 (142.250.189.202) not encrypted at time Mon Aug 15 16:51:0.8679 2022 (1660582269867)
+
+(packet) 10105 outbound to firebaseinstallations.googleapis.com:0 
+(packet) 10015 outbound to gmscompliance-pa.googleapis.com:443 (142.251.46.170) not encrypted at time Mon Aug 15 16:50:4.6618 2022 (1660582248661)
+
+(packet) 10028 inbound to connectivitycheck.gstatic.com:0 
+(packet) 10028 outbound to connectivitycheck.gstatic.com:0 
+(packet) 10105 inbound to graph.facebook.com:0 
+
+
+chrome_packet
+

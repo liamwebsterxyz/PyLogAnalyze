@@ -1,0 +1,22 @@
+net_log
+
+(packet) 10028 inbound to play.googleapis.com:0 
+(packet) ae.mediclinic.app outbound to firebaseinstallations.googleapis.com:0 
+(packet) 10015 outbound to app-measurement.com:0 
+(packet) 10103 outbound to api.twitter.com:0 
+(packet) ae.mediclinic.app inbound to firebaseinstallations.googleapis.com:0 
+(packet) 10103 inbound to api.twitter.com:0 
+(packet) 10015 inbound to android.apis.google.com:0 
+(packet) ae.mediclinic.app inbound to crashlyticsreports-pa.googleapis.com:0 
+(packet) ae.mediclinic.app outbound to crashlyticsreports-pa.googleapis.com:0 
+(packet) ae.mediclinic.app inbound to firebase-settings.crashlytics.com:0 
+(packet) 10015 inbound to app-measurement.com:0 
+(packet) ae.mediclinic.app outbound to firebase-settings.crashlytics.com:0 
+(packet) 10015 outbound to android.apis.google.com:0 
+(packet) 10028 outbound to play.googleapis.com:0 
+(packet) 10028 inbound to connectivitycheck.gstatic.com:0 
+(packet) 10028 outbound to connectivitycheck.gstatic.com:0 
+
+
+chrome_packet
+
