@@ -128,6 +128,7 @@ class PyLogAnalyze:
             if appID in self.appList.keys():
                 currentApp_obj = self.appList[appID]
             else:
+                print(f"App {appID} not found in appList. Creating new app object.")
                 currentApp_obj = app.App(appID, appInfo['testing_stage'].values[0], appInfo['hipaa_compliant'].values[0], appInfo['us_audience'].values[0], self.identifiers.keys())
                 # add app to appList
                 self.appList[appID] = currentApp_obj
@@ -181,7 +182,7 @@ class PyLogAnalyze:
 
                 # DEBUG
                 if currentDomain not in app_obj.DNSList:
-                    print(currentDomain)
+                    print(f"Domain {currentDomain} not found in DNSList.")
 
                 if proc_ID == 10081:
                     # get domain info
