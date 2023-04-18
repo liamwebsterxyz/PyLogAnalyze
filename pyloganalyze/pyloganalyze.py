@@ -191,8 +191,12 @@ class PyLogAnalyze:
                         currentDomain_obj = self.domainList[currentDomain]
                     else:
                         # create domain object
-                        currentDomain_obj = domain.Domain(currentDomain, currentDomainInfo['third_party'].values[0], currentDomainInfo['hipaa_compliant'].values[0], currentDomainInfo['us_ip'].values[0], self.identifiers.keys())
-                        self.domainList[currentDomain] = currentDomain_obj
+                        try:
+                            currentDomain_obj = domain.Domain(currentDomain, currentDomainInfo['third_party'].values[0], currentDomainInfo['hipaa_compliant'].values[0], currentDomainInfo['us_ip'].values[0], self.identifiers.keys())
+                        except:
+                            print(f"Error creating domain object for {currentDomain}")
+                            logging.error(f"Error creating domain object for {currentDomain}")
+                            continue
                     
                     try:
                         decoded_payload = base64.b64decode(payload).decode('utf-8', errors='replace')
@@ -292,7 +296,12 @@ class PyLogAnalyze:
                                 currentDomain_obj = self.domainList[currentDomain]
                             else:
                                 # create domain object
-                                currentDomain_obj = domain.Domain(currentDomain, currentDomainInfo['third_party'].values[0], currentDomainInfo['hipaa_compliant'].values[0], currentDomainInfo['us_ip'].values[0], self.identifiers.keys())
+                                try:
+                                    currentDomain_obj = domain.Domain(currentDomain, currentDomainInfo['third_party'].values[0], currentDomainInfo['hipaa_compliant'].values[0], currentDomainInfo['us_ip'].values[0], self.identifiers.keys())
+                                except:
+                                    print(f"Error creating domain object for {currentDomain}")
+                                    logging.error(f"Error creating domain object for {currentDomain}")
+                                    continue
                                 self.domainList[currentDomain] = currentDomain_obj
                             
                         domainNext = False
