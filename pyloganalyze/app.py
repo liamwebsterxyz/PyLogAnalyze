@@ -20,7 +20,6 @@ class App:
         self.usBased = us_based
         self.DNSList = set()
         self.trafficList = set()
-        self.capturedDNSList = set()
         for identifier in identifiers:
             setattr(self, identifier + "_FirstParty", set())
             setattr(self, identifier + "_ThirdParty", set())
@@ -62,7 +61,7 @@ class App:
         # TODO: not the best way to do this ie hardcode the order possible?
         ret = []
         for identifiers in self.__dict__.values():
-            ret.append(identifiers.values())
+            ret.append(identifiers)
         return ret
 
     def AddDomain(self, identifierKey: str, domain: str, thirdParty: bool,) -> None:
