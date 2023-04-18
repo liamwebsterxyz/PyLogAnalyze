@@ -197,12 +197,12 @@ class PyLogAnalyze:
                         self.domainList[currentDomain] = Domain_obj
 
                     decoded_data = base64.b64decode(outbound_payload).decode('utf-8', 'replace')
-                    for identifierKey in identifiers.keys():
-                            if _IdentifierSearch(identifierKey, identifiers[identifierKey], decoded_data):
+                    for identifierKey, identifierValues in identifiers.items():
+                            if _IdentifierSearch(identifierKey, identifierValues, decoded_data):
                                 try:
                                     app_obj.AddDomain(identifierKey, outbound_domain, Domain_obj.thirdParty)
                                     Domain_obj.AddApp(app_obj.AppID, identifierKey)
-                                    print("here")
+                                    print(app_obj.name)
                                 except Exception as e:
                                     logging.error(f"Error Updating Domain and App Objects: {e}")
         except:
