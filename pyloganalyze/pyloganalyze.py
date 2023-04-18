@@ -54,7 +54,6 @@ def _IdentifierSearch(identifierKey: str, identifiers: List[str], line: str) -> 
     """
     # TODO improve search process to not be so naive REGEX? 
     # TODO add search until next domain... e.g. to search for first and last name then combine to determine full name 
-    line = line.lower()
     success = False
     if identifierKey == "FullName":
         for identity in identifiers:
@@ -196,7 +195,8 @@ class PyLogAnalyze:
                         Domain_obj = domain.Domain(currentDomain, currentDomainInfo['third_party'].values[0], currentDomainInfo['hipaa_compliant'].values[0], currentDomainInfo['us_ip'].values[0], self.identifiers.keys())
                         self.domainList[currentDomain] = Domain_obj
 
-                    decoded_data = base64.b64decode(outbound_payload).decode('utf-8', 'replace')
+                    decoded_data = (base64.b64decode(outbound_payload).decode('utf-8', 'replace')).lower()
+
                     for identifierKey, identifierValues in identifiers.items():
                             if _IdentifierSearch(identifierKey, identifierValues, decoded_data):
                                 try:
@@ -207,9 +207,6 @@ class PyLogAnalyze:
                                     logging.error(f"Error Updating Domain and App Objects: {e}")
         except:
             logging.warning(f"File {appPath / 'net_log'} not found.")
-
-
-
 
 
     def _Analyze_PlainLog(self, appPath: Path, identifiers: dict, app_obj: app) -> None:
@@ -255,8 +252,8 @@ class PyLogAnalyze:
                                 currentDomain_obj = domain.Domain(currentDomain, currentDomainInfo['third_party'].values[0], currentDomainInfo['hipaa_compliant'].values[0], currentDomainInfo['us_ip'].values[0], self.identifiers.keys())
                                 self.domainList[currentDomain] = currentDomain_obj
                     else:
-                        for identifierKey in identifiers.keys():
-                            if _IdentifierSearch(identifierKey, identifiers[identifierKey], line):
+                        for identifierKey, identifierValues in identifiers.items():
+                            if _IdentifierSearch(identifierKey, identifierValues, line.lower()):
                                 try:
                                     app_obj.AddDomain(identifierKey, currentDomain_full, currentDomain_obj.thirdParty)
                                     currentDomain_obj.AddApp(app_obj.AppID, identifierKey)
@@ -300,8 +297,8 @@ class PyLogAnalyze:
                     elif "---------------- new packet ----------------" in line:
                         domainNext = True
                     else:
-                        for identifierKey in identifiers.keys():
-                            if _IdentifierSearch(identifierKey, identifiers[identifierKey], line):
+                        for identifierKey, identifierValues in identifiers.items():
+                            if _IdentifierSearch(identifierKey, identifierValues, line.lower()):
                                 try:
                                     app_obj.AddDomain(identifierKey, currentDomain_full, currentDomain_obj.thirdParty)
                                     currentDomain_obj.AddApp(app_obj.AppID, identifierKey)
