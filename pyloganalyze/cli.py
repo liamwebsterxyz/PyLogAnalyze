@@ -9,6 +9,7 @@ import json
 import pickle
 import logging
 import pandas as pd
+import chardet
 
 app = typer.Typer()
 

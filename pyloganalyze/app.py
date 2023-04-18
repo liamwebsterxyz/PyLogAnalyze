@@ -19,6 +19,7 @@ class App:
         self.hipaaCompliant = hipaa_compliant
         self.usBased = us_based
         self.DNSList = set()
+        self.trafficList = set()
         self.capturedDNSList = set()
         for identifier in identifiers:
             setattr(self, identifier + "_FirstParty", set())
