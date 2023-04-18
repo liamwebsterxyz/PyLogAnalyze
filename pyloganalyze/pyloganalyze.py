@@ -134,7 +134,7 @@ class PyLogAnalyze:
             # # Analyze the app's log, plain_log and chrome_packet files
             self._DNS_Queries(appPath, currentApp_obj)
             self._Analyze_NetLog(appPath, self.identifiers, currentApp_obj)
-            #self._Analyze_ChromePacket(appPath, self.identifiers, currentApp_obj)
+            self._Analyze_ChromePacket(appPath, self.identifiers, currentApp_obj)
 
             print(f"App {currentApp_obj.AppID} analyzed.")
             logging.debug(f"App {currentApp_obj.AppID} analyzed.")
@@ -439,10 +439,22 @@ class PyLogAnalyze:
         # dict2['percent of apps that are HIPAA compliant that shared Medical Info'] = hipaa_sharedMedical / (hipaa_sharedMedical + nonhipaa_sharedMedical) if hipaa_sharedMedical + nonhipaa_sharedMedical > 0 else 0
         # print(dict2)
 
-    def Domain(self) -> None:
+    def DNSCapture(self) -> None:
         """
-        What percentage of third party domains received 
+        What percentage of the DNS queries did we capture?
         """
+        percents = []
+
+        for appID, app_obj in self.appList.items():
+            if len(app_obj.DNSList) == 0:
+                # figure out how to handle this
+                continue
+            intersection = app_obj.DNSList.intersection(app_obj.trafficList)
+            percents.append(len(intersection) / len(app_obj.DNSList))
+
+        
+        return sum(percents) / len(percents)
+
 
 # US APPs:
 # percent of hipaa compliant apps that shared ID vs percent of non hipaa compliant apps that shared ID

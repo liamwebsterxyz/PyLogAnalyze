@@ -228,3 +228,37 @@ def thirdparty(
     f.write(statsJson)
     # close file
     f.close()
+
+@app.command()
+def DNS(
+    input_file: Path = typer.Argument(
+        ...,
+        help="File path containing the results to analyze.",
+    ),
+    output_folder: Path = typer.Argument(
+        ...,
+        help="The output folder to put the results into.",
+    ),
+) -> None:
+    """Analyze results."""
+        # Check if output folder exists
+    if not output_folder.exists():
+        logging.error(f"Output Folder doesn't Exist")
+        raise typer.Exit(1)
+
+    typer.echo(f"Analyzing results from {input_file} and writing to {output_folder}/out.json")
+    logging.basicConfig(filename=str(output_folder)+'/debug.log', level=logging.DEBUG)
+
+    # Init the controller
+    try:
+        with open(str(input_file), 'rb') as inp:
+            try:
+                controller = pickle.load(inp)
+            except pickle.PickleError as e:
+                logging.error(f"Error Loading Results Object: {e}")
+                raise typer.Exit(1)
+    except FileNotFoundError as e:
+        logging.error(f"Error Opening Results Object: {e}")
+        raise typer.Exit(1)
+    
+    print(controller.DNSCapture())
