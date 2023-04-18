@@ -117,12 +117,12 @@ class PyLogAnalyze:
         for appPath in self.appPaths:
             
             appID = str(appPath).split('/')[-1]
-            try:
-                appInfo = self.appInfo.loc[self.appInfo['app_id'] == appID.strip()]
-            except:
+            appInfo = self.appInfo.loc[self.appInfo['app_id'] == appID.strip()]
+            if appInfo.empty:
                 print(f"App {appID} not found in appInfo.csv")
                 logging.warning(f"App {appID} not found in appInfo.csv")
                 continue
+                
 
             # Find current app object or create new app object
             if appID in self.appList.keys():
