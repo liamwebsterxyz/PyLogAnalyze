@@ -148,7 +148,7 @@ class PyLogAnalyze:
                 for line in file:
                     if "DNS:" in line:
                         currentDomain = (line.split(":")[-1]).strip()
-                        if currentDomain != "":
+                        if currentDomain != "" and currentDomain != "(null)":
                             currentDomain_tld = tldextract.extract(currentDomain.strip())
                             currentDomain = currentDomain_tld.domain + '.' + currentDomain_tld.suffix
                             app_obj.DNSList.add(currentDomain)
@@ -443,16 +443,24 @@ class PyLogAnalyze:
         """
         What percentage of the DNS queries did we capture?
         """
+        appids = []
         percents = []
 
         for appID, app_obj in self.appList.items():
             if len(app_obj.DNSList) == 0:
                 # figure out how to handle this
+                appids.append(appID)
+                percents.append(1)
                 continue
             intersection = app_obj.DNSList.intersection(app_obj.trafficList)
-            percents.append(len(intersection) / len(app_obj.DNSList))
 
-        
+            percent = len(intersection) / len(app_obj.DNSList)
+
+            appids.append(appID)
+            percents.append(percent)
+
+            pd.DataFrame({'appID': appids, 'percent': percents}).to_csv('DNSCapture.csv', index=False)
+
         return sum(percents) / len(percents)
 
 
