@@ -132,19 +132,19 @@ class PyLogAnalyze:
                 self.appList[appID] = currentApp_obj
 
             # # Analyze the app's log, plain_log and chrome_packet files
-            self._Analyze_Log(appPath, currentApp_obj)
+            self._DNS_Queries(appPath, currentApp_obj)
             self._Analyze_NetLog(appPath, self.identifiers, currentApp_obj)
             #self._Analyze_ChromePacket(appPath, self.identifiers, currentApp_obj)
 
             print(f"App {currentApp_obj.AppID} analyzed.")
             logging.debug(f"App {currentApp_obj.AppID} analyzed.")
 
-    def _Analyze_Log(self, appPath: Path, app_obj: app) -> None:
+    def _DNS_Queries(self, appPath: Path, app_obj: app) -> None:
         """
         Analyze the log file for identifiers.
         """
         try:
-            with open(appPath / "log", "r", errors='ignore') as file:
+            with open(appPath / "log", "r", errors="ignore") as file:
                 for line in file:
                     if "DNS:" in line:
                         currentDomain = (line.split(":")[-1]).strip()
@@ -154,6 +154,7 @@ class PyLogAnalyze:
                             app_obj.DNSList.add(currentDomain)
                     
         except FileNotFoundError:
+            print(f"File {appPath / 'log'} not found.")
             logging.warning(f"File {appPath / 'log'} not found.")
 
     def _Analyze_NetLog(self, appPath: Path, identifiers: dict, app_obj: app) -> None:
@@ -161,51 +162,55 @@ class PyLogAnalyze:
         Analyze the net_log file for identifiers.
         """
         try: 
-            df = pd.read_csv(appPath / "net_log")
-            for i in range(len(df)):
-                proc_ID = df.iloc[i,0]
-                outbound_domain = df.iloc[i,6]
-                outbound_payload = df.iloc[i,9]
-                
-                if proc_ID == None or outbound_domain == None or outbound_domain == "":
-                    continue
+            with open(appPath / "net_log", "r") as file:
+                for line in file:
+                    
+                    data = line.split(",")
+                    if len(data) < 10:
+                        continue
+                    proc_id = data[0]
+                    outbound_domain = data[6]
+                    payload = data[9]
 
-                # add domain to captured domains list
-                currentDomain_tld = tldextract.extract(outbound_domain.strip())
-                if currentDomain_tld.domain == "":
-                    logging.warning(f"Domain {outbound_domain} not found via tldextract.")
-                    continue
-                currentDomain = currentDomain_tld.domain + '.' + currentDomain_tld.suffix
-                app_obj.trafficList.add(currentDomain)
+                    currentDomain_tld = tldextract.extract(outbound_domain.strip())
+                    currentDomain_full = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain + '.' + currentDomain_tld.suffix
+                    currentDomain = currentDomain_tld.domain + '.' + currentDomain_tld.suffix
 
-                if proc_ID == 10081:
+                    # add outbound domain to app's captured domain list
+                    app_obj.trafficList.add(currentDomain)
+                    
                     # get domain info
-                    print("here")
-    
                     currentDomainInfo = self.domainInfo.loc[self.domainInfo['domain'] == currentDomain]
                     if currentDomainInfo.empty:
                         print(f"Domain {currentDomain} not found in domainInfo.csv")
                         logging.warning(f"Domain {currentDomain} not found in domainInfo.csv")
                         continue
 
+                    # create domain object and add it to self.domains
                     if currentDomain in self.domainList:
-                        Domain_obj = self.domainList[currentDomain]
+                        currentDomain_obj = self.domainList[currentDomain]
                     else:
                         # create domain object
-                        Domain_obj = domain.Domain(currentDomain, currentDomainInfo['third_party'].values[0], currentDomainInfo['hipaa_compliant'].values[0], currentDomainInfo['us_ip'].values[0], self.identifiers.keys())
-                        self.domainList[currentDomain] = Domain_obj
-
-                    decoded_data = (base64.b64decode(outbound_payload).decode('utf-8', 'replace')).lower()
+                        currentDomain_obj = domain.Domain(currentDomain, currentDomainInfo['third_party'].values[0], currentDomainInfo['hipaa_compliant'].values[0], currentDomainInfo['us_ip'].values[0], self.identifiers.keys())
+                        self.domainList[currentDomain] = currentDomain_obj
+                    
+                    try:
+                        decoded_payload = base64.b64decode(payload).decode('utf-8', errors='replace')
+                    except:
+                        print("Error decoding payload")
+                        continue
 
                     for identifierKey, identifierValues in identifiers.items():
-                            if _IdentifierSearch(identifierKey, identifierValues, decoded_data):
-                                try:
-                                    app_obj.AddDomain(identifierKey, outbound_domain, Domain_obj.thirdParty)
-                                    Domain_obj.AddApp(app_obj.AppID, identifierKey)
-                                    print(app_obj.name)
-                                except Exception as e:
-                                    logging.error(f"Error Updating Domain and App Objects: {e}")
+                        if _IdentifierSearch(identifierKey, identifierValues, decoded_payload.lower()):
+                            try:
+                                app_obj.AddDomain(identifierKey, currentDomain_full, currentDomain_obj.thirdParty)
+                                currentDomain_obj.AddApp(app_obj.AppID, identifierKey)
+                            except Exception as e:
+                                logging.error(f"Error Adding Domain: {e}")
+
+         
         except:
+            print(f"File {appPath / 'net_log'} not found.")
             logging.warning(f"File {appPath / 'net_log'} not found.")
 
 
@@ -231,9 +236,6 @@ class PyLogAnalyze:
                         currentDomain_full = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain + '.' + currentDomain_tld.suffix
                         currentDomain = currentDomain_tld.domain + '.' + currentDomain_tld.suffix
 
-                        # Add Domain to Captured DNSList - indicating we've successfully captured the network payloads corresponding to this domain name
-                        if currentDomain not in app_obj.DNSList:
-                            print(currentDomain)
 
                         # get domain info
                         currentDomainInfo = self.domainInfo.loc[self.domainInfo['domain'] == currentDomain]

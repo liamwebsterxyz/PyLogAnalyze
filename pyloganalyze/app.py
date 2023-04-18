@@ -18,11 +18,11 @@ class App:
         self.testStage = 1 if test_stage == 3 else 0
         self.hipaaCompliant = hipaa_compliant
         self.usBased = us_based
-        self.DNSList = set()
-        self.trafficList = set()
         for identifier in identifiers:
             setattr(self, identifier + "_FirstParty", set())
             setattr(self, identifier + "_ThirdParty", set())
+        self.DNSList = set()
+        self.trafficList = set()
 
     def SharedID(self, identifiers) -> bool:
         """
