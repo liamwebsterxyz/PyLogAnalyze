@@ -193,6 +193,7 @@ class PyLogAnalyze:
                         # create domain object
                         try:
                             currentDomain_obj = domain.Domain(currentDomain, currentDomainInfo['third_party'].values[0], currentDomainInfo['hipaa_compliant'].values[0], currentDomainInfo['us_ip'].values[0], self.identifiers.keys())
+                            self.domainList[currentDomain] = currentDomain_obj
                         except:
                             print(f"Error creating domain object for {currentDomain}")
                             logging.error(f"Error creating domain object for {currentDomain}")
@@ -298,11 +299,11 @@ class PyLogAnalyze:
                                 # create domain object
                                 try:
                                     currentDomain_obj = domain.Domain(currentDomain, currentDomainInfo['third_party'].values[0], currentDomainInfo['hipaa_compliant'].values[0], currentDomainInfo['us_ip'].values[0], self.identifiers.keys())
+                                    self.domainList[currentDomain] = currentDomain_obj
                                 except:
                                     print(f"Error creating domain object for {currentDomain}")
                                     logging.error(f"Error creating domain object for {currentDomain}")
                                     continue
-                                self.domainList[currentDomain] = currentDomain_obj
                             
                         domainNext = False
                     elif "---------------- new packet ----------------" in line:
