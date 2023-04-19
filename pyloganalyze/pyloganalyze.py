@@ -150,7 +150,7 @@ class PyLogAnalyze:
                         currentDomain = (line.split(":")[-1]).strip()
                         if currentDomain != "" and currentDomain != "(null)":
                             currentDomain_tld = tldextract.extract(currentDomain.strip())
-                            currentDomain = currentDomain_tld.subdomain + currentDomain_tld.domain + '.' + currentDomain_tld.suffix
+                            currentDomain = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain + '.' + currentDomain_tld.suffix
                             app_obj.DNSList.add(currentDomain)
                     
         except FileNotFoundError:
