@@ -150,7 +150,7 @@ class PyLogAnalyze:
                         currentDomain = (line.split(":")[-1]).strip()
                         if currentDomain != "" and currentDomain != "(null)":
                             currentDomain_tld = tldextract.extract(currentDomain.strip())
-                            currentDomain = currentDomain_tld.domain + '.' + currentDomain_tld.suffix
+                            currentDomain = currentDomain_tld.subdomain + currentDomain_tld.domain + '.' + currentDomain_tld.suffix
                             app_obj.DNSList.add(currentDomain)
                     
         except FileNotFoundError:
@@ -177,7 +177,7 @@ class PyLogAnalyze:
                     currentDomain = currentDomain_tld.domain + '.' + currentDomain_tld.suffix
 
                     # add outbound domain to app's captured domain list
-                    app_obj.trafficList.add(currentDomain)
+                    app_obj.trafficList.add(currentDomain_full)
                     
                     # get domain info
                     currentDomainInfo = self.domainInfo.loc[self.domainInfo['domain'] == currentDomain]
@@ -283,7 +283,10 @@ class PyLogAnalyze:
                         currentDomain_tld = tldextract.extract(currentDomain_full.strip())
                         currentDomain_full = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain + '.' + currentDomain_tld.suffix
                         currentDomain = currentDomain_tld.domain + '.' + currentDomain_tld.suffix
-                                             
+
+                        # add outbound domain to app's captured domain list
+                        app_obj.trafficList.add(currentDomain_full)     
+
                         # get domain info
                         currentDomainInfo = self.domainInfo.loc[self.domainInfo['domain'] == currentDomain]
                         
@@ -461,11 +464,12 @@ class PyLogAnalyze:
                 # figure out how to handle this
                 appids.append(appID)
                 percents.append(1)
+                print(percent)
                 continue
             intersection = app_obj.DNSList.intersection(app_obj.trafficList)
 
             percent = len(intersection) / len(app_obj.DNSList)
-
+            print(percent)
             appids.append(appID)
             percents.append(percent)
 
