@@ -146,7 +146,7 @@ class PyLogAnalyze:
         try:
             with open(appPath / "log", "r", errors="ignore") as file:
                 for line in file:
-                    if "DNS:" in line:
+                    if "DNS:getAddrInfo:" in line:
                         currentDomain = (line.split(":")[-1]).strip()
                         if currentDomain != "" and currentDomain != "(null)":
                             currentDomain_tld = tldextract.extract(currentDomain.strip())
