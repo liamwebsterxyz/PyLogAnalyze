@@ -152,9 +152,9 @@ class PyLogAnalyze:
                         app_obj.proccessIDs.add(proc_id)
             with open(appPath / "log", "r", errors="ignore") as file:
                 for line in file:
-                    if ":DNS:getAddrInfo:" in line and any(proc_id in line for proc_id in app_obj.proccessIDs):
-                        currentDomain = (line.split(":")[-1]).strip()
-                        if currentDomain != "" and currentDomain != "(null)":
+                    if ":getaddrinforfornet:" in line and any(proc_id in line for proc_id in app_obj.proccessIDs):
+                        currentDomain = (line.split(":")[-2]).strip()
+                        if currentDomain != "":
                             currentDomain_tld = tldextract.extract(currentDomain.strip())
                             currentDomain = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain + '.' + currentDomain_tld.suffix
                             app_obj.DNSList.add(currentDomain)
@@ -472,7 +472,7 @@ class PyLogAnalyze:
                 # figure out how to handle this
                 appids.append(appID)
                 percents.append(1)
-                print(percent)
+                print(1)
                 continue
             intersection = app_obj.DNSList.intersection(app_obj.trafficList)
 
