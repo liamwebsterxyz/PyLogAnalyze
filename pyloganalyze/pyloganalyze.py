@@ -283,15 +283,16 @@ class PyLogAnalyze:
         """
         try:
             with open(appPath / "chrome_packet", "r") as file:
+                domainNext = False
                 for line in file:
-                    if domainNext == True:
-                        
+                    if domainNext:
+                        print("here2")
                         # split domain
                         currentDomain_full = line.split(':')[1]
                         currentDomain_tld = tldextract.extract(currentDomain_full.strip())
                         currentDomain_full = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain + '.' + currentDomain_tld.suffix
                         currentDomain = currentDomain_tld.domain + '.' + currentDomain_tld.suffix
-
+                        print(currentDomain_full)
                         # add outbound domain to app's captured domain list
                         app_obj.trafficList.add(currentDomain_full)     
 
@@ -318,7 +319,9 @@ class PyLogAnalyze:
                             
                         domainNext = False
                     elif "---------------- new packet ----------------" in line:
+                        print("here")
                         domainNext = True
+                        continue
                     else:
                         for identifierKey, identifierValues in identifiers.items():
                             if _IdentifierSearch(identifierKey, identifierValues, line.lower()):
