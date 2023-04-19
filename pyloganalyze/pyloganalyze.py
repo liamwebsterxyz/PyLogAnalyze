@@ -286,7 +286,7 @@ class PyLogAnalyze:
                 domainNext = False
                 for line in file:
                     if domainNext:
-                        print("here2")
+                        
                         # split domain
                         currentDomain_full = line.split(':')[1]
                         currentDomain_tld = tldextract.extract(currentDomain_full.strip())
@@ -319,7 +319,7 @@ class PyLogAnalyze:
                             
                         domainNext = False
                     elif "---------------- new packet ----------------" in line:
-                        print("here")
+                        
                         domainNext = True
                         continue
                     else:
