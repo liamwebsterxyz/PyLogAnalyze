@@ -134,7 +134,7 @@ class PyLogAnalyze:
             # # Analyze the app's log, plain_log and chrome_packet files
             self._DNS_Queries(appPath, currentApp_obj)
             self._Analyze_NetLog(appPath, self.identifiers, currentApp_obj)
-            #self._Analyze_ChromePacket(appPath, self.identifiers, currentApp_obj)
+            self._Analyze_ChromePacket(appPath, self.identifiers, currentApp_obj)
 
             print(f"App {currentApp_obj.AppID} analyzed.")
             logging.debug(f"App {currentApp_obj.AppID} analyzed.")
