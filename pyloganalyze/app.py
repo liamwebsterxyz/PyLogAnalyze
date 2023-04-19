@@ -21,6 +21,7 @@ class App:
         for identifier in identifiers:
             setattr(self, identifier + "_FirstParty", set())
             setattr(self, identifier + "_ThirdParty", set())
+        self.proccessIDs = set()
         self.DNSList = set()
         self.trafficList = set()
 
