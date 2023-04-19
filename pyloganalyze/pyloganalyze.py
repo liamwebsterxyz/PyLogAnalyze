@@ -149,10 +149,10 @@ class PyLogAnalyze:
                     if "Start proc" in line and app_obj.AppID in line:
                         line = (line.split("Start proc", 1)[1]).strip()
                         proc_id = line.split(":", 1)[0]
-                        self.proccessIDs.add(proc_id)
+                        app_obj.proccessIDs.add(proc_id)
                 for line in file:
-                    if "DNS:getAddrInfo:" in line and any(proc_id in line for proc_id in self.proccessIDs):
-                        currentDomain = (line.split(":")[-1]).strip()
+                    if ":getaddrinforfornet:" in line and any(proc_id in line for proc_id in app_obj.proccessIDs):
+                        currentDomain = (line.split(":")[-2]).strip()
                         if currentDomain != "" and currentDomain != "(null)":
                             currentDomain_tld = tldextract.extract(currentDomain.strip())
                             currentDomain = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain + '.' + currentDomain_tld.suffix
