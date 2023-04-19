@@ -169,6 +169,11 @@ class PyLogAnalyze:
         """
         try: 
             with open(appPath / "net_log", "r") as file:
+                curr_proc_id = None
+                for line in file:
+                    if 'PKG' in line and app_obj.AppID in line:
+                        curr_proc_id = line.split(',')[2].strip()
+            with open(appPath / "net_log", "r") as file:
                 for line in file:
                     
                     data = line.split(",")
@@ -178,7 +183,7 @@ class PyLogAnalyze:
                     outbound_domain = data[6]
                     payload = data[9]
 
-                    if proc_id == '10081':
+                    if proc_id == curr_proc_id:
 
                         currentDomain_tld = tldextract.extract(outbound_domain.strip())
                         currentDomain_full = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain + '.' + currentDomain_tld.suffix
@@ -292,7 +297,7 @@ class PyLogAnalyze:
                         currentDomain_tld = tldextract.extract(currentDomain_full.strip())
                         currentDomain_full = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain + '.' + currentDomain_tld.suffix
                         currentDomain = currentDomain_tld.domain + '.' + currentDomain_tld.suffix
-                        print(currentDomain_full)
+                        
                         # add outbound domain to app's captured domain list
                         app_obj.trafficList.add(currentDomain_full)     
 
