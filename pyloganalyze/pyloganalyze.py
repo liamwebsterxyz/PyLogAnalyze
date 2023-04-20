@@ -175,16 +175,16 @@ class PyLogAnalyze:
                 for line in file:
                     if first_line:
                         first_line = False
-                        first_proc_id = line.split(',')[2].strip()
+                        first_proc_id = line.split(',')[0].strip()
                     if 'PKG' in line and app_obj.AppID in line:
                         curr_proc_id = line.split(',')[2].strip()
             with open(appPath / "net_log", "r", errors='ignore') as file:
-
-                for line in file:
-                    if curr_proc_id == None:
+                if curr_proc_id == None:
                         curr_proc_id = first_proc_id
                         print(f"App {app_obj.AppID} has no PKG lines in net_log. Using first proc_id: {curr_proc_id}")
 
+                for line in file:
+                    
                     data = line.split(",")
                     if len(data) < 10:
                         continue
@@ -263,9 +263,8 @@ class PyLogAnalyze:
                         currentDomainInfo = self.domainInfo.loc[self.domainInfo['domain'] == currentDomain]
                         
                         if currentDomainInfo.empty:
-                            # TODO add loging
                             print(f"Domain {currentDomain} not found in domain info")
-                            print(f"Domain {currentDomain_full} not found in domain info")
+                            logging.warning(f"Domain {currentDomain_full} not found in domain info")
                         else:
                             # create domain object and add it to self.domains
                             if currentDomain in self.domainList:
@@ -279,15 +278,15 @@ class PyLogAnalyze:
                                     print(f"Error creating domain object for {currentDomain}")
                                     logging.error(f"Error creating domain object for {currentDomain}")
                                     continue
-                            
                         domainNext = False
                     elif "---------------- new packet ----------------" in line:
-                        
                         domainNext = True
                         continue
                     else:
                         for identifierKey, identifierValues in identifiers.items():
                             if _IdentifierSearch(identifierKey, identifierValues, line.lower()):
+                                if currentDomainInfo.empty:
+                                    break
                                 try:
                                     app_obj.AddDomain(identifierKey, currentDomain_full, currentDomain_obj.thirdParty)
                                     currentDomain_obj.AddApp(app_obj.AppID, identifierKey)
