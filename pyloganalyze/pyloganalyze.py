@@ -168,14 +168,23 @@ class PyLogAnalyze:
         Analyze the net_log file for identifiers.
         """
         try: 
-            with open(appPath / "net_log", "r") as file:
+            with open(appPath / "net_log", "r", errors='ignore') as file:
                 curr_proc_id = None
+                first_proc_id = None
+                first_line = True
                 for line in file:
+                    if first_line:
+                        first_line = False
+                        first_proc_id = line.split(',')[2].strip()
                     if 'PKG' in line and app_obj.AppID in line:
                         curr_proc_id = line.split(',')[2].strip()
-            with open(appPath / "net_log", "r") as file:
+            with open(appPath / "net_log", "r", errors='ignore') as file:
+
                 for line in file:
-                    
+                    if curr_proc_id == None:
+                        curr_proc_id = first_proc_id
+                        print(f"App {app_obj.AppID} has no PKG lines in net_log. Using first proc_id: {curr_proc_id}")
+
                     data = line.split(",")
                     if len(data) < 10:
                         continue
@@ -231,63 +240,12 @@ class PyLogAnalyze:
             print(f"File {appPath / 'net_log'} not found.")
             logging.warning(f"File {appPath / 'net_log'} not found.")
 
-
-    def _Analyze_PlainLog(self, appPath: Path, identifiers: dict, app_obj: app) -> None:
-        """
-        Analyze the plain log file for identifiers.
-        """
-        try:
-            with open(appPath / "plain_log", "r") as file:
-                for line in file:
-                    if ('(packet)' in line):
-                        currentDomain_full = line
-                        if "inbound" in currentDomain_full:
-                            currentDomain_full = currentDomain_full.split('inbound to ')[1]
-                        elif "outbound" in currentDomain_full:
-                            currentDomain_full = currentDomain_full.split('outbound to ')[1]
-                        
-                        # # split app ID
-                        # appID_tld = tldextract.extract(self.AppID)
-
-                        # split domain
-                        currentDomain_tld = tldextract.extract(currentDomain_full.strip())
-                        currentDomain_full = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain + '.' + currentDomain_tld.suffix
-                        currentDomain = currentDomain_tld.domain + '.' + currentDomain_tld.suffix
-
-
-                        # get domain info
-                        currentDomainInfo = self.domainInfo.loc[self.domainInfo['domain'] == currentDomain]
-                        
-                        if currentDomainInfo.empty:
-                            # TODO add loging
-                            print(f"Curr {currentDomain} not found in domain info")
-                            print(f"Domain {currentDomain_full} not found in domain info")
-                            
-                        else:
-                            # create domain object and add it to self.domains
-                            if currentDomain in self.domainList:
-                                currentDomain_obj = self.domainList[currentDomain]
-                            else:
-                                # create domain object
-                                currentDomain_obj = domain.Domain(currentDomain, currentDomainInfo['third_party'].values[0], currentDomainInfo['hipaa_compliant'].values[0], currentDomainInfo['us_ip'].values[0], self.identifiers.keys())
-                                self.domainList[currentDomain] = currentDomain_obj
-                    else:
-                        for identifierKey, identifierValues in identifiers.items():
-                            if _IdentifierSearch(identifierKey, identifierValues, line.lower()):
-                                try:
-                                    app_obj.AddDomain(identifierKey, currentDomain_full, currentDomain_obj.thirdParty)
-                                    currentDomain_obj.AddApp(app_obj.AppID, identifierKey)
-                                except Exception as e:
-                                    logging.error(f"Error Adding Domain: {e}")
-        except Exception as e:
-            logging.error(f"Error Analyzing {app_obj.AppID} Plain Log File: {e}")
-
     def _Analyze_ChromePacket(self, appPath: Path, identifiers: dict, app_obj: app) -> None:
         """
         Analyze the NetLog file for identifiers.
         """
         try:
-            with open(appPath / "chrome_packet", "r") as file:
+            with open(appPath / "chrome_packet", "r", errors='ignore') as file:
                 domainNext = False
                 for line in file:
                     if domainNext:
@@ -494,6 +452,8 @@ class PyLogAnalyze:
         return sum(percents) / len(percents)
 
 
+
+
 # US APPs:
 # percent of hipaa compliant apps that shared ID vs percent of non hipaa compliant apps that shared ID
 
@@ -505,3 +465,52 @@ class PyLogAnalyze:
 # percent of hipaa compliant apps that shared medical info vs percent of non hipaa compliant apps that shared medical info
 
 
+    # def _Analyze_PlainLog(self, appPath: Path, identifiers: dict, app_obj: app) -> None:
+    #     """
+    #     Analyze the plain log file for identifiers.
+    #     """
+    #     try:
+    #         with open(appPath / "plain_log", "r") as file:
+    #             for line in file:
+    #                 if ('(packet)' in line):
+    #                     currentDomain_full = line
+    #                     if "inbound" in currentDomain_full:
+    #                         currentDomain_full = currentDomain_full.split('inbound to ')[1]
+    #                     elif "outbound" in currentDomain_full:
+    #                         currentDomain_full = currentDomain_full.split('outbound to ')[1]
+                        
+    #                     # # split app ID
+    #                     # appID_tld = tldextract.extract(self.AppID)
+
+    #                     # split domain
+    #                     currentDomain_tld = tldextract.extract(currentDomain_full.strip())
+    #                     currentDomain_full = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain + '.' + currentDomain_tld.suffix
+    #                     currentDomain = currentDomain_tld.domain + '.' + currentDomain_tld.suffix
+
+
+    #                     # get domain info
+    #                     currentDomainInfo = self.domainInfo.loc[self.domainInfo['domain'] == currentDomain]
+                        
+    #                     if currentDomainInfo.empty:
+    #                         # TODO add loging
+    #                         print(f"Curr {currentDomain} not found in domain info")
+    #                         print(f"Domain {currentDomain_full} not found in domain info")
+                            
+    #                     else:
+    #                         # create domain object and add it to self.domains
+    #                         if currentDomain in self.domainList:
+    #                             currentDomain_obj = self.domainList[currentDomain]
+    #                         else:
+    #                             # create domain object
+    #                             currentDomain_obj = domain.Domain(currentDomain, currentDomainInfo['third_party'].values[0], currentDomainInfo['hipaa_compliant'].values[0], currentDomainInfo['us_ip'].values[0], self.identifiers.keys())
+    #                             self.domainList[currentDomain] = currentDomain_obj
+    #                 else:
+    #                     for identifierKey, identifierValues in identifiers.items():
+    #                         if _IdentifierSearch(identifierKey, identifierValues, line.lower()):
+    #                             try:
+    #                                 app_obj.AddDomain(identifierKey, currentDomain_full, currentDomain_obj.thirdParty)
+    #                                 currentDomain_obj.AddApp(app_obj.AppID, identifierKey)
+    #                             except Exception as e:
+    #                                 logging.error(f"Error Adding Domain: {e}")
+    #     except Exception as e:
+    #         logging.error(f"Error Analyzing {app_obj.AppID} Plain Log File: {e}")
