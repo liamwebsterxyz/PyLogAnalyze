@@ -44,6 +44,7 @@ from pathlib import Path
 from typing import List, Optional, Tuple
 from pyloganalyze import app, domain
 import pandas as pd
+import numpy as np
 import logging, tldextract
 
 
@@ -121,13 +122,16 @@ class PyLogAnalyze:
                 print(f"App {appID} not found in appInfo.csv")
                 logging.warning(f"App {appID} not found in appInfo.csv")
                 continue
-                
+            if np.isnan(appInfo['proc_ids'].values[0]):
+                print(f"App {appID} has no proc_ids")
+                logging.warning(f"App {appID} has no proc_ids")
+                continue
 
             # Find current app object or create new app object
             if appID in self.appList.keys():
                 currentApp_obj = self.appList[appID]
             else:
-                currentApp_obj = app.App(appID, appInfo['testing_stage'].values[0], appInfo['hipaa_compliant'].values[0], appInfo['us_audience'].values[0], self.identifiers.keys())
+                currentApp_obj = app.App(appID, int(appInfo['proc_ids'].values[0]), int(appInfo['testing_stage'].values[0]), int(appInfo['hipaa_compliant'].values[0]), int(appInfo['us_audience'].values[0]), self.identifiers.keys())
                 # add app to appList
                 self.appList[appID] = currentApp_obj
 
@@ -141,18 +145,24 @@ class PyLogAnalyze:
 
     def _DNS_Queries(self, appPath: Path, app_obj: app) -> None:
         """
-        Analyze the log file for identifiers.
+        Analyze the log file DNS queries.
         """
         try:
-            with open(appPath / "log", "r", errors="ignore") as file:
+            with open(appPath / "log", "r", errors="replace") as file:
                 for line in file:
                     if "Start proc" in line and app_obj.AppID in line:
                         line = (line.split("Start proc", 1)[1]).strip()
                         proc_id = line.split(":", 1)[0]
-                        app_obj.proccessIDs.add(proc_id)
-            with open(appPath / "log", "r", errors="ignore") as file:
+                        app_obj.DNSproccessIDs.add(proc_id)
+
+            if len(app_obj.DNSproccessIDs) == 0:
+                print(f"App {app_obj.AppID} has no DNSproccessIDs.")
+                logging.warning(f"App {app_obj.AppID} has no DNSproccessIDs.")
+                return
+            
+            with open(appPath / "log", "r", errors="replace") as file:
                 for line in file:
-                    if ":getaddrinforfornet:" in line and any(proc_id in line for proc_id in app_obj.proccessIDs):
+                    if ":getaddrinforfornet:" in line and any(proc_id in line for proc_id in app_obj.DNSproccessIDs):
                         currentDomain = (line.split(":")[-2]).strip()
                         if currentDomain != "":
                             currentDomain_tld = tldextract.extract(currentDomain.strip())
@@ -168,31 +178,17 @@ class PyLogAnalyze:
         Analyze the net_log file for identifiers.
         """
         try: 
-            with open(appPath / "net_log", "r", errors='ignore') as file:
-                curr_proc_id = None
-                first_proc_id = None
-                first_line = True
-                for line in file:
-                    if first_line:
-                        first_line = False
-                        first_proc_id = line.split(',')[0].strip()
-                    if 'PKG' in line and app_obj.AppID in line:
-                        curr_proc_id = line.split(',')[2].strip()
-            with open(appPath / "net_log", "r", errors='ignore') as file:
-                if curr_proc_id == None:
-                        curr_proc_id = first_proc_id
-                        print(f"App {app_obj.AppID} has no PKG lines in net_log. Using first proc_id: {curr_proc_id}")
-
+            with open(appPath / "net_log", "r", errors='replace') as file:
                 for line in file:
                     
                     data = line.split(",")
                     if len(data) < 10:
                         continue
-                    proc_id = data[0]
+                    proc_id = int(data[0])
                     outbound_domain = data[6]
-                    payload = data[9]
+                    payload = data[9]   
 
-                    if proc_id == curr_proc_id:
+                    if proc_id == app_obj.ProcID:
 
                         currentDomain_tld = tldextract.extract(outbound_domain.strip())
                         currentDomain_full = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain + '.' + currentDomain_tld.suffix
@@ -245,7 +241,7 @@ class PyLogAnalyze:
         Analyze the NetLog file for identifiers.
         """
         try:
-            with open(appPath / "chrome_packet", "r", errors='ignore') as file:
+            with open(appPath / "chrome_packet", "r", errors='replace') as file:
                 domainNext = False
                 for line in file:
                     if domainNext:

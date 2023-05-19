@@ -13,15 +13,16 @@ class App:
     Initialize the app object.
     """
 
-    def __init__(self, appId: str, test_stage: int, hipaa_compliant: int, us_based: int, identifiers: List[str]) -> None:
+    def __init__(self, appId: str, procId: int, test_stage: int, hipaa_compliant: int, us_based: int, identifiers: List[str]) -> None:
         self.AppID = appId
+        self.ProcID = procId
         self.testStage = 1 if test_stage == 3 else 0
         self.hipaaCompliant = hipaa_compliant
         self.usBased = us_based
         for identifier in identifiers:
             setattr(self, identifier + "_FirstParty", set())
             setattr(self, identifier + "_ThirdParty", set())
-        self.proccessIDs = set()
+        self.DNSproccessIDs = set()
         self.DNSList = set()
         self.trafficList = set()
 
