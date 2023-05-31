@@ -1,0 +1,12 @@
+{
+  "FullName": 0.52,
+  "Email": 0.5666666666666667,
+  "DOB": 0.25,
+  "DeviceID": 0.9285714285714286,
+  "Gender": 0.5416666666666666,
+  "Phone": 0.8,
+  "IPAddress": 0,
+  "Fingerprint": 0,
+  "Location": 0.6363636363636364,
+  "MedicalInfo": 0
+}

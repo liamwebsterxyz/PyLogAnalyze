@@ -122,6 +122,10 @@ class PyLogAnalyze:
                 print(f"App {appID} not found in appInfo.csv")
                 logging.warning(f"App {appID} not found in appInfo.csv")
                 continue
+            if appInfo['testing_stage'].values[0] == -1 or appInfo['testing_stage'].values[0] == 0 or appInfo['testing_stage'].values[0] == 1:
+                print(f"App {appID} is not a full test")
+                logging.warning(f"App {appID} is not a full test")
+                continue
             if np.isnan(appInfo['proc_ids'].values[0]):
                 print(f"App {appID} has no proc_ids")
                 logging.warning(f"App {appID} has no proc_ids")
@@ -131,7 +135,7 @@ class PyLogAnalyze:
             if appID in self.appList.keys():
                 currentApp_obj = self.appList[appID]
             else:
-                currentApp_obj = app.App(appID, int(appInfo['proc_ids'].values[0]), int(appInfo['testing_stage'].values[0]), int(appInfo['hipaa_compliant'].values[0]), int(appInfo['us_audience'].values[0]), self.identifiers.keys())
+                currentApp_obj = app.App(appID, int(appInfo['testing_stage'].values[0]), int(appInfo['hipaa_compliant'].values[0]), int(appInfo['us_audience'].values[0]), self.identifiers.keys())
                 # add app to appList
                 self.appList[appID] = currentApp_obj
 
@@ -178,6 +182,13 @@ class PyLogAnalyze:
         Analyze the net_log file for identifiers.
         """
         try: 
+            curr_proc_ids = set()
+            with open(appPath / "/net_log", "r", errors='replace') as net_log:
+                for line in net_log:
+                    if 'PKG' in line and app_obj.AppID in line:
+                        curr_proc_id = int(line.split(',')[2].strip())
+                        curr_proc_ids.add(curr_proc_id)
+            
             with open(appPath / "net_log", "r", errors='replace') as file:
                 for line in file:
                     
@@ -188,7 +199,7 @@ class PyLogAnalyze:
                     outbound_domain = data[6]
                     payload = data[9]   
 
-                    if proc_id == app_obj.ProcID:
+                    if proc_id in curr_proc_ids:
 
                         currentDomain_tld = tldextract.extract(outbound_domain.strip())
                         currentDomain_full = currentDomain_tld.subdomain + '.' + currentDomain_tld.domain + '.' + currentDomain_tld.suffix
@@ -231,7 +242,6 @@ class PyLogAnalyze:
                                 except Exception as e:
                                     logging.error(f"Error Adding Domain: {e}")
 
-         
         except:
             print(f"File {appPath / 'net_log'} not found.")
             logging.warning(f"File {appPath / 'net_log'} not found.")
