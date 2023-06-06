@@ -46,6 +46,7 @@ from pyloganalyze import app, domain
 import pandas as pd
 import numpy as np
 import logging, tldextract
+import difflib
 
 
 
@@ -123,12 +124,7 @@ class PyLogAnalyze:
                 logging.warning(f"App {appID} not found in appInfo.csv")
                 continue
             if appInfo['testing_stage'].values[0] == -1 or appInfo['testing_stage'].values[0] == 0 or appInfo['testing_stage'].values[0] == 1:
-                print(f"App {appID} is not a full test")
                 logging.warning(f"App {appID} is not a full test")
-                continue
-            if np.isnan(appInfo['proc_ids'].values[0]):
-                print(f"App {appID} has no proc_ids")
-                logging.warning(f"App {appID} has no proc_ids")
                 continue
 
             # Find current app object or create new app object
@@ -183,12 +179,19 @@ class PyLogAnalyze:
         """
         try: 
             curr_proc_ids = set()
-            with open(appPath / "/net_log", "r", errors='replace') as net_log:
+            with open(appPath / "net_log", "r", errors='replace') as net_log:
                 for line in net_log:
-                    if 'PKG' in line and app_obj.AppID in line:
-                        curr_proc_id = int(line.split(',')[2].strip())
-                        curr_proc_ids.add(curr_proc_id)
-            
+                    if 'PKG' in line:
+                        curr_id = line.split(',')[3]
+                        if app_obj.AppID == curr_id or difflib.SequenceMatcher(None,app_obj.AppID,curr_id).ratio()*100 >= 80:
+                            curr_proc_id = int(line.split(',')[2].strip())
+                            curr_proc_ids.add(curr_proc_id)
+            if len(curr_proc_ids) == 0:
+                print(f'No Proc id found for {app_obj.AppID}')
+                return
+        except:
+            print(f'Error collecting Net_log Proc Ids for: {app_obj.AppID}')
+        try:
             with open(appPath / "net_log", "r", errors='replace') as file:
                 for line in file:
                     
@@ -305,18 +308,6 @@ class PyLogAnalyze:
         """
         Convert the PyLogAnalyze object to a pandas DataFrame.
         """
-        # if self.inputFile is not None:
-        #     # read app from input file
-        #     print("Reading results from file...")
-        #     try:
-        #         with open(self.inputFile, 'r') as f:
-        #             df = pd.read_csv(f, index_col=0)
-        #     except:
-        #         print("Error reading input file to save df")
-        #         return
-        # else:
-        #     #TODO change this? shouldn't be hardcoded
-        #     df = pd.DataFrame(columns=['AppID', 'FullName_FirstPart', 'FullName_ThirdParty', 'Email_FirstParty', 'Email_ThirdParty', 'DOB_FirstParty', 'DOB_ThirdParty', 'DeviceID_FirstParty', 'DeviceID_ThirdParty', 'Gender_FirstParty', 'Gender_ThirdParty', 'Phone_FirstParty', 'Phone_ThirdParty', 'IPAddress_FirstParty', 'IPAddress_ThirdParty', 'Fingerprint_FirstParty', 'Fingerprint_ThirdParty', 'Location_FirstParty', 'Location_ThirdParty'])
         appIDs = list(self.appList.keys())
 
         appDF = pd.DataFrame(columns=self.appList[appIDs[0]].__dict__.keys())
