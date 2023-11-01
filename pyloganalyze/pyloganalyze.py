@@ -131,7 +131,8 @@ class PyLogAnalyze:
             if appID in self.appList.keys():
                 currentApp_obj = self.appList[appID]
             else:
-                currentApp_obj = app.App(appID, int(appInfo['testing_stage'].values[0]), int(appInfo['hipaa_compliant'].values[0]), int(appInfo['us_audience'].values[0]), self.identifiers.keys())
+                # TODO fix hipaa compliant
+                currentApp_obj = app.App(appID, int(appInfo['testing_stage'].values[0]), -1, int(appInfo['us_audience'].values[0]), self.identifiers.keys())
                 # add app to appList
                 self.appList[appID] = currentApp_obj
 
